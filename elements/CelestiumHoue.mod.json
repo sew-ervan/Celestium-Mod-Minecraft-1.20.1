@@ -1,0 +1,31 @@
+{
+  "_fv": 43,
+  "_type": "tool",
+  "definition": {
+    "renderType": 0,
+    "texture": "celestiumhouetexture",
+    "customModelName": "Normal",
+    "name": "Houe en Celestium",
+    "specialInfo": [],
+    "creativeTab": {
+      "value": "CUSTOM:CelestialUnivers"
+    },
+    "toolType": "Hoe",
+    "harvestLevel": 1,
+    "efficiency": 11.0,
+    "attackSpeed": 4.0,
+    "enchantability": 20,
+    "damageVsEntity": 1.0,
+    "usageCount": 5000,
+    "blocksAffected": [],
+    "hasGlow": false,
+    "repairItems": [
+      {
+        "value": "CUSTOM:Fragementceleste"
+      }
+    ],
+    "immuneToFire": true,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false
+  }
+}

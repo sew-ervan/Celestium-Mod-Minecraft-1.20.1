@@ -1,0 +1,58 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 348,
+    "height": 112,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_qcm_estu_pour_macron",
+          "text": {
+            "fixedValue": "Sondage sans pression"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 49,
+          "y": 75
+        }
+      },
+      {
+        "type": "checkbox",
+        "data": {
+          "name": "PourMacron",
+          "text": "DesertFennek, ervan34 et Mactoine sont des bg",
+          "x": 49,
+          "y": 96
+        }
+      },
+      {
+        "type": "checkbox",
+        "data": {
+          "name": "ContreMacron",
+          "text": "DesertFennek, ervan34 et Mactoine ne sont pas des bg",
+          "x": 49,
+          "y": 130
+        }
+      }
+    ],
+    "onTick": {
+      "name": "QCMMacronProcedurePourMacron"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

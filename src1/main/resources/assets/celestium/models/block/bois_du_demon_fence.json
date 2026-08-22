@@ -1,0 +1,8 @@
+{
+  "parent": "block/fence_side",
+  "textures": {
+    "texture": "celestium:blocks/bois_du_demon_planks",
+    "particle": "celestium:blocks/bois_du_demon_planks"
+  },
+  "render_type": "solid"
+}

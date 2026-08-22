@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "celestium:fragementceleste"
+    },
+    "1": {
+      "item": "celestium:fragementceleste"
+    },
+    "2": {
+      "item": "celestium:fragementceleste"
+    },
+    "3": {
+      "item": "celestium:fragementceleste"
+    },
+    "4": {
+      "item": "celestium:fragementceleste"
+    },
+    "5": {
+      "item": "celestium:fragementceleste"
+    },
+    "6": {
+      "item": "celestium:fragementceleste"
+    },
+    "7": {
+      "item": "celestium:fragementceleste"
+    },
+    "8": {
+      "item": "celestium:fragementceleste"
+    }
+  },
+  "result": {
+    "item": "celestium:minerai_celeste",
+    "count": 1
+  }
+}

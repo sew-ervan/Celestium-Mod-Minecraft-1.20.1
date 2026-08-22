@@ -1,0 +1,33 @@
+{
+  "group": "wooden_stairs",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "0  ",
+    "34 ",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "celestium:bois_du_demon_planks"
+    },
+    "3": {
+      "item": "celestium:bois_du_demon_planks"
+    },
+    "4": {
+      "item": "celestium:bois_du_demon_planks"
+    },
+    "6": {
+      "item": "celestium:bois_du_demon_planks"
+    },
+    "7": {
+      "item": "celestium:bois_du_demon_planks"
+    },
+    "8": {
+      "item": "celestium:bois_du_demon_planks"
+    }
+  },
+  "result": {
+    "item": "celestium:bois_du_demon_stairs",
+    "count": 4
+  }
+}

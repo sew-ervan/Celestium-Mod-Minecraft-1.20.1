@@ -1,0 +1,11 @@
+{
+  "_fv": 43,
+  "_type": "tab",
+  "definition": {
+    "name": "Celestia",
+    "icon": {
+      "value": "CUSTOM:MineraiCeleste"
+    },
+    "showSearch": true
+  }
+}

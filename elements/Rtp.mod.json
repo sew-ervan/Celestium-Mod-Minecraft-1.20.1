@@ -1,0 +1,9 @@
+{
+  "_fv": 43,
+  "_type": "command",
+  "definition": {
+    "commandName": "rtp",
+    "permissionLevel": "No requirement",
+    "argsxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"args_start\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"old_command\"><field name=\"procedure\">RtpProcedure1</field></block></next></block><block type=\"call_procedure\" x=\"207\" y=\"245\"><field name=\"procedure\"></field></block></xml>"
+  }
+}

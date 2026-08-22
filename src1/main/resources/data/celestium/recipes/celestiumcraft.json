@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "0 2",
+    "3 5"
+  ],
+  "key": {
+    "0": {
+      "item": "celestium:minerai_celeste"
+    },
+    "2": {
+      "item": "celestium:minerai_celeste"
+    },
+    "3": {
+      "item": "celestium:minerai_celeste"
+    },
+    "5": {
+      "item": "celestium:minerai_celeste"
+    }
+  },
+  "result": {
+    "item": "celestium:celestiumarmor_boots",
+    "count": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "group": "planks",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:bois_du_demon_log"
+    }
+  ],
+  "result": {
+    "item": "celestium:bois_du_demon_planks",
+    "count": 4
+  }
+}

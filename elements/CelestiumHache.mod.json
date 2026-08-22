@@ -1,0 +1,31 @@
+{
+  "_fv": 43,
+  "_type": "tool",
+  "definition": {
+    "renderType": 0,
+    "texture": "texturecelestiumhache",
+    "customModelName": "Normal",
+    "name": "Hache en Celestium",
+    "specialInfo": [],
+    "creativeTab": {
+      "value": "CUSTOM:CelestialUnivers"
+    },
+    "toolType": "Axe",
+    "harvestLevel": 1,
+    "efficiency": 15.0,
+    "attackSpeed": 1.0,
+    "enchantability": 20,
+    "damageVsEntity": 11.5,
+    "usageCount": 5000,
+    "blocksAffected": [],
+    "hasGlow": false,
+    "repairItems": [
+      {
+        "value": "CUSTOM:Fragementceleste"
+      }
+    ],
+    "immuneToFire": true,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false
+  }
+}

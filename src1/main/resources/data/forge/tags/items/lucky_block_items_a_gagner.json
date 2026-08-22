@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "celestium:sac_a_dos_magique_petit",
+    "celestium:bois_du_demon_log",
+    "celestium:fragementceleste",
+    "minecraft:coal_ore",
+    "minecraft:iron_ingot",
+    "minecraft:diamond",
+    "minecraft:enchanting_table",
+    "minecraft:diamond_hoe",
+    "minecraft:brewing_stand",
+    "celestium:caca_1",
+    "minecraft:damaged_anvil",
+    "celestium:bois_du_demon_planks",
+    "celestium:cacafumeur",
+    "minecraft:goat_horn",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:lapis_block",
+    "minecraft:sculk_sensor",
+    "minecraft:golden_horse_armor",
+    "minecraft:diamond_horse_armor",
+    "celestium:sac_a_dos_magique",
+    "celestium:minerai_celeste",
+    "minecraft:amethyst_block",
+    "minecraft:beacon",
+    "minecraft:dirt"
+  ]
+}

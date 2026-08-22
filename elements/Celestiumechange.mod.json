@@ -1,0 +1,33 @@
+{
+  "_fv": 43,
+  "_type": "villagertrade",
+  "definition": {
+    "tradeEntries": [
+      {
+        "villagerProfession": {
+          "value": "ARMORER"
+        },
+        "entries": [
+          {
+            "price1": {
+              "value": "Items.EMERALD"
+            },
+            "countPrice1": 32,
+            "price2": {
+              "value": "CUSTOM:Caca1"
+            },
+            "countPrice2": 1,
+            "offer": {
+              "value": "CUSTOM:Fragementceleste"
+            },
+            "countOffer": 1,
+            "level": 5,
+            "maxTrades": 9,
+            "xp": 10,
+            "priceMultiplier": 0.2
+          }
+        ]
+      }
+    ]
+  }
+}

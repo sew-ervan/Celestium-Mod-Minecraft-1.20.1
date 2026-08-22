@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "celestium:blocks/deepslate",
+    "up": "celestium:blocks/deepslate",
+    "north": "celestium:blocks/deepslate",
+    "east": "celestium:blocks/deepslate",
+    "south": "celestium:blocks/deepslate",
+    "west": "celestium:blocks/deepslate",
+    "particle": "celestium:blocks/deepslate"
+  },
+  "render_type": "solid"
+}

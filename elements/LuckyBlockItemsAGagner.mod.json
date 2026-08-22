@@ -1,0 +1,87 @@
+{
+  "_fv": 43,
+  "_type": "tag",
+  "definition": {
+    "type": "Items",
+    "items": [
+      {
+        "value": "CUSTOM:Fragementceleste"
+      },
+      {
+        "value": "CUSTOM:MineraiCeleste"
+      },
+      {
+        "value": "CUSTOM:SacADosMagique"
+      },
+      {
+        "value": "CUSTOM:SacADosMagiquePetit"
+      },
+      {
+        "value": "Blocks.AMETHYST_BLOCK"
+      },
+      {
+        "value": "Blocks.ENCHANTING_TABLE"
+      },
+      {
+        "value": "Items.IRON_INGOT"
+      },
+      {
+        "value": "Items.DIAMOND"
+      },
+      {
+        "value": "Items.DIAMOND_HOE"
+      },
+      {
+        "value": "Blocks.SCULK_SENSOR"
+      },
+      {
+        "value": "Blocks.DIRT#0"
+      },
+      {
+        "value": "Blocks.LAPIS_BLOCK"
+      },
+      {
+        "value": "Items.GOAT_HORN"
+      },
+      {
+        "value": "Blocks.ANVIL#2"
+      },
+      {
+        "value": "Blocks.COAL_ORE"
+      },
+      {
+        "value": "Blocks.BREWING_STAND"
+      },
+      {
+        "value": "Items.GOLDEN_HORSE_ARMOR"
+      },
+      {
+        "value": "Items.DIAMOND_HORSE_ARMOR"
+      },
+      {
+        "value": "CUSTOM:Caca1"
+      },
+      {
+        "value": "CUSTOM:Bois_du_demonPlanks"
+      },
+      {
+        "value": "CUSTOM:Bois_du_demonLog"
+      },
+      {
+        "value": "CUSTOM:Cacafumeur"
+      },
+      {
+        "value": "Blocks.BEACON"
+      },
+      {
+        "value": "Items.SKULL#1"
+      }
+    ],
+    "blocks": [],
+    "functions": [],
+    "entities": [],
+    "biomes": [],
+    "name": "lucky_block_items_a_gagner",
+    "namespace": "forge"
+  }
+}

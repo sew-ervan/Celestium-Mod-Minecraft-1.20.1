@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="celestium"
+version="0.0.8"
+displayName="Celestium"
+credits="L'équipe Celestium"
+displayURL="https://celestialunivers.wordpress.com/"
+authors="Les développeurs Celestium (DesertFennek quoi)"
+description="Le seul est l'unique mod du serveur minecraft Celestial Univers! Rejoint le discord içi:  https://discord.gg/rDswpVGcen"
+
+[[dependencies.celestium]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2]"
+    ordering="NONE"
+    side="BOTH"
+
+
+
+[[dependencies.celestium]]
+    modId="geckolib"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
+

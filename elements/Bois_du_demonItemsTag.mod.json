@@ -1,0 +1,21 @@
+{
+  "_fv": 43,
+  "_type": "tag",
+  "definition": {
+    "type": "Items",
+    "items": [
+      {
+        "value": "CUSTOM:Bois_du_demonWood"
+      },
+      {
+        "value": "CUSTOM:Bois_du_demonLog"
+      }
+    ],
+    "blocks": [],
+    "functions": [],
+    "entities": [],
+    "biomes": [],
+    "name": "bois_du_demon_log",
+    "namespace": "forge"
+  }
+}

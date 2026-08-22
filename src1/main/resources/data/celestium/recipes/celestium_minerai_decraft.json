@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "celestium:minerai_celeste"
+    }
+  ],
+  "result": {
+    "item": "celestium:fragementceleste",
+    "count": 9
+  }
+}

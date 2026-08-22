@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "celestium:blocks/bois_du_demon_leaves",
+    "particle": "celestium:blocks/bois_du_demon_leaves"
+  }
+}

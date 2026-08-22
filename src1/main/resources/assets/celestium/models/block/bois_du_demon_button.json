@@ -1,0 +1,7 @@
+{
+  "parent": "block/button",
+  "textures": {
+    "texture": "celestium:blocks/bois_du_demon_planks"
+  },
+  "render_type": "solid"
+}
