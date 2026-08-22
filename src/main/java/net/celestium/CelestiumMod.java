@@ -1,9 +1,16 @@
 package net.celestium;
 
 import com.mojang.logging.LogUtils;
+import net.celestium.core.material.CelestiumTier;
+import net.celestium.core.network.ModNetwork;
+import net.celestium.init.ModBlocks;
+import net.celestium.init.ModCreativeTabs;
+import net.celestium.init.ModItems;
+import net.celestium.init.ModSounds;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -23,9 +30,21 @@ public class CelestiumMod {
 	public CelestiumMod() {
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		// Les registres seront branches ici au lot 2.
+		// ModBlocks est touche en premier : son initialisation inscrit aussi les items de bloc
+		// dans ModItems, qui doit donc etre complet avant que le bus ne collecte les entrees.
+		ModBlocks.BLOCKS.register(modBus);
+		ModItems.ITEMS.register(modBus);
+		ModCreativeTabs.TABS.register(modBus);
+		ModSounds.SOUNDS.register(modBus);
 
-		LOGGER.info("Celestium initialise");
+		modBus.addListener(this::onCommonSetup);
+	}
+
+	private void onCommonSetup(FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> {
+			CelestiumTier.registerSorting();
+			ModNetwork.register();
+		});
 	}
 
 	/** Raccourci pour construire un identifiant dans l'espace de noms du mod. */
