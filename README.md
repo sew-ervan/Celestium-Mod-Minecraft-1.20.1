@@ -55,7 +55,3 @@ Deux règles à tenir :
 **Un sort** — une classe qui implémente `feature/magie/Spell`, puis une ligne dans `init/ModSpells.java`. Le coût en énergie, le temps de recharge et le camp requis sont vérifiés par `SpellCaster`, pas par le sort.
 
 **Un son** — le `.ogg` dans `assets/celestium/sounds/`, l'enregistrement dans `init/ModSounds.java`, la déclaration dans `sounds.json`. Minecraft ne lit **que** l'OGG.
-
-## Le dossier `legacy/`
-
-`legacy/mcreator-java/` contient le code MCreator 1.19.2 d'origine, conservé comme référence de lecture pendant la réécriture. Il est hors du périmètre de compilation et doit être supprimé une fois le chantier terminé — il reste accessible dans l'historique git (commit initial `ea4d2f9`).

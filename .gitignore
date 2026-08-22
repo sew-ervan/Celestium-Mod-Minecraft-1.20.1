@@ -21,6 +21,3 @@ run/
 
 # Cache DataGen
 src/generated/resources/.cache/
-
-# Code MCreator 1.19.2 conserve comme reference pendant la reecriture.
-# Supprime a la fin du chantier. Reste accessible dans l'historique git.
