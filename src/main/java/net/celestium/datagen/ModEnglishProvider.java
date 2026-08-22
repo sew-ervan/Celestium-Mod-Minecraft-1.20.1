@@ -18,6 +18,10 @@ public class ModEnglishProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add("itemGroup.celestium.celestial_univers", "Celestial Univers");
 
+		// --- Advancements ---
+		add("advancements.premier_celestium.title", "First Celestium");
+		add("advancements.premier_celestium.descr", "You obtained your first Celestium fragment.");
+
 		addItem(ModItems.CELESTIUM_FRAGMENT, "Celestial Fragment");
 		addItem(ModItems.CELESTIUM_INGOT, "Celestium Ingot");
 		addItem(ModItems.CELESTIUM_STICK, "Celestium Stick");

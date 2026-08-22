@@ -23,6 +23,10 @@ public class ModFrenchProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add("itemGroup.celestium.celestial_univers", "Celestial Univers");
 
+		// --- Progrès ---
+		add("advancements.premier_celestium.title", "Premier Celestium");
+		add("advancements.premier_celestium.descr", "Tu as obtenu ton premier fragment de Celestium.");
+
 		addItem(ModItems.CELESTIUM_FRAGMENT, "Fragment céleste");
 		addItem(ModItems.CELESTIUM_INGOT, "Lingot de Celestium");
 		addItem(ModItems.CELESTIUM_STICK, "Bâton de Celestium");
