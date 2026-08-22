@@ -1,9 +1,0 @@
-{
-  "_fv": 43,
-  "_type": "command",
-  "definition": {
-    "commandName": "annonce",
-    "permissionLevel": "2",
-    "argsxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"args_start\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"number_default\"><field name=\"name\">niveau</field><statement name=\"args\"><block type=\"string\"><field name=\"type\">string</field><field name=\"name\">message</field><statement name=\"args\"><block type=\"call_procedure\"><field name=\"procedure\">Annonce</field></block></statement></block></statement></block></next></block></xml>"
-  }
-}

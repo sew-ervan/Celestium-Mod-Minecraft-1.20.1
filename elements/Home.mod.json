@@ -1,9 +1,0 @@
-{
-  "_fv": 43,
-  "_type": "command",
-  "definition": {
-    "commandName": "home",
-    "permissionLevel": "No requirement",
-    "argsxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"args_start\" deletable=\"false\" x=\"309\" y=\"134\"><next><block type=\"string\"><field name=\"type\">word</field><field name=\"name\">name</field><statement name=\"args\"><block type=\"call_procedure\"><field name=\"procedure\">HomeProcedure1</field></block></statement></block></next></block></xml>"
-  }
-}

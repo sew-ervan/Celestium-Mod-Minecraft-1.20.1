@@ -1,9 +1,0 @@
-{
-  "_fv": 43,
-  "_type": "command",
-  "definition": {
-    "commandName": "AdminSetServerSpawn",
-    "permissionLevel": "4",
-    "argsxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"args_start\" deletable=\"false\" x=\"342\" y=\"149\"><next><block type=\"call_procedure\"><field name=\"procedure\">SetServerSpawnProcedure</field></block></next></block></xml>"
-  }
-}
