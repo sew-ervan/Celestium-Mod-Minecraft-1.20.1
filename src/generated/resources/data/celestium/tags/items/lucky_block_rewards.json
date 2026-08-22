@@ -1,0 +1,24 @@
+{
+  "values": [
+    "celestium:celestium_fragment",
+    "celestium:celestium_ingot",
+    "celestium:bois_du_demon_log",
+    "celestium:bois_du_demon_planks",
+    "minecraft:coal_ore",
+    "minecraft:iron_ingot",
+    "minecraft:diamond",
+    "minecraft:enchanting_table",
+    "minecraft:diamond_hoe",
+    "minecraft:brewing_stand",
+    "minecraft:damaged_anvil",
+    "minecraft:goat_horn",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:lapis_block",
+    "minecraft:sculk_sensor",
+    "minecraft:golden_horse_armor",
+    "minecraft:diamond_horse_armor",
+    "minecraft:amethyst_block",
+    "minecraft:beacon",
+    "minecraft:dirt"
+  ]
+}

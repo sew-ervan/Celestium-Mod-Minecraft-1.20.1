@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "celestium:bois_du_demon_planks"
+    }
+  ],
+  "result": {
+    "item": "celestium:bois_du_demon_button"
+  }
+}

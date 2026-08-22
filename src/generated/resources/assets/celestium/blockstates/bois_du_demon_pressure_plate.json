@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "celestium:block/bois_du_demon_pressure_plate"
+    },
+    "powered=true": {
+      "model": "celestium:block/bois_du_demon_pressure_plate_down"
+    }
+  }
+}

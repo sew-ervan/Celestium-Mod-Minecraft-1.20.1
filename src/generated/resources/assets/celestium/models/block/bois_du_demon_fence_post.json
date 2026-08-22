@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "texture": "celestium:block/bois_du_demon_planks"
+  }
+}

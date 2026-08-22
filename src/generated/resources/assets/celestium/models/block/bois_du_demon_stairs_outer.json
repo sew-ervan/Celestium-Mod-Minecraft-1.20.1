@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "celestium:block/bois_du_demon_planks",
+    "side": "celestium:block/bois_du_demon_planks",
+    "top": "celestium:block/bois_du_demon_planks"
+  }
+}

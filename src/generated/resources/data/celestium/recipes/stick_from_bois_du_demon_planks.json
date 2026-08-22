@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "sticks",
+  "ingredients": [
+    {
+      "item": "celestium:bois_du_demon_planks"
+    },
+    {
+      "item": "celestium:bois_du_demon_planks"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:stick"
+  }
+}

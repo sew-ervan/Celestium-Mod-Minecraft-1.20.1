@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fence_gate",
+  "textures": {
+    "texture": "celestium:block/bois_du_demon_planks"
+  }
+}

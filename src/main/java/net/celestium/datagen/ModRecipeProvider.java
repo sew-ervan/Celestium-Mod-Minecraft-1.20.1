@@ -1,5 +1,6 @@
 package net.celestium.datagen;
 
+import net.celestium.CelestiumMod;
 import net.celestium.core.registry.ModTags;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.init.ModBlocks;
@@ -11,6 +12,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
@@ -21,6 +23,11 @@ import java.util.function.Consumer;
  *
  * <p>Les outils reprennent les formes vanilla. Le mod d'origine alignait le manche de la hache et
  * de la houe sur la colonne de gauche, une forme qu'aucun joueur ne devine.
+ *
+ * <p>Les identifiants sont donnes explicitement, dans l'espace de noms du mod. Les raccourcis
+ * vanilla du genre {@code nineBlockStorageRecipes} nomment leurs recettes avec le seul chemin de
+ * l'objet produit : l'identifiant retombe alors dans l'espace de noms {@code minecraft}, et deux
+ * paliers de compactage successifs finissent par se disputer le meme nom.
  */
 public class ModRecipeProvider extends RecipeProvider {
 
@@ -38,11 +45,14 @@ public class ModRecipeProvider extends RecipeProvider {
 		Item fragment = ModItems.CELESTIUM_FRAGMENT.get();
 		Item ingot = ModItems.CELESTIUM_INGOT.get();
 		Item stick = ModItems.CELESTIUM_STICK.get();
+		ItemLike block = ModBlocks.CELESTIUM_BLOCK.get();
 
-		// Les deux paliers de compactage, avec leurs recettes inverses.
-		nineBlockStorageRecipes(writer, RecipeCategory.MISC, fragment, RecipeCategory.MISC, ingot);
-		nineBlockStorageRecipes(writer, RecipeCategory.MISC, ingot,
-				RecipeCategory.BUILDING_BLOCKS, ModBlocks.CELESTIUM_BLOCK.get().asItem());
+		// Les deux paliers de compactage, chacun avec sa recette inverse.
+		pack(writer, RecipeCategory.MISC, ingot, fragment, "celestium_ingot_from_fragments");
+		unpack(writer, RecipeCategory.MISC, fragment, ingot, "celestium_fragment_from_ingot");
+
+		pack(writer, RecipeCategory.BUILDING_BLOCKS, block, ingot, "celestium_block_from_ingots");
+		unpack(writer, RecipeCategory.MISC, ingot, block, "celestium_ingot_from_block");
 
 		// Deux fragments donnent un baton, deux lingots en donnent neuf.
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, stick)
@@ -50,27 +60,46 @@ public class ModRecipeProvider extends RecipeProvider {
 				.pattern("F")
 				.define('F', fragment)
 				.unlockedBy("has_celestium_fragment", has(fragment))
-				.save(writer);
+				.save(writer, CelestiumMod.id("celestium_stick_from_fragments"));
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, stick, 9)
 				.pattern("I")
 				.pattern("I")
 				.define('I', ingot)
 				.unlockedBy("has_celestium_ingot", has(ingot))
-				.save(writer, "celestium:celestium_stick_from_ingots");
+				.save(writer, CelestiumMod.id("celestium_stick_from_ingots"));
 
-		// Outils.
 		tool(writer, ModItems.CELESTIUM_PICKAXE.get(), ingot, stick, "III", " S ", " S ");
 		tool(writer, ModItems.CELESTIUM_SWORD.get(), ingot, stick, "I", "I", "S");
 		tool(writer, ModItems.CELESTIUM_AXE.get(), ingot, stick, "II", "IS", " S");
 		tool(writer, ModItems.CELESTIUM_SHOVEL.get(), ingot, stick, "I", "S", "S");
 		tool(writer, ModItems.CELESTIUM_HOE.get(), ingot, stick, "II", " S", " S");
 
-		// Armure.
 		armour(writer, ModItems.CELESTIUM_HELMET.get(), ingot, "III", "I I");
 		armour(writer, ModItems.CELESTIUM_CHESTPLATE.get(), ingot, "I I", "III", "III");
 		armour(writer, ModItems.CELESTIUM_LEGGINGS.get(), ingot, "III", "I I", "I I");
 		armour(writer, ModItems.CELESTIUM_BOOTS.get(), ingot, "I I", "I I");
+	}
+
+	/** Neuf unites du composant donnent une unite du produit. */
+	private void pack(Consumer<FinishedRecipe> writer, RecipeCategory category, ItemLike result,
+			ItemLike component, String id) {
+		ShapedRecipeBuilder.shaped(category, result)
+				.pattern("CCC")
+				.pattern("CCC")
+				.pattern("CCC")
+				.define('C', component)
+				.unlockedBy("has_component", has(component))
+				.save(writer, CelestiumMod.id(id));
+	}
+
+	/** Une unite du composant redonne neuf unites du produit. */
+	private void unpack(Consumer<FinishedRecipe> writer, RecipeCategory category, ItemLike result,
+			ItemLike component, String id) {
+		ShapelessRecipeBuilder.shapeless(category, result, 9)
+				.requires(component)
+				.unlockedBy("has_component", has(component))
+				.save(writer, CelestiumMod.id(id));
 	}
 
 	private void tool(Consumer<FinishedRecipe> writer, ItemLike result, Item ingot, Item stick, String... pattern) {
@@ -96,12 +125,24 @@ public class ModRecipeProvider extends RecipeProvider {
 
 	/** Les neuf recettes d'une essence, deduites de ses blocs. */
 	private void woodSet(Consumer<FinishedRecipe> writer, WoodSet set) {
+		String prefix = set.getName();
 		ItemLike log = set.log.get();
 		ItemLike planks = set.planks.get();
 		Ingredient fromPlanks = Ingredient.of(planks);
 
-		planksFromLogs(writer, planks, ModTags.Items.BOIS_DU_DEMON_LOGS, 4);
-		woodFromLogs(writer, set.wood.get(), log);
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, planks, 4)
+				.requires(ModTags.Items.BOIS_DU_DEMON_LOGS)
+				.group("planks")
+				.unlockedBy("has_log", has(ModTags.Items.BOIS_DU_DEMON_LOGS))
+				.save(writer, CelestiumMod.id(prefix + "_planks"));
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, set.wood.get(), 3)
+				.pattern("LL")
+				.pattern("LL")
+				.define('L', log)
+				.group("bark")
+				.unlockedBy("has_log", has(log))
+				.save(writer, CelestiumMod.id(prefix + "_wood"));
 
 		stairBuilder(set.stairs.get(), fromPlanks)
 				.unlockedBy("has_planks", has(planks)).save(writer);
@@ -117,9 +158,10 @@ public class ModRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_planks", has(planks)).save(writer);
 
 		// Le bois du demon donne des batons ordinaires, comme toute essence.
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, net.minecraft.world.item.Items.STICK, 4)
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STICK, 4)
 				.requires(planks, 2)
+				.group("sticks")
 				.unlockedBy("has_planks", has(planks))
-				.save(writer, "celestium:stick_from_bois_du_demon_planks");
+				.save(writer, CelestiumMod.id("stick_from_" + prefix + "_planks"));
 	}
 }
