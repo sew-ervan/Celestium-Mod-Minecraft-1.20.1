@@ -38,6 +38,10 @@ public class PlayerData {
 	private static final String KEY_HOME_POS = "HomePos";
 	private static final String KEY_FACTION = "Faction";
 	private static final String KEY_LAST_RTP_DAY = "LastRtpDay";
+	private static final String KEY_MANA = "Mana";
+
+	/** Reserve maximale d'energie celeste. */
+	public static final int MAX_MANA = 100;
 
 	/** Ancien nom du champ de camp, lu une derniere fois pour reprendre les sauvegardes 1.19.2. */
 	private static final String LEGACY_KEY_TEAM = "magie_equipe";
@@ -49,6 +53,9 @@ public class PlayerData {
 
 	/** Jour du dernier {@code /rtp}, en jours depuis l'epoque. -1 si jamais utilise. */
 	private long lastRtpDay = -1L;
+
+	/** Energie celeste disponible pour lancer des sorts. */
+	private int mana = MAX_MANA;
 
 	public Optional<GlobalPos> getHome() {
 		return Optional.ofNullable(this.home);
@@ -66,6 +73,15 @@ public class PlayerData {
 		this.faction = faction;
 	}
 
+	public int getMana() {
+		return this.mana;
+	}
+
+	/** Fixe l'energie, bornee entre zero et {@link #MAX_MANA}. */
+	public void setMana(int mana) {
+		this.mana = Math.max(0, Math.min(MAX_MANA, mana));
+	}
+
 	public long getLastRtpDay() {
 		return this.lastRtpDay;
 	}
@@ -79,6 +95,7 @@ public class PlayerData {
 		this.home = other.home;
 		this.faction = other.faction;
 		this.lastRtpDay = other.lastRtpDay;
+		this.mana = other.mana;
 	}
 
 	public CompoundTag save() {
@@ -89,6 +106,7 @@ public class PlayerData {
 		}
 		tag.putString(KEY_FACTION, this.faction.getSerializedName());
 		tag.putLong(KEY_LAST_RTP_DAY, this.lastRtpDay);
+		tag.putInt(KEY_MANA, this.mana);
 		return tag;
 	}
 
@@ -112,6 +130,7 @@ public class PlayerData {
 		}
 
 		this.lastRtpDay = tag.getLong(KEY_LAST_RTP_DAY);
+		this.mana = tag.contains(KEY_MANA) ? tag.getInt(KEY_MANA) : MAX_MANA;
 	}
 
 	/** Vrai si le joueur a deja utilise le {@code /rtp} pendant la journee indiquee. */

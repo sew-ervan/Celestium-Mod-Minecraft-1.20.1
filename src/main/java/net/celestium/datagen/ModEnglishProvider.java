@@ -79,5 +79,20 @@ public class ModEnglishProvider extends LanguageProvider {
 		add("message.celestium.admin.rtp_radius_set", "/rtp radius set to %s blocks.");
 		add("message.celestium.admin.faction_set", "%s now belongs to the %s faction.");
 		add("message.celestium.admin.home_reset", "Home of %s has been removed.");
+
+		// --- Creatures ---
+		add("entity.celestium.mini_warden", "Mini Warden");
+		add("entity.celestium.demon_swordsman", "Demon Swordsman");
+		add("entity.celestium.celestial_bolt", "Celestial Bolt");
+		addItem(ModItems.MINI_WARDEN_SPAWN_EGG, "Mini Warden Spawn Egg");
+		addItem(ModItems.DEMON_SWORDSMAN_SPAWN_EGG, "Demon Swordsman Spawn Egg");
+
+		// --- Spells ---
+		add("spell.celestium.celestial_strike", "Celestial Strike");
+		add("spell.celestium.celestial_bolt", "Celestial Bolt");
+		add("message.celestium.spell.no_target", "No target in sight.");
+		add("message.celestium.spell.no_mana", "Your celestial energy is depleted.");
+		add("message.celestium.spell.cooling_down", "That spell is still recharging for %s seconds.");
+		add("message.celestium.spell.wrong_faction", "That spell is reserved for the %s faction.");
 	}
 }

@@ -84,5 +84,20 @@ public class ModFrenchProvider extends LanguageProvider {
 		add("message.celestium.admin.rtp_radius_set", "Rayon du /rtp réglé sur %s blocs.");
 		add("message.celestium.admin.faction_set", "%s appartient désormais au camp %s.");
 		add("message.celestium.admin.home_reset", "Le home de %s a été supprimé.");
+
+		// --- Creatures ---
+		add("entity.celestium.mini_warden", "Gardien miniature");
+		add("entity.celestium.demon_swordsman", "Démon épéiste");
+		add("entity.celestium.celestial_bolt", "Éclair céleste");
+		addItem(ModItems.MINI_WARDEN_SPAWN_EGG, "Œuf de gardien miniature");
+		addItem(ModItems.DEMON_SWORDSMAN_SPAWN_EGG, "Œuf de démon épéiste");
+
+		// --- Sorts ---
+		add("spell.celestium.celestial_strike", "Frappe céleste");
+		add("spell.celestium.celestial_bolt", "Éclair céleste");
+		add("message.celestium.spell.no_target", "Aucune cible en vue.");
+		add("message.celestium.spell.no_mana", "Ton énergie céleste est épuisée.");
+		add("message.celestium.spell.cooling_down", "Ce sort se recharge encore %s secondes.");
+		add("message.celestium.spell.wrong_faction", "Ce sort est réservé au camp %s.");
 	}
 }

@@ -38,12 +38,20 @@ public class ModItemModelProvider extends ItemModelProvider {
 		handheld(ModItems.CELESTIUM_AXE);
 		handheld(ModItems.CELESTIUM_SHOVEL);
 		handheld(ModItems.CELESTIUM_HOE);
+
+		spawnEgg(ModItems.MINI_WARDEN_SPAWN_EGG);
+		spawnEgg(ModItems.DEMON_SWORDSMAN_SPAWN_EGG);
 	}
 
 	/** Objet plat, tenu comme une ressource : lingots, fragments, pieces d'armure. */
 	private void flat(RegistryObject<Item> item) {
 		String name = name(item);
 		withExistingParent(name, mcLoc("item/generated")).texture("layer0", modLoc("item/" + name));
+	}
+
+	/** Oeuf d'apparition : le modele vanilla se teinte des deux couleurs de l'oeuf. */
+	private void spawnEgg(RegistryObject<Item> item) {
+		withExistingParent(name(item), mcLoc("item/template_spawn_egg"));
 	}
 
 	/** Objet tenu par le manche : outils et armes. */

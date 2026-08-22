@@ -4,13 +4,14 @@ import net.celestium.CelestiumMod;
 import net.celestium.core.material.CelestiumTier;
 import net.celestium.feature.celestium.CelestiumArmorItem;
 import net.celestium.feature.celestium.CelestiumIngotItem;
+import net.celestium.feature.celestium.CelestiumSwordItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.SwordItem;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -44,7 +45,7 @@ public class ModItems {
 	// ce qui distingue le Celestium des autres materiaux est porte par CelestiumTier.
 
 	public static final RegistryObject<Item> CELESTIUM_SWORD = ITEMS.register("celestium_sword",
-			() -> new SwordItem(CelestiumTier.CELESTIUM, 3, -2.4F, new Item.Properties().fireResistant()));
+			CelestiumSwordItem::new);
 
 	public static final RegistryObject<Item> CELESTIUM_PICKAXE = ITEMS.register("celestium_pickaxe",
 			() -> new PickaxeItem(CelestiumTier.CELESTIUM, 1, -2.8F, new Item.Properties().fireResistant()));
@@ -71,6 +72,14 @@ public class ModItems {
 
 	public static final RegistryObject<Item> CELESTIUM_BOOTS = ITEMS.register("celestium_boots",
 			() -> new CelestiumArmorItem(ArmorItem.Type.BOOTS));
+
+	// --- Oeufs d'apparition ---
+
+	public static final RegistryObject<Item> MINI_WARDEN_SPAWN_EGG = ITEMS.register("mini_warden_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.MINI_WARDEN, 0x0F6C68, 0x39D6E0, new Item.Properties()));
+
+	public static final RegistryObject<Item> DEMON_SWORDSMAN_SPAWN_EGG = ITEMS.register("demon_swordsman_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.DEMON_SWORDSMAN, 0x2B0A0A, 0xB01818, new Item.Properties()));
 
 	private ModItems() {
 	}

@@ -5,6 +5,8 @@ import net.celestium.core.material.CelestiumTier;
 import net.celestium.core.network.ModNetwork;
 import net.celestium.init.ModBlocks;
 import net.celestium.init.ModCreativeTabs;
+import net.celestium.init.ModEntities;
+import net.celestium.init.ModSpells;
 import net.celestium.init.ModItems;
 import net.celestium.init.ModSounds;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +38,7 @@ public class CelestiumMod {
 		ModItems.ITEMS.register(modBus);
 		ModCreativeTabs.TABS.register(modBus);
 		ModSounds.SOUNDS.register(modBus);
+		ModEntities.ENTITIES.register(modBus);
 
 		modBus.addListener(this::onCommonSetup);
 	}
@@ -43,6 +46,7 @@ public class CelestiumMod {
 	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			CelestiumTier.registerSorting();
+			ModSpells.init();
 			ModNetwork.register();
 			ModBlocks.BOIS_DU_DEMON.registerFlammability();
 		});
