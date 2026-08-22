@@ -35,6 +35,12 @@ import java.util.List;
 @PrefixGameTestTemplate(false)
 public class CelestiumGameTests {
 
+	/**
+	 * Forge prefixe automatiquement l'espace de noms declare par {@code @GameTestHolder} :
+	 * ce nom devient {@code celestium:empty} et pointe sur
+	 * {@code data/celestium/structures/empty.nbt}. L'ecrire qualifie ici donnerait
+	 * {@code celestium:celestium:empty}.
+	 */
 	private static final String ARENA = "empty";
 
 	/**
