@@ -86,7 +86,13 @@ public final class CelestiumAdminCommand {
 	}
 
 	private static int setFaction(CommandSourceStack source, ServerPlayer target, String factionName) {
-		Faction faction = Faction.byName(factionName);
+		// byName retombe sur le camp neutre pour un nom inconnu : sans ce controle, une faute de
+		// frappe rangerait silencieusement le joueur chez les neutres.
+		Faction faction = Faction.find(factionName).orElse(null);
+		if (faction == null) {
+			source.sendFailure(Component.translatable("message.celestium.admin.unknown_faction", factionName));
+			return 0;
+		}
 
 		PlayerData data = ModCapabilities.of(target);
 		data.setFaction(faction);

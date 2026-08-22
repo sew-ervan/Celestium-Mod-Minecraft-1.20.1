@@ -43,7 +43,7 @@ src/main/java/net/celestium/
 
 Deux règles à tenir :
 
-- **Ni `feature/` ni `server/` ne doit importer `client/`.** Un serveur dédié n'a pas les classes clientes et planterait au chargement. `ClientSetup` est le seul point d'entrée client.
+- **Aucune classe chargée sur un serveur dédié ne doit toucher `client/` directement.** Un serveur dédié n'a pas les classes clientes et planterait au chargement. La seule exception admise est le passage par `DistExecutor`, qui diffère le chargement de classe — voir `server/data/PlayerDataSyncPacket`. `ClientSetup` reste le point d'entrée client.
 - **Ne jamais éditer `src/generated/` à la main.** Ce dossier est réécrit par `runData`.
 
 ## Ajouter du contenu

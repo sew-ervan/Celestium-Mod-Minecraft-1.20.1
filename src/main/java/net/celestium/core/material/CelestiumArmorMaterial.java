@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public enum CelestiumArmorMaterial implements ArmorMaterial {
 
 	CELESTIUM("celestium", 25, new int[]{4, 7, 8, 4}, 9, 3.5F, 0.2F,
-			() -> Ingredient.of(ModItems.MINERAI_CELESTE.get()));
+			() -> Ingredient.of(ModItems.CELESTIUM_INGOT.get()));
 
 	/** Durabilite de base par emplacement, dans l'ordre bottes / jambieres / plastron / casque. */
 	private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};

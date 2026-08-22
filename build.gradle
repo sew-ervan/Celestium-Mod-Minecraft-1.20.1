@@ -51,8 +51,9 @@ minecraft {
 
         // Genere modeles, blockstates, recettes, tags, loot tables et langues.
         data {
-            programArguments '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(),
-                    '--existing', file('src/main/resources/').getAbsolutePath()
+            args '--mod', mod_id, '--all',
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/')
         }
     }
 }

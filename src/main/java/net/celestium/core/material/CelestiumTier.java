@@ -21,7 +21,7 @@ import java.util.function.Supplier;
  */
 public enum CelestiumTier implements Tier {
 
-	CELESTIUM(4, 5000, 12.0F, 5.0F, 18, () -> Ingredient.of(ModItems.FRAGMENT_CELESTE.get()));
+	CELESTIUM(4, 5000, 12.0F, 5.0F, 18, () -> Ingredient.of(ModItems.CELESTIUM_FRAGMENT.get()));
 
 	private final int level;
 	private final int uses;

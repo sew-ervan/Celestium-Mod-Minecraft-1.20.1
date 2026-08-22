@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Camp d'un joueur dans le conflit celeste.
@@ -30,6 +31,18 @@ public enum Faction implements StringRepresentable {
 	/** Camp par defaut d'un joueur qui n'a jamais choisi. */
 	public static Faction getDefault() {
 		return NEUTRE;
+	}
+
+	/** Retrouve un camp par son nom, s'il existe. */
+	public static Optional<Faction> find(@Nullable String name) {
+		if (name != null) {
+			for (Faction faction : values()) {
+				if (faction.name.equals(name)) {
+					return Optional.of(faction);
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 	/** Retrouve un camp par son nom, ou {@link #NEUTRE} si le nom est inconnu. */

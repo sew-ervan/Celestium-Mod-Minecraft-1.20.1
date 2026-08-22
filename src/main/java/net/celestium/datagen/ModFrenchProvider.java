@@ -88,6 +88,7 @@ public class ModFrenchProvider extends LanguageProvider {
 		add("message.celestium.admin.rtp_radius_set", "Rayon du /rtp réglé sur %s blocs.");
 		add("message.celestium.admin.faction_set", "%s appartient désormais au camp %s.");
 		add("message.celestium.admin.home_reset", "Le home de %s a été supprimé.");
+		add("message.celestium.admin.unknown_faction", "Le camp « %s » n'existe pas.");
 
 		// --- Creatures ---
 		add("entity.celestium.mini_warden", "Gardien miniature");

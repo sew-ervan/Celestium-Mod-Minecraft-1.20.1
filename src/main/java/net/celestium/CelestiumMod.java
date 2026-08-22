@@ -6,6 +6,7 @@ import net.celestium.core.network.ModNetwork;
 import net.celestium.init.ModBlocks;
 import net.celestium.init.ModCreativeTabs;
 import net.celestium.init.ModEntities;
+import net.celestium.init.ModFeatures;
 import net.celestium.init.ModSpells;
 import net.celestium.init.ModItems;
 import net.celestium.init.ModMenus;
@@ -41,6 +42,7 @@ public class CelestiumMod {
 		ModSounds.SOUNDS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
 		ModMenus.MENUS.register(modBus);
+		ModFeatures.FEATURES.register(modBus);
 
 		modBus.addListener(this::onCommonSetup);
 	}

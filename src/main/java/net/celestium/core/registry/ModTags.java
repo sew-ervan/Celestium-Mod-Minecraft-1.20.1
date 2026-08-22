@@ -4,7 +4,6 @@ import net.celestium.CelestiumMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -18,9 +17,6 @@ public final class ModTags {
 
 		/** Blocs qui exigent au moins un outil en Celestium pour laisser leur butin. */
 		public static final TagKey<Block> NEEDS_CELESTIUM_TOOL = tag("needs_celestium_tool");
-
-		/** Blocs que le gardien miniature peut traverser ou briser. */
-		public static final TagKey<Block> WARDEN_BREAKABLE = tag("warden_breakable");
 
 		private Blocks() {
 		}
@@ -46,19 +42,6 @@ public final class ModTags {
 
 		private static TagKey<Item> tag(String name) {
 			return TagKey.create(Registries.ITEM, CelestiumMod.id(name));
-		}
-	}
-
-	public static final class EntityTypes {
-
-		/** Creatures que le gardien miniature ne prend jamais pour cible. */
-		public static final TagKey<EntityType<?>> WARDEN_ALLIES = tag("warden_allies");
-
-		private EntityTypes() {
-		}
-
-		private static TagKey<EntityType<?>> tag(String name) {
-			return TagKey.create(Registries.ENTITY_TYPE, CelestiumMod.id(name));
 		}
 	}
 

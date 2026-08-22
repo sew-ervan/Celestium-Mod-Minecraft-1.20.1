@@ -83,6 +83,7 @@ public class ModEnglishProvider extends LanguageProvider {
 		add("message.celestium.admin.rtp_radius_set", "/rtp radius set to %s blocks.");
 		add("message.celestium.admin.faction_set", "%s now belongs to the %s faction.");
 		add("message.celestium.admin.home_reset", "Home of %s has been removed.");
+		add("message.celestium.admin.unknown_faction", "There is no faction named %s.");
 
 		// --- Creatures ---
 		add("entity.celestium.mini_warden", "Mini Warden");

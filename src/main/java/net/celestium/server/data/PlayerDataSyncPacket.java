@@ -31,6 +31,8 @@ public record PlayerDataSyncPacket(CompoundTag data) {
 
 	public static void handle(PlayerDataSyncPacket packet, Supplier<NetworkEvent.Context> context) {
 		NetworkEvent.Context ctx = context.get();
+		// La lambda imbriquee est compilee dans une classe a part : ClientPacketHandler, et donc
+		// Minecraft, ne sont charges que sur un client. Un serveur dedie ne les touche jamais.
 		ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 				() -> () -> ClientPacketHandler.applyPlayerData(packet.data())));
 		ctx.setPacketHandled(true);
