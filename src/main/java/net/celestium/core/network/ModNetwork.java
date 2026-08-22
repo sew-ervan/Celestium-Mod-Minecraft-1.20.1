@@ -1,6 +1,7 @@
 package net.celestium.core.network;
 
 import net.celestium.CelestiumMod;
+import net.celestium.server.data.PlayerDataSyncPacket;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
@@ -27,7 +28,8 @@ public final class ModNetwork {
 	}
 
 	public static void register() {
-		// Les paquets seront enregistres ici au fil des lots (donnees joueur, sorts).
+		CHANNEL.registerMessage(nextId(), PlayerDataSyncPacket.class,
+				PlayerDataSyncPacket::encode, PlayerDataSyncPacket::decode, PlayerDataSyncPacket::handle);
 	}
 
 	/** Reserve le prochain identifiant de paquet libre. */

@@ -48,5 +48,36 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(demon.fenceGate, "Demon Wood Fence Gate");
 		addBlock(demon.pressurePlate, "Demon Wood Pressure Plate");
 		addBlock(demon.button, "Demon Wood Button");
+
+		// --- Factions ---
+		add("faction.celestium.demon", "Demon");
+		add("faction.celestium.neutre", "Neutral");
+		add("faction.celestium.celeste", "Celestial");
+
+		// --- Command messages ---
+		add("message.celestium.teleport.warmup", "Do not move for %s seconds.");
+		add("message.celestium.teleport.moved", "You moved. Try again.");
+
+		add("message.celestium.home.set", "Home saved at %s, %s, %s.");
+		add("message.celestium.home.none", "You have not set a home yet. Use /sethome.");
+		add("message.celestium.home.arrived", "Welcome home.");
+		add("message.celestium.home.cleared", "Home removed.");
+
+		add("message.celestium.spawn.none", "No spawn point has been set on this server.");
+		add("message.celestium.spawn.arrived", "Welcome to spawn.");
+
+		add("message.celestium.rtp.wrong_dimension", "/rtp only works in the Overworld.");
+		add("message.celestium.rtp.already_used", "You have already used /rtp today.");
+		add("message.celestium.rtp.success", "Teleport successful.");
+
+		add("message.celestium.announce.header", "New announcement from the staff");
+
+		add("message.celestium.morph.unavailable",
+				"/morph requires the Identity mod, which is not installed on this server.");
+
+		add("message.celestium.admin.spawn_set", "Spawn point set at %s, %s, %s.");
+		add("message.celestium.admin.rtp_radius_set", "/rtp radius set to %s blocks.");
+		add("message.celestium.admin.faction_set", "%s now belongs to the %s faction.");
+		add("message.celestium.admin.home_reset", "Home of %s has been removed.");
 	}
 }

@@ -53,5 +53,36 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(demon.fenceGate, "Portillon en bois du démon");
 		addBlock(demon.pressurePlate, "Plaque de pression en bois du démon");
 		addBlock(demon.button, "Bouton en bois du démon");
+
+		// --- Camps ---
+		add("faction.celestium.demon", "Démon");
+		add("faction.celestium.neutre", "Neutre");
+		add("faction.celestium.celeste", "Céleste");
+
+		// --- Messages de commandes ---
+		add("message.celestium.teleport.warmup", "Ne bouge pas pendant %s secondes.");
+		add("message.celestium.teleport.moved", "Tu as bougé. Réessaye.");
+
+		add("message.celestium.home.set", "Home enregistré en %s, %s, %s.");
+		add("message.celestium.home.none", "Tu n'as pas encore défini de home. Utilise /sethome.");
+		add("message.celestium.home.arrived", "Te voilà chez toi.");
+		add("message.celestium.home.cleared", "Home supprimé.");
+
+		add("message.celestium.spawn.none", "Aucun point d'apparition n'a été défini sur ce serveur.");
+		add("message.celestium.spawn.arrived", "Bienvenue au spawn.");
+
+		add("message.celestium.rtp.wrong_dimension", "Le /rtp ne fonctionne que dans l'Overworld.");
+		add("message.celestium.rtp.already_used", "Tu as déjà utilisé le /rtp aujourd'hui.");
+		add("message.celestium.rtp.success", "Téléportation réussie.");
+
+		add("message.celestium.announce.header", "Nouvelle annonce de la part du staff");
+
+		add("message.celestium.morph.unavailable",
+				"Le /morph nécessite le mod Identity, qui n'est pas installé sur ce serveur.");
+
+		add("message.celestium.admin.spawn_set", "Point d'apparition défini en %s, %s, %s.");
+		add("message.celestium.admin.rtp_radius_set", "Rayon du /rtp réglé sur %s blocs.");
+		add("message.celestium.admin.faction_set", "%s appartient désormais au camp %s.");
+		add("message.celestium.admin.home_reset", "Le home de %s a été supprimé.");
 	}
 }
