@@ -1,10 +1,15 @@
 package net.celestium.feature.celestium;
 
+import net.celestium.CelestiumMod;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 /**
  * Effets accordes par chaque piece de l'armure en Celestium.
@@ -14,7 +19,11 @@ import net.minecraft.world.item.ArmorItem;
  * effet de trois secondes. Seule celle du casque utilisait le bon reflexe : ne rafraichir que
  * lorsque la duree restante descend sous un seuil, ce qui evite au passage le clignotement de
  * l'ecran propre a la vision nocturne. Ce reflexe est ici applique aux quatre pieces.
+ *
+ * <p>Le parcours des pieces portees se fait sur un evenement de tick joueur plutot que par le
+ * crochet {@code onArmorTick} de Forge, deprecie et marque pour suppression en 1.20.1.
  */
+@Mod.EventBusSubscriber(modid = CelestiumMod.MOD_ID)
 public final class CelestiumArmorEffects {
 
 	private static final int NIGHT_VISION_DURATION = 1000;
@@ -23,7 +32,20 @@ public final class CelestiumArmorEffects {
 	private CelestiumArmorEffects() {
 	}
 
-	/** Applique l'effet de la piece portee. Appele cote serveur uniquement. */
+	@SubscribeEvent
+	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) {
+			return;
+		}
+
+		for (ItemStack stack : event.player.getArmorSlots()) {
+			if (stack.getItem() instanceof CelestiumArmorItem armor) {
+				applyFor(armor.getType(), event.player);
+			}
+		}
+	}
+
+	/** Applique l'effet de la piece portee. Cote serveur uniquement. */
 	public static void applyFor(ArmorItem.Type type, LivingEntity wearer) {
 		switch (type) {
 			case HELMET -> refresh(wearer, MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 1, true);

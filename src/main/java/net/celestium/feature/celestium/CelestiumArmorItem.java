@@ -3,11 +3,9 @@ package net.celestium.feature.celestium;
 import net.celestium.core.material.CelestiumArmorMaterial;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 /**
  * Une piece de l'armure en Celestium.
@@ -22,14 +20,6 @@ public class CelestiumArmorItem extends ArmorItem {
 
 	public CelestiumArmorItem(ArmorItem.Type type) {
 		super(CelestiumArmorMaterial.CELESTIUM, type, new Item.Properties().fireResistant());
-	}
-
-	@Override
-	public void onArmorTick(ItemStack stack, Level level, Player player) {
-		if (level.isClientSide()) {
-			return;
-		}
-		CelestiumArmorEffects.applyFor(this.getType(), player);
 	}
 
 	/**
