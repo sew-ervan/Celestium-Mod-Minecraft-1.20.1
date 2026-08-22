@@ -2,7 +2,7 @@
   "display": {
     "background": "minecraft:textures/block/stone.png",
     "icon": {
-      "item": "celestium:fragementceleste"
+      "item": "celestium:celestium_fragment"
     },
     "title": {
       "translate": "advancements.premier_celestium.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "celestium:fragementceleste"
+              "celestium:celestium_fragment"
             ],
             "count": {
               "min": 1,

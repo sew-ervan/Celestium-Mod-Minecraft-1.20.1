@@ -44,6 +44,7 @@ public class CelestiumMod {
 		event.enqueueWork(() -> {
 			CelestiumTier.registerSorting();
 			ModNetwork.register();
+			ModBlocks.BOIS_DU_DEMON.registerFlammability();
 		});
 	}
 

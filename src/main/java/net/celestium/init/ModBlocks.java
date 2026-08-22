@@ -1,6 +1,7 @@
 package net.celestium.init;
 
 import net.celestium.CelestiumMod;
+import net.celestium.core.registry.WoodSet;
 import net.celestium.feature.celestium.CelestiumStorageBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -58,6 +59,19 @@ public class ModBlocks {
 					.sound(SoundType.COPPER)
 					.strength(1.7F, 10.0F)
 					.lightLevel(state -> 1)));
+
+	/**
+	 * Le bois du demon : dix blocs en une declaration.
+	 *
+	 * <p>Ajouter une seconde essence tient desormais en une ligne, la ou le mod d'origine
+	 * demandait dix classes Java et vingt enregistrements.
+	 */
+	public static final WoodSet BOIS_DU_DEMON = new WoodSet(
+			"bois_du_demon",
+			MapColor.CRIMSON_STEM,
+			MapColor.COLOR_RED,
+			ModWoodTypes.BOIS_DU_DEMON,
+			ModWoodTypes.BOIS_DU_DEMON_SET);
 
 	private ModBlocks() {
 	}

@@ -1,9 +1,0 @@
-{
-  "parent": "block/stairs",
-  "textures": {
-    "bottom": "celestium:blocks/bois_du_demon_planks",
-    "top": "celestium:blocks/bois_du_demon_planks",
-    "side": "celestium:blocks/bois_du_demon_planks"
-  },
-  "render_type": "solid"
-}

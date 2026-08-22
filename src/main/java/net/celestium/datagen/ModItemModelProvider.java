@@ -1,0 +1,62 @@
+package net.celestium.datagen;
+
+import net.celestium.CelestiumMod;
+import net.celestium.init.ModItems;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+/**
+ * Genere les modeles des items qui ne sont pas des blocs.
+ *
+ * <p>Les modeles d'items de blocs sont produits par {@link ModBlockStateProvider}, au plus pres
+ * des modeles de blocs dont ils derivent.
+ */
+public class ModItemModelProvider extends ItemModelProvider {
+
+	public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+		super(output, CelestiumMod.MOD_ID, existingFileHelper);
+	}
+
+	@Override
+	protected void registerModels() {
+		flat(ModItems.CELESTIUM_FRAGMENT);
+		flat(ModItems.CELESTIUM_INGOT);
+		flat(ModItems.CELESTIUM_STICK);
+
+		flat(ModItems.CELESTIUM_HELMET);
+		flat(ModItems.CELESTIUM_CHESTPLATE);
+		flat(ModItems.CELESTIUM_LEGGINGS);
+		flat(ModItems.CELESTIUM_BOOTS);
+
+		handheld(ModItems.CELESTIUM_SWORD);
+		handheld(ModItems.CELESTIUM_PICKAXE);
+		handheld(ModItems.CELESTIUM_AXE);
+		handheld(ModItems.CELESTIUM_SHOVEL);
+		handheld(ModItems.CELESTIUM_HOE);
+	}
+
+	/** Objet plat, tenu comme une ressource : lingots, fragments, pieces d'armure. */
+	private void flat(RegistryObject<Item> item) {
+		String name = name(item);
+		withExistingParent(name, mcLoc("item/generated")).texture("layer0", modLoc("item/" + name));
+	}
+
+	/** Objet tenu par le manche : outils et armes. */
+	private void handheld(RegistryObject<Item> item) {
+		String name = name(item);
+		withExistingParent(name, mcLoc("item/handheld")).texture("layer0", modLoc("item/" + name));
+	}
+
+	private String name(RegistryObject<Item> item) {
+		ResourceLocation key = ForgeRegistries.ITEMS.getKey(item.get());
+		if (key == null) {
+			throw new IllegalStateException("Item non enregistre : " + item.getId());
+		}
+		return key.getPath();
+	}
+}

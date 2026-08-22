@@ -1,8 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "celestium:blocks/bois_du_demon_log_side",
-    "particle": "celestium:blocks/bois_du_demon_log_side"
-  },
-  "render_type": "solid"
-}
