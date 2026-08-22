@@ -3,11 +3,15 @@ package net.celestium.client;
 import net.celestium.CelestiumMod;
 import net.celestium.client.model.SimpleGeoModel;
 import net.celestium.client.renderer.SimpleGeoRenderer;
+import net.celestium.client.screen.BackpackScreen;
 import net.celestium.init.ModEntities;
+import net.celestium.init.ModMenus;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
  * Enregistrements cote client.
@@ -21,6 +25,13 @@ import net.minecraftforge.fml.common.Mod;
 public final class ClientSetup {
 
 	private ClientSetup() {
+	}
+
+	@SubscribeEvent
+	public static void onClientSetup(FMLClientSetupEvent event) {
+		// L'association menu / ecran manquait entierement au mod d'origine : ses quatre interfaces
+		// etaient enregistrees cote serveur mais ne pouvaient pas s'afficher.
+		event.enqueueWork(() -> MenuScreens.register(ModMenus.BACKPACK.get(), BackpackScreen::new));
 	}
 
 	@SubscribeEvent

@@ -2,6 +2,8 @@ package net.celestium.init;
 
 import net.celestium.CelestiumMod;
 import net.celestium.core.material.CelestiumTier;
+import net.celestium.feature.backpack.BackpackItem;
+import net.celestium.feature.backpack.BackpackTier;
 import net.celestium.feature.celestium.CelestiumArmorItem;
 import net.celestium.feature.celestium.CelestiumIngotItem;
 import net.celestium.feature.celestium.CelestiumSwordItem;
@@ -72,6 +74,17 @@ public class ModItems {
 
 	public static final RegistryObject<Item> CELESTIUM_BOOTS = ITEMS.register("celestium_boots",
 			() -> new CelestiumArmorItem(ArmorItem.Type.BOOTS));
+
+	// --- Sacs celestes ---
+
+	public static final RegistryObject<Item> BACKPACK_SMALL = ITEMS.register("backpack_small",
+			() -> new BackpackItem(BackpackTier.SMALL));
+
+	public static final RegistryObject<Item> BACKPACK_MEDIUM = ITEMS.register("backpack_medium",
+			() -> new BackpackItem(BackpackTier.MEDIUM));
+
+	public static final RegistryObject<Item> BACKPACK = ITEMS.register("backpack",
+			() -> new BackpackItem(BackpackTier.LARGE));
 
 	// --- Oeufs d'apparition ---
 

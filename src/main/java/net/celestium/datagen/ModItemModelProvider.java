@@ -39,6 +39,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 		handheld(ModItems.CELESTIUM_SHOVEL);
 		handheld(ModItems.CELESTIUM_HOE);
 
+		// Les trois sacs partagent deux textures : le format moyen reprend celle du grand.
+		flat(ModItems.BACKPACK);
+		flat(ModItems.BACKPACK_SMALL);
+		texturedFlat(ModItems.BACKPACK_MEDIUM, "backpack");
+
 		spawnEgg(ModItems.MINI_WARDEN_SPAWN_EGG);
 		spawnEgg(ModItems.DEMON_SWORDSMAN_SPAWN_EGG);
 	}
@@ -47,6 +52,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 	private void flat(RegistryObject<Item> item) {
 		String name = name(item);
 		withExistingParent(name, mcLoc("item/generated")).texture("layer0", modLoc("item/" + name));
+	}
+
+	/** Objet plat dont la texture porte un autre nom que l'item. */
+	private void texturedFlat(RegistryObject<Item> item, String textureName) {
+		withExistingParent(name(item), mcLoc("item/generated")).texture("layer0", modLoc("item/" + textureName));
 	}
 
 	/** Oeuf d'apparition : le modele vanilla se teinte des deux couleurs de l'oeuf. */

@@ -43,6 +43,7 @@ public class DataGenerators {
 
 		// Donnees serveur : recettes, tags, tables de butin.
 		generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
+		generator.addProvider(event.includeServer(), new ModWorldGenProvider(output, lookup));
 
 		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(output, lookup, fileHelper);
 		generator.addProvider(event.includeServer(), blockTags);

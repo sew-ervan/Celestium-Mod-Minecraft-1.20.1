@@ -87,6 +87,11 @@ public class ModEnglishProvider extends LanguageProvider {
 		addItem(ModItems.MINI_WARDEN_SPAWN_EGG, "Mini Warden Spawn Egg");
 		addItem(ModItems.DEMON_SWORDSMAN_SPAWN_EGG, "Demon Swordsman Spawn Egg");
 
+		// --- Celestial backpacks ---
+		addItem(ModItems.BACKPACK, "Celestial Backpack");
+		addItem(ModItems.BACKPACK_MEDIUM, "Medium Celestial Backpack");
+		addItem(ModItems.BACKPACK_SMALL, "Small Celestial Backpack");
+
 		// --- Spells ---
 		add("spell.celestium.celestial_strike", "Celestial Strike");
 		add("spell.celestium.celestial_bolt", "Celestial Bolt");

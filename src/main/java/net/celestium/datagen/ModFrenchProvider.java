@@ -92,6 +92,11 @@ public class ModFrenchProvider extends LanguageProvider {
 		addItem(ModItems.MINI_WARDEN_SPAWN_EGG, "Œuf de gardien miniature");
 		addItem(ModItems.DEMON_SWORDSMAN_SPAWN_EGG, "Œuf de démon épéiste");
 
+		// --- Sacs celestes ---
+		addItem(ModItems.BACKPACK, "Sac céleste");
+		addItem(ModItems.BACKPACK_MEDIUM, "Sac céleste moyen");
+		addItem(ModItems.BACKPACK_SMALL, "Petit sac céleste");
+
 		// --- Sorts ---
 		add("spell.celestium.celestial_strike", "Frappe céleste");
 		add("spell.celestium.celestial_bolt", "Éclair céleste");

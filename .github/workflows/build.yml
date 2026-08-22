@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer le JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Mettre en cache Gradle et les artefacts ForgeGradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle', 'gradle.properties', 'gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Rendre le wrapper exécutable
+        run: chmod +x ./gradlew
+
+      - name: Compiler
+        run: ./gradlew build --no-daemon --stacktrace
+
+      - name: Vérifier que les données générées sont à jour
+        run: |
+          ./gradlew runData --no-daemon
+          if [ -n "$(git status --porcelain src/generated)" ]; then
+            echo "::error::Les fichiers de src/generated/ ne correspondent pas aux providers DataGen."
+            echo "Lance 'gradlew runData' en local et commite le résultat."
+            git --no-pager diff --stat src/generated
+            exit 1
+          fi
+
+      - name: Lancer les GameTests
+        run: ./gradlew runGameTestServer --no-daemon
+
+      - name: Publier le jar
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: celestium-jar
+          path: build/libs/*.jar
+          if-no-files-found: error
