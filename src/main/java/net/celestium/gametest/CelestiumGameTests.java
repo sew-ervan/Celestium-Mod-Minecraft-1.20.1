@@ -6,7 +6,9 @@ import net.celestium.core.material.ModArmorMaterials;
 import net.celestium.feature.celestium.ArmorSetEffects;
 import net.celestium.feature.magie.Faction;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
+import net.celestium.feature.corruption.DimensionMining;
 import net.celestium.feature.portal.DemonPortalShape;
+import net.celestium.feature.portal.DemonPortalTravel;
 import net.celestium.init.ModBlocks;
 import net.celestium.init.ModEntities;
 import net.celestium.init.ModItems;
@@ -15,11 +17,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -216,6 +221,81 @@ public class CelestiumGameTests {
 		// Casser un montant doit dissiper toute la surface.
 		helper.setBlock(origin.offset(-1, 0, 0), Blocks.AIR);
 		helper.succeedWhen(() -> helper.assertBlockPresent(Blocks.AIR, origin));
+	}
+
+	/**
+	 * L'attente devant le portail avance d'un cran par tick, pas par appel.
+	 *
+	 * <p>Un joueur debout dans un portail touche plusieurs blocs a la fois, et chacun signale sa
+	 * presence. Le compteur avait ete ecrit comme si un seul le faisait : le deuxieme signal du
+	 * meme tick passait pour une interruption et remettait tout a zero. L'attente plafonnait a un
+	 * tick et le portail n'emportait jamais personne.
+	 *
+	 * <p>Le test simule quatre signaux par tick sur trois ticks : le compte doit valoir trois.
+	 * Avec le defaut d'origine il valait un.
+	 */
+	@GameTest(template = ARENA, timeoutTicks = 120)
+	public static void portalWarmupCountsOncePerTick(GameTestHelper helper) {
+		ArmorStand stand = helper.spawn(EntityType.ARMOR_STAND, 1, 1, 1);
+		int signalsPerTick = 4;
+		int ticks = 3;
+
+		for (int tick = 1; tick <= ticks; tick++) {
+			helper.runAtTickTime(tick, () -> {
+				for (int signal = 0; signal < signalsPerTick; signal++) {
+					DemonPortalTravel.onEntityInPortal(stand);
+				}
+			});
+		}
+
+		helper.runAtTickTime(ticks + 1L, () -> {
+			int warmup = DemonPortalTravel.warmupOf(stand);
+			helper.assertTrue(warmup == ticks,
+					"L'attente du portail vaut " + warmup + " apres " + ticks + " ticks");
+			helper.succeed();
+		});
+	}
+
+	/**
+	 * Seuls les outils corrompus et demoniaques mordent la pierre des Terres du demon.
+	 *
+	 * <p>Le netherite sert de temoin : c'est le meilleur outil du jeu de base, et il doit echouer.
+	 */
+	@GameTest(template = ARENA)
+	public static void onlyCorruptedAndDemonToolsBreak(GameTestHelper helper) {
+		helper.assertTrue(DimensionMining.breaks(new ItemStack(ModItems.CORRUPTED_CELESTIUM_PICKAXE.get())),
+				"La pioche en Celestium corrompu ne casse rien dans les Terres du demon");
+		helper.assertTrue(DimensionMining.breaks(new ItemStack(ModItems.DEMONIUM_PICKAXE.get())),
+				"La pioche en Demonium ne casse rien dans les Terres du demon");
+
+		helper.assertFalse(DimensionMining.breaks(new ItemStack(Items.NETHERITE_PICKAXE)),
+				"La pioche en netherite casse dans les Terres du demon");
+		helper.assertFalse(DimensionMining.breaks(new ItemStack(ModItems.CELESTIUM_PICKAXE.get())),
+				"La pioche en Celestium pur casse dans les Terres du demon");
+		helper.assertFalse(DimensionMining.breaks(ItemStack.EMPTY),
+				"Les mains nues cassent dans les Terres du demon");
+
+		helper.succeed();
+	}
+
+	/**
+	 * La pioche corrompue extrait bien le Demonium.
+	 *
+	 * <p>C'est la condition qui rend la panoplie de voyage utile : elle est le seul outillage
+	 * emportable, et le Demonium est le seul minerai sur place. Si son palier etait mal classe
+	 * face au diamant, le joueur arriverait equipe et repartirait bredouille.
+	 */
+	@GameTest(template = ARENA)
+	public static void corruptedPickaxeMinesDemonium(GameTestHelper helper) {
+		BlockState ore = ModBlocks.DEMONIUM_ORE.get().defaultBlockState();
+
+		helper.assertTrue(
+				new ItemStack(ModItems.CORRUPTED_CELESTIUM_PICKAXE.get()).isCorrectToolForDrops(ore),
+				"La pioche en Celestium corrompu n'extrait pas le Demonium");
+		helper.assertFalse(new ItemStack(Items.IRON_PICKAXE).isCorrectToolForDrops(ore),
+				"La pioche en fer extrait le Demonium");
+
+		helper.succeed();
 	}
 
 	/** Butin d'un bloc casse a mains nues, sans Fortune ni Toucher de soie. */

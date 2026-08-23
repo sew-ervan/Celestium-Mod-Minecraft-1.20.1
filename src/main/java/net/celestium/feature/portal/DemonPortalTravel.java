@@ -57,7 +57,9 @@ public final class DemonPortalTravel implements ITeleporter {
 	/** Avancement d'une entite vers le passage, et dernier tick ou elle a ete vue dans le portail. */
 	private static final class Progress {
 		private int ticks;
-		private long lastSeen;
+
+		/** Negatif tant que l'entite n'a pas ete vue, pour ne pas coincider avec le tick zero. */
+		private long lastSeen = -1;
 	}
 
 	/**
@@ -65,6 +67,12 @@ public final class DemonPortalTravel implements ITeleporter {
 	 *
 	 * <p>Le compteur repart de zero des qu'un tick est manque : sortir du portail annule donc
 	 * l'attente, exactement comme en vanilla.
+	 *
+	 * <p>Un joueur debout dans un portail occupe plusieurs blocs a la fois — deux en hauteur au
+	 * minimum, quatre s'il chevauche deux colonnes. Cette methode est donc appelee plusieurs fois
+	 * par tick, et il faut n'en retenir qu'une : sans ce garde-fou, le deuxieme appel voit un
+	 * dernier passage date du tick courant, croit a une interruption et remet le compteur a zero.
+	 * L'attente ne depassait jamais un tick et le portail n'emportait personne.
 	 */
 	public static void onEntityInPortal(Entity entity) {
 		if (entity.isOnPortalCooldown() || !(entity.level() instanceof ServerLevel origin)) {
@@ -74,6 +82,9 @@ public final class DemonPortalTravel implements ITeleporter {
 		long now = origin.getGameTime();
 		Progress progress = PROGRESS.computeIfAbsent(entity.getUUID(), id -> new Progress());
 
+		if (progress.lastSeen == now) {
+			return;
+		}
 		if (progress.lastSeen != now - 1) {
 			progress.ticks = 0;
 		}
@@ -109,6 +120,17 @@ public final class DemonPortalTravel implements ITeleporter {
 	/** Oublie l'attente d'une entite qui disparait, pour ne pas retenir son identifiant. */
 	public static void forget(Entity entity) {
 		PROGRESS.remove(entity.getUUID());
+	}
+
+	/**
+	 * Nombre de ticks deja passes dans le portail par cette entite.
+	 *
+	 * <p>Expose pour les tests : c'est la seule facon d'observer que l'attente progresse bien d'un
+	 * cran par tick, et non par appel.
+	 */
+	public static int warmupOf(Entity entity) {
+		Progress progress = PROGRESS.get(entity.getUUID());
+		return progress == null ? 0 : progress.ticks;
 	}
 
 	@Override

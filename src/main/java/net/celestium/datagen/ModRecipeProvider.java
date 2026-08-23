@@ -67,11 +67,31 @@ public class ModRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_celestium_block", has(ModBlocks.CELESTIUM_BLOCK.get()))
 				.save(writer, CelestiumMod.id("corrupted_celestium_block"));
 
-		// Le bloc corrompu se detaille en lingots, et inversement, comme tout materiau du mod.
+		// Le bloc corrompu se detaille en lingots puis en fragments, et inversement, comme tout
+		// materiau du mod. C'est par cette chaine qu'on obtient le fragment qui allume le cadre.
 		unpack(writer, RecipeCategory.MISC, ModItems.CORRUPTED_CELESTIUM_INGOT.get(),
 				ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get(), "corrupted_celestium_ingot_from_block");
 		pack(writer, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get(),
 				ModItems.CORRUPTED_CELESTIUM_INGOT.get(), "corrupted_celestium_block_from_ingots");
+
+		unpack(writer, RecipeCategory.MISC, ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get(),
+				ModItems.CORRUPTED_CELESTIUM_INGOT.get(), "corrupted_celestium_fragment_from_ingot");
+		pack(writer, RecipeCategory.MISC, ModItems.CORRUPTED_CELESTIUM_INGOT.get(),
+				ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get(), "corrupted_celestium_ingot_from_fragments");
+
+		// Les outils du voyage. Ils se montent sur un baton ordinaire : cette panoplie ne doit rien
+		// devoir aux Terres du demon, puisqu'elle est ce qui permet d'y mettre les pieds.
+		Item corruptedIngot = ModItems.CORRUPTED_CELESTIUM_INGOT.get();
+		tool(writer, ModItems.CORRUPTED_CELESTIUM_PICKAXE.get(), corruptedIngot, Items.STICK,
+				"III", " S ", " S ");
+		tool(writer, ModItems.CORRUPTED_CELESTIUM_SWORD.get(), corruptedIngot, Items.STICK,
+				"I", "I", "S");
+		tool(writer, ModItems.CORRUPTED_CELESTIUM_AXE.get(), corruptedIngot, Items.STICK,
+				"II", "IS", " S");
+		tool(writer, ModItems.CORRUPTED_CELESTIUM_SHOVEL.get(), corruptedIngot, Items.STICK,
+				"I", "S", "S");
+		tool(writer, ModItems.CORRUPTED_CELESTIUM_HOE.get(), corruptedIngot, Items.STICK,
+				"II", " S", " S");
 
 		// La tenue du voyage, fabricable des l'Overworld.
 		armour(writer, ModItems.CORRUPTED_CELESTIUM_HELMET.get(),

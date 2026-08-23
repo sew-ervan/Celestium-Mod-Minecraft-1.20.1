@@ -67,13 +67,22 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Corrupted Celestium");
 
 		// --- Corrupted Celestium ---
+		addItem(ModItems.CORRUPTED_CELESTIUM_FRAGMENT, "Corrupted Celestium Fragment");
 		addItem(ModItems.CORRUPTED_CELESTIUM_INGOT, "Corrupted Celestium Ingot");
+
+		addItem(ModItems.CORRUPTED_CELESTIUM_SWORD, "Corrupted Celestium Sword");
+		addItem(ModItems.CORRUPTED_CELESTIUM_PICKAXE, "Corrupted Celestium Pickaxe");
+		addItem(ModItems.CORRUPTED_CELESTIUM_AXE, "Corrupted Celestium Axe");
+		addItem(ModItems.CORRUPTED_CELESTIUM_SHOVEL, "Corrupted Celestium Shovel");
+		addItem(ModItems.CORRUPTED_CELESTIUM_HOE, "Corrupted Celestium Hoe");
 		addItem(ModItems.CORRUPTED_CELESTIUM_HELMET, "Corrupted Celestium Helmet");
 		addItem(ModItems.CORRUPTED_CELESTIUM_CHESTPLATE, "Corrupted Celestium Chestplate");
 		addItem(ModItems.CORRUPTED_CELESTIUM_LEGGINGS, "Corrupted Celestium Leggings");
 		addItem(ModItems.CORRUPTED_CELESTIUM_BOOTS, "Corrupted Celestium Boots");
 
 		add("message.celestium.corruption.unprotected", "The corruption gnaws at you. You need armour.");
+		add("message.celestium.mining.refused",
+				"This stone yields only to corrupted Celestium or Demonium.");
 		add("death.attack.corruption", "%1$s was consumed by the corruption");
 		add("death.attack.corruption.player", "%1$s was consumed by the corruption while fighting %2$s");
 

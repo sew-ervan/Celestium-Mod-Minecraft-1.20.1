@@ -72,13 +72,22 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Celestium corrompu");
 
 		// --- Celestium corrompu ---
+		addItem(ModItems.CORRUPTED_CELESTIUM_FRAGMENT, "Fragment de Celestium corrompu");
 		addItem(ModItems.CORRUPTED_CELESTIUM_INGOT, "Lingot de Celestium corrompu");
+
+		addItem(ModItems.CORRUPTED_CELESTIUM_SWORD, "Épée en Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_PICKAXE, "Pioche en Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_AXE, "Hache en Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_SHOVEL, "Pelle en Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_HOE, "Houe en Celestium corrompu");
 		addItem(ModItems.CORRUPTED_CELESTIUM_HELMET, "Casque en Celestium corrompu");
 		addItem(ModItems.CORRUPTED_CELESTIUM_CHESTPLATE, "Plastron en Celestium corrompu");
 		addItem(ModItems.CORRUPTED_CELESTIUM_LEGGINGS, "Jambières en Celestium corrompu");
 		addItem(ModItems.CORRUPTED_CELESTIUM_BOOTS, "Bottes en Celestium corrompu");
 
 		add("message.celestium.corruption.unprotected", "La corruption te ronge. Il te faut une armure.");
+		add("message.celestium.mining.refused",
+				"Cette pierre ne cède qu'au Celestium corrompu ou au Demonium.");
 		add("death.attack.corruption", "%1$s a été rongé par la corruption");
 		add("death.attack.corruption.player", "%1$s a été rongé par la corruption en affrontant %2$s");
 

@@ -82,8 +82,45 @@ public class ModItems {
 
 	// --- Celestium corrompu : de quoi ouvrir le portail et survivre derriere ---
 
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_FRAGMENT =
+			ITEMS.register("corrupted_celestium_fragment",
+					() -> new Item(new Item.Properties().fireResistant()));
+
 	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_INGOT =
 			ITEMS.register("corrupted_celestium_ingot", () -> new Item(new Item.Properties().fireResistant()));
+
+	// --- Celestium corrompu : outils ---
+	//
+	// Les seuls outils, avec ceux du demon, qui mordent la pierre des Terres du demon. Ils se
+	// montent sur un baton ordinaire : cette panoplie doit rester fabricable sans rien rapporter
+	// de la dimension qu'elle sert a ouvrir.
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_PICKAXE =
+			ITEMS.register("corrupted_celestium_pickaxe",
+					() -> new PickaxeItem(ModTiers.CORRUPTED_CELESTIUM, 1, -2.8F,
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_SWORD =
+			ITEMS.register("corrupted_celestium_sword",
+					() -> new SwordItem(ModTiers.CORRUPTED_CELESTIUM, 3, -2.4F,
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_AXE =
+			ITEMS.register("corrupted_celestium_axe",
+					() -> new AxeItem(ModTiers.CORRUPTED_CELESTIUM, 5.5F, -3.1F,
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_SHOVEL =
+			ITEMS.register("corrupted_celestium_shovel",
+					() -> new ShovelItem(ModTiers.CORRUPTED_CELESTIUM, 1.5F, -3.0F,
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_HOE =
+			ITEMS.register("corrupted_celestium_hoe",
+					() -> new HoeItem(ModTiers.CORRUPTED_CELESTIUM, -3, 0.0F,
+							new Item.Properties().fireResistant()));
+
+	// --- Celestium corrompu : armure ---
 
 	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_HELMET =
 			ITEMS.register("corrupted_celestium_helmet",

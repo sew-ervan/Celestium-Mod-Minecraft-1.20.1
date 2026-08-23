@@ -18,14 +18,24 @@ import java.util.function.Supplier;
  * hache avaient une valeur d'enchantement dix fois superieure a celle de l'epee, et la pioche
  * annoncait un niveau de recolte 5 qui ne correspond a rien en 1.20.1.
  *
- * <p>Les deux materiaux s'opposent au lieu de se repeter. Le Celestium dure et mine vite ; le
- * Demonium frappe plus fort mais s'use plus vite et accepte moins d'enchantements. Chacun a son
- * usage plutot qu'un successeur.
+ * <p>Les deux materiaux de fin de course s'opposent au lieu de se repeter. Le Celestium dure et
+ * mine vite ; le Demonium frappe plus fort mais s'use plus vite et accepte moins d'enchantements.
+ * Chacun a son usage plutot qu'un successeur.
+ *
+ * <p>Le Celestium corrompu se tient a l'ecart de ces deux-la. C'est l'outillage de voyage : il
+ * ouvre les Terres du demon et permet d'y creuser, sans rivaliser avec ce qu'on en rapporte. Ses
+ * valeurs tiennent entre le fer et le diamant, et son niveau de recolte est celui du diamant —
+ * assez pour extraire le Demonium, qui est tout ce qu'il a besoin de miner la-bas.
  */
 public enum ModTiers implements Tier {
 
-	CELESTIUM(4, 5000, 12.0F, 5.0F, 18, () -> Ingredient.of(ModItems.CELESTIUM_FRAGMENT.get())),
-	DEMONIUM(4, 3200, 9.0F, 8.0F, 12, () -> Ingredient.of(ModItems.DEMONIUM_FRAGMENT.get()));
+	CELESTIUM(4, 5000, 12.0F, 5.0F, 18, () -> Ingredient.of(ModItems.CELESTIUM_FRAGMENT.get()),
+			List.of(Tiers.NETHERITE), List.of()),
+	DEMONIUM(4, 3200, 9.0F, 8.0F, 12, () -> Ingredient.of(ModItems.DEMONIUM_FRAGMENT.get()),
+			List.of(Tiers.NETHERITE), List.of()),
+	CORRUPTED_CELESTIUM(3, 900, 7.0F, 2.5F, 12,
+			() -> Ingredient.of(ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get()),
+			List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
 
 	private final int level;
 	private final int uses;
@@ -34,28 +44,34 @@ public enum ModTiers implements Tier {
 	private final int enchantmentValue;
 	private final Supplier<Ingredient> repairIngredient;
 
+	/** Paliers que celui-ci suit, et paliers qu'il precede, dans l'ordre de recolte. */
+	private final List<Object> after;
+	private final List<Object> before;
+
 	ModTiers(int level, int uses, float speed, float attackDamageBonus, int enchantmentValue,
-			Supplier<Ingredient> repairIngredient) {
+			Supplier<Ingredient> repairIngredient, List<Object> after, List<Object> before) {
 		this.level = level;
 		this.uses = uses;
 		this.speed = speed;
 		this.attackDamageBonus = attackDamageBonus;
 		this.enchantmentValue = enchantmentValue;
 		this.repairIngredient = repairIngredient;
+		this.after = after;
+		this.before = before;
 	}
 
 	/**
-	 * Declare les paliers aupres de Forge pour qu'ils s'inserent apres le netherite dans l'ordre
-	 * de recolte. Sans cet appel, les tags {@code needs_*_tool} les ignorent et les outils ne
-	 * minent pas ce que mine le netherite.
+	 * Declare les paliers aupres de Forge pour qu'ils prennent leur place dans l'ordre de recolte.
+	 * Sans cet appel, les tags {@code needs_*_tool} les ignorent et les outils ne minent pas ce que
+	 * mine le palier qu'ils sont censes suivre.
 	 */
 	public static void registerSorting() {
 		for (ModTiers tier : values()) {
 			TierSortingRegistry.registerTier(
 					tier,
 					CelestiumMod.id(tier.name().toLowerCase(java.util.Locale.ROOT)),
-					List.of(Tiers.NETHERITE),
-					List.of());
+					tier.after,
+					tier.before);
 		}
 	}
 

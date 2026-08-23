@@ -67,7 +67,13 @@ public final class DemoniumTextures {
 		}
 
 		partialCorruption(root, "block/celestium_block.png", "block/corrupted_celestium_block.png");
+		partialCorruption(root, "item/celestium_fragment.png", "item/corrupted_celestium_fragment.png");
 		partialCorruption(root, "item/celestium_ingot.png", "item/corrupted_celestium_ingot.png");
+		partialCorruption(root, "item/celestium_sword.png", "item/corrupted_celestium_sword.png");
+		partialCorruption(root, "item/celestium_pickaxe.png", "item/corrupted_celestium_pickaxe.png");
+		partialCorruption(root, "item/celestium_axe.png", "item/corrupted_celestium_axe.png");
+		partialCorruption(root, "item/celestium_shovel.png", "item/corrupted_celestium_shovel.png");
+		partialCorruption(root, "item/celestium_hoe.png", "item/corrupted_celestium_hoe.png");
 		partialCorruption(root, "item/celestium_helmet.png", "item/corrupted_celestium_helmet.png");
 		partialCorruption(root, "item/celestium_chestplate.png", "item/corrupted_celestium_chestplate.png");
 		partialCorruption(root, "item/celestium_leggings.png", "item/corrupted_celestium_leggings.png");
