@@ -4,6 +4,7 @@ import net.celestium.CelestiumMod;
 import net.celestium.worldgen.ModBiomeModifiers;
 import net.celestium.worldgen.ModConfiguredFeatures;
 import net.celestium.worldgen.ModPlacedFeatures;
+import net.celestium.worldgen.ModStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -26,7 +27,10 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
 	private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
 			.add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
 			.add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
-			.add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap);
+			.add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap)
+			.add(Registries.TEMPLATE_POOL, ModStructures::bootstrapPool)
+			.add(Registries.STRUCTURE, ModStructures::bootstrapStructure)
+			.add(Registries.STRUCTURE_SET, ModStructures::bootstrapSet);
 
 	public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
 		super(output, registries, BUILDER, Set.of(CelestiumMod.MOD_ID));

@@ -2,14 +2,12 @@ package net.celestium.worldgen;
 
 import net.celestium.CelestiumMod;
 import net.celestium.init.ModBlocks;
-import net.celestium.init.ModFeatures;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
@@ -25,7 +23,6 @@ import java.util.List;
 public final class ModConfiguredFeatures {
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CELESTIUM_ORE = key("celestium_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> CEMETERY = key("cemetery");
 
 	/** Nombre de blocs par filon. */
 	private static final int VEIN_SIZE = 3;
@@ -42,9 +39,6 @@ public final class ModConfiguredFeatures {
 
 		context.register(CELESTIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
 				new OreConfiguration(targets, VEIN_SIZE)));
-
-		context.register(CEMETERY, new ConfiguredFeature<>(ModFeatures.CEMETERY.get(),
-				NoneFeatureConfiguration.INSTANCE));
 	}
 
 	private static ResourceKey<ConfiguredFeature<?, ?>> key(String name) {

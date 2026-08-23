@@ -24,7 +24,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class ModBiomeModifiers {
 
 	public static final ResourceKey<BiomeModifier> ADD_CELESTIUM_ORE = key("add_celestium_ore");
-	public static final ResourceKey<BiomeModifier> ADD_CEMETERY = key("add_cemetery");
 
 	private ModBiomeModifiers() {
 	}
@@ -37,14 +36,6 @@ public final class ModBiomeModifiers {
 				biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
 				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.CELESTIUM_ORE)),
 				GenerationStep.Decoration.UNDERGROUND_ORES));
-
-		// Le cimetiere vise tout l'Overworld : c'est la feature elle-meme qui refuse de se poser
-		// dans l'eau. Le mod d'origine ne le generait au contraire QUE dans les oceans et les
-		// rivieres, ce qui ressemble a une inversion de la liste de biomes.
-		context.register(ADD_CEMETERY, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-				biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.CEMETERY)),
-				GenerationStep.Decoration.SURFACE_STRUCTURES));
 	}
 
 	private static ResourceKey<BiomeModifier> key(String name) {

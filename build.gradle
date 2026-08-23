@@ -30,6 +30,13 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
+            // Les mixins des mods tiers, GeckoLib au premier chef, designent leurs cibles par
+            // des noms SRG dans leur refmap. En developpement le jeu est compile avec les
+            // mappings officiels : sans cette table de correspondance, leurs injections ne
+            // trouvent aucune cible et le client plante avant d'afficher quoi que ce soit.
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', file("build/createSrgToMcp/output.srg").getAbsolutePath()
             mods {
                 "${mod_id}" {
                     source sourceSets.main
