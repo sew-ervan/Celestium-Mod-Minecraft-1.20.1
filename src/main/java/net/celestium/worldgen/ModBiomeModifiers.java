@@ -32,10 +32,14 @@ public final class ModBiomeModifiers {
 	public static final ResourceKey<BiomeModifier> ADD_DEMON_SWORDSMAN = key("add_demon_swordsman");
 
 	/**
-	 * Poids d'apparition du demon epeiste. Un zombie pese 100, un enderman 10 : a 8, et toujours
-	 * seul, la rencontre reste rare pour une creature de 120 points de vie.
+	 * Poids d'apparition du demon epeiste.
+	 *
+	 * <p>Pour donner l'echelle : un zombie pese 95, une araignee 100, un enderman 10, une sorciere
+	 * 5. Le total des poids d'un biome sombre tourne autour de 400. A 3, le demon represente donc
+	 * moins d'un pour cent des apparitions hostiles — soit une rencontre par plusieurs nuits, ce
+	 * qui convient a un boss de 220 points de vie dote de sa propre barre de vie.
 	 */
-	private static final int DEMON_SPAWN_WEIGHT = 8;
+	private static final int DEMON_SPAWN_WEIGHT = 3;
 
 	private ModBiomeModifiers() {
 	}

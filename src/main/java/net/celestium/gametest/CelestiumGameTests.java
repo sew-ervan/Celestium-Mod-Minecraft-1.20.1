@@ -4,7 +4,9 @@ import net.celestium.CelestiumMod;
 import net.celestium.core.registry.ModTags;
 import net.celestium.feature.celestium.CelestiumArmorEffects;
 import net.celestium.feature.magie.Faction;
+import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.init.ModBlocks;
+import net.celestium.init.ModEntities;
 import net.celestium.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,9 +14,11 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -127,6 +131,32 @@ public class CelestiumGameTests {
 				"Le feu ne se propage pas au bois du demon");
 
 		helper.succeed();
+	}
+
+	/**
+	 * Le demon bascule en seconde phase sous la moitie de ses points de vie.
+	 *
+	 * <p>Le sol est pose explicitement : l'arene de test ne contient que de l'air, et une creature
+	 * qui tombe dans le vide cesse de reflechir avant d'avoir pu changer de phase.
+	 */
+	@GameTest(template = ARENA, timeoutTicks = 200)
+	public static void demonSwordsmanEntersSecondPhase(GameTestHelper helper) {
+		helper.setBlock(new BlockPos(1, 0, 1), Blocks.STONE);
+
+		DemonSwordsmanEntity demon = helper.spawn(ModEntities.DEMON_SWORDSMAN.get(), 1, 1, 1);
+
+		helper.assertTrue(!demon.isSecondPhase(),
+				"Le demon commence deja en seconde phase");
+
+		demon.setHealth(demon.getMaxHealth() * 0.4F);
+
+		helper.succeedWhen(() -> {
+			helper.assertTrue(demon.isSecondPhase(),
+					"Le demon ne bascule pas en seconde phase sous la moitie de ses points de vie");
+			helper.assertTrue(
+					demon.getAttributeValue(Attributes.ATTACK_DAMAGE) > 14.0,
+					"La seconde phase n'augmente pas les degats du demon");
+		});
 	}
 
 	/** Le camp celeste est le seul a echapper a la magie celeste. */
