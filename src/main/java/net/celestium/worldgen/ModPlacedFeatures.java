@@ -25,9 +25,12 @@ public final class ModPlacedFeatures {
 
 	public static final ResourceKey<PlacedFeature> CELESTIUM_ORE = key("celestium_ore");
 
-	private static final int VEINS_PER_CHUNK = 2;
+	// Valeurs relevees a la demande du serveur. Le mod d'origine en donnait 2 filons de 3 blocs
+	// entre -64 et -48, soit une bande de seize blocs au fond du monde : le Celestium y etait
+	// pratiquement introuvable. Ces trois constantes se reglent independamment.
+	private static final int VEINS_PER_CHUNK = 5;
 	private static final int MIN_HEIGHT = -64;
-	private static final int MAX_HEIGHT = -48;
+	private static final int MAX_HEIGHT = -40;
 
 	private ModPlacedFeatures() {
 	}

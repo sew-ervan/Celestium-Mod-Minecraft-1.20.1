@@ -24,8 +24,8 @@ public final class ModConfiguredFeatures {
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CELESTIUM_ORE = key("celestium_ore");
 
-	/** Nombre de blocs par filon. */
-	private static final int VEIN_SIZE = 3;
+	/** Nombre de blocs par filon. Etait de 3 dans le mod d'origine. */
+	private static final int VEIN_SIZE = 4;
 
 	private ModConfiguredFeatures() {
 	}
