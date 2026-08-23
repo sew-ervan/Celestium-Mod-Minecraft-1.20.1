@@ -2,7 +2,9 @@ package net.celestium.client;
 
 import net.celestium.CelestiumMod;
 import net.celestium.client.model.SimpleGeoModel;
+import net.celestium.client.renderer.CorruptedVillagerRenderer;
 import net.celestium.client.renderer.SimpleGeoRenderer;
+import net.celestium.feature.mob.ParasiteEntity;
 import net.celestium.client.screen.BackpackScreen;
 import net.celestium.init.ModEntities;
 import net.celestium.init.ModMenus;
@@ -43,6 +45,13 @@ public final class ClientSetup {
 		event.registerEntityRenderer(ModEntities.DEMON_SWORDSMAN.get(),
 				context -> new SimpleGeoRenderer<>(context,
 						new SimpleGeoModel<>("demonepeiste", "demonepeiste"), 0.9F));
+
+		// Le parasite reutilise la geometrie du gardien miniature, au tiers de sa taille.
+		event.registerEntityRenderer(ModEntities.PARASITE.get(),
+				context -> new SimpleGeoRenderer<>(context,
+						new SimpleGeoModel<>("miniwarden", "parasite"), 0.2F, ParasiteEntity.SCALE));
+
+		event.registerEntityRenderer(ModEntities.CORRUPTED_VILLAGER.get(), CorruptedVillagerRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.CELESTIAL_BOLT.get(),
 				context -> new SimpleGeoRenderer<>(context,

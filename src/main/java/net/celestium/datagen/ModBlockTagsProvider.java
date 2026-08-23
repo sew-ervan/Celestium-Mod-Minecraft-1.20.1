@@ -33,11 +33,13 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
 		Block corrupted = ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get();
 
-		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ore, storage, demoniumOre, demoniumBlock, corrupted);
+		Block altar = ModBlocks.SUMMONING_ALTAR.get();
+
+		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ore, storage, demoniumOre, demoniumBlock, corrupted, altar);
 
 		// Le mod d'origine testait le niveau de l'outil dans le code du bloc. En 1.20.1 c'est le
 		// role des tags : le minerai et le bloc compact exigent au moins un outil en diamant.
-		tag(BlockTags.NEEDS_DIAMOND_TOOL).add(ore, storage, demoniumOre, demoniumBlock, corrupted);
+		tag(BlockTags.NEEDS_DIAMOND_TOOL).add(ore, storage, demoniumOre, demoniumBlock, corrupted, altar);
 		tag(ModTags.Blocks.NEEDS_CELESTIUM_TOOL).add(storage);
 
 		tag(ModTags.Forge.BLOCK_ORES_CELESTIUM).add(ore);

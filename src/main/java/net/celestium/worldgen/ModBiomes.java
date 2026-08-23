@@ -1,6 +1,7 @@
 package net.celestium.worldgen;
 
 import net.celestium.CelestiumMod;
+import net.celestium.init.ModEntities;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.biome.AmbientMoodSettings;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
@@ -49,9 +51,16 @@ public final class ModBiomes {
 	private static Biome demonWastes(HolderGetter<PlacedFeature> features,
 			HolderGetter<ConfiguredWorldCarver<?>> carvers) {
 
-		// La dimension ne fait apparaitre aucune creature par le cycle ordinaire : ce qui la
-		// peuple y est place par le mod, via ses structures et ses modificateurs de biome.
-		MobSpawnSettings spawns = new MobSpawnSettings.Builder().build();
+		// Le parasite est la vermine de fond, le villageois corrompu hante les ruines, et le demon
+		// epeiste reste l'evenement rare. Les poids traduisent ce rapport.
+		MobSpawnSettings spawns = new MobSpawnSettings.Builder()
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						ModEntities.PARASITE.get(), 70, 3, 6))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						ModEntities.CORRUPTED_VILLAGER.get(), 25, 1, 3))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						ModEntities.DEMON_SWORDSMAN.get(), 2, 1, 1))
+				.build();
 
 		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder(features, carvers);
 

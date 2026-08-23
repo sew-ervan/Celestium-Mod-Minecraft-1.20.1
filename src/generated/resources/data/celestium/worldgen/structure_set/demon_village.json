@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 615003477,
+    "separation": 7,
+    "spacing": 20
+  },
+  "structures": [
+    {
+      "structure": "celestium:demon_village",
+      "weight": 1
+    }
+  ]
+}

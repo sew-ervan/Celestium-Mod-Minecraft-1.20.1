@@ -2,7 +2,9 @@ package net.celestium.init;
 
 import net.celestium.CelestiumMod;
 import net.celestium.feature.magie.entity.CelestialBoltEntity;
+import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
+import net.celestium.feature.mob.ParasiteEntity;
 import net.celestium.feature.mob.MiniWardenEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -48,6 +50,21 @@ public class ModEntities {
 					.updateInterval(1)
 					.build("celestial_bolt"));
 
+	public static final RegistryObject<EntityType<ParasiteEntity>> PARASITE =
+			ENTITIES.register("parasite", () -> EntityType.Builder
+					.<ParasiteEntity>of(ParasiteEntity::new, MobCategory.MONSTER)
+					.sized(0.5F, 0.6F)
+					.fireImmune()
+					.clientTrackingRange(8)
+					.build("parasite"));
+
+	public static final RegistryObject<EntityType<CorruptedVillagerEntity>> CORRUPTED_VILLAGER =
+			ENTITIES.register("corrupted_villager", () -> EntityType.Builder
+					.<CorruptedVillagerEntity>of(CorruptedVillagerEntity::new, MobCategory.MONSTER)
+					.sized(0.6F, 1.95F)
+					.clientTrackingRange(10)
+					.build("corrupted_villager"));
+
 	private ModEntities() {
 	}
 
@@ -65,11 +82,25 @@ public class ModEntities {
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				Monster::checkMonsterSpawnRules);
+
+		// Les terres du demon sont en nuit permanente : exiger l'obscurite y serait sans effet,
+		// mais la regle vanilla verifie aussi le sol et la place disponible.
+		SpawnPlacements.register(PARASITE.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Monster::checkAnyLightMonsterSpawnRules);
+
+		SpawnPlacements.register(CORRUPTED_VILLAGER.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Monster::checkAnyLightMonsterSpawnRules);
 	}
 
 	@SubscribeEvent
 	public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
 		event.put(MINI_WARDEN.get(), MiniWardenEntity.createAttributes().build());
 		event.put(DEMON_SWORDSMAN.get(), DemonSwordsmanEntity.createAttributes().build());
+		event.put(PARASITE.get(), ParasiteEntity.createAttributes().build());
+		event.put(CORRUPTED_VILLAGER.get(), CorruptedVillagerEntity.createAttributes().build());
 	}
 }

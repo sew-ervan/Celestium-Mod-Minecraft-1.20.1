@@ -56,6 +56,17 @@ public class ModRecipeProvider extends RecipeProvider {
 				.define('C', ModBlocks.CELESTIUM_BLOCK.get())
 				.unlockedBy("has_demonium_fragment", has(ModItems.DEMONIUM_FRAGMENT.get()))
 				.save(writer, CelestiumMod.id("corrupted_celestium_block"));
+
+		// L'autel : du Demonium travaille sur un socle de bois du demon, autour d'un coeur corrompu.
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SUMMONING_ALTAR.get())
+				.pattern(" D ")
+				.pattern("DCD")
+				.pattern("PPP")
+				.define('D', ModItems.DEMONIUM_INGOT.get())
+				.define('C', ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get())
+				.define('P', ModBlocks.BOIS_DU_DEMON.planks.get())
+				.unlockedBy("has_demonium_ingot", has(ModItems.DEMONIUM_INGOT.get()))
+				.save(writer, CelestiumMod.id("summoning_altar"));
 	}
 
 	/**

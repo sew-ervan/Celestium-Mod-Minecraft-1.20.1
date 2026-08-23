@@ -66,6 +66,15 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(ModBlocks.DEMONIUM_BLOCK, "Block of Demonium");
 		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Corrupted Celestium");
 
+		// --- Demon Wastes creatures ---
+		add("entity.celestium.parasite", "Parasite");
+		add("entity.celestium.corrupted_villager", "Corrupted Villager");
+		addItem(ModItems.PARASITE_SPAWN_EGG, "Parasite Spawn Egg");
+		addItem(ModItems.CORRUPTED_VILLAGER_SPAWN_EGG, "Corrupted Villager Spawn Egg");
+
+		addBlock(ModBlocks.SUMMONING_ALTAR, "Summoning Altar");
+		add("message.celestium.altar.summoned", "The altar blazes. Something answers.");
+
 		WoodSet demon = ModBlocks.BOIS_DU_DEMON;
 		addBlock(demon.log, "Demon Wood Log");
 		addBlock(demon.wood, "Demon Wood");

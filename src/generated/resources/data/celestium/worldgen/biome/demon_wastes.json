@@ -70,7 +70,26 @@
     "axolotls": [],
     "creature": [],
     "misc": [],
-    "monster": [],
+    "monster": [
+      {
+        "type": "celestium:parasite",
+        "maxCount": 6,
+        "minCount": 3,
+        "weight": 70
+      },
+      {
+        "type": "celestium:corrupted_villager",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 25
+      },
+      {
+        "type": "celestium:demon_swordsman",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 2
+      }
+    ],
     "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []

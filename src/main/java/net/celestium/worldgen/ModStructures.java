@@ -2,8 +2,10 @@ package net.celestium.worldgen;
 
 import com.mojang.datafixers.util.Pair;
 import net.celestium.CelestiumMod;
+import net.celestium.worldgen.village.DemonVillageStructure;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.Pools;
@@ -48,12 +50,20 @@ public final class ModStructures {
 	public static final ResourceKey<Structure> CEMETERY = structureKey("cemetery");
 	public static final ResourceKey<StructureSet> CEMETERY_SET = setKey("cemetery");
 
+	public static final ResourceKey<Structure> DEMON_VILLAGE = structureKey("demon_village");
+	public static final ResourceKey<StructureSet> DEMON_VILLAGE_SET = setKey("demon_village");
+
 	/** Un cimetiere en moyenne tous les 24 chunks, avec au moins 8 chunks entre deux. */
 	private static final int SPACING = 24;
 	private static final int SEPARATION = 8;
 
 	/** Graine propre a la structure : deux structures de meme sel se superposeraient. */
 	private static final int SALT = 874_310_291;
+
+	/** Les villages demoniaques sont plus rapproches que les cimetieres, sans etre communs. */
+	private static final int VILLAGE_SPACING = 20;
+	private static final int VILLAGE_SEPARATION = 7;
+	private static final int VILLAGE_SALT = 615_003_477;
 
 	private ModStructures() {
 	}
@@ -88,6 +98,14 @@ public final class ModStructures {
 				false,
 				Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
 				80));
+
+		// Le village est bati par code : sa structure ne porte que ses conditions d'apparition.
+		context.register(DEMON_VILLAGE, new DemonVillageStructure(
+				new Structure.StructureSettings(
+						HolderSet.direct(biomes.getOrThrow(ModBiomes.DEMON_WASTES)),
+						Map.of(),
+						GenerationStep.Decoration.SURFACE_STRUCTURES,
+						TerrainAdjustment.BEARD_THIN)));
 	}
 
 	public static void bootstrapSet(BootstapContext<StructureSet> context) {
@@ -96,6 +114,11 @@ public final class ModStructures {
 		context.register(CEMETERY_SET, new StructureSet(
 				structures.getOrThrow(CEMETERY),
 				new RandomSpreadStructurePlacement(SPACING, SEPARATION, RandomSpreadType.LINEAR, SALT)));
+
+		context.register(DEMON_VILLAGE_SET, new StructureSet(
+				structures.getOrThrow(DEMON_VILLAGE),
+				new RandomSpreadStructurePlacement(VILLAGE_SPACING, VILLAGE_SEPARATION,
+						RandomSpreadType.LINEAR, VILLAGE_SALT)));
 	}
 
 	private static ResourceKey<StructureTemplatePool> poolKey(String name) {

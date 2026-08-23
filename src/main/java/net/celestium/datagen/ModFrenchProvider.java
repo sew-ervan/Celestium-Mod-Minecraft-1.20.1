@@ -71,6 +71,15 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.DEMONIUM_BLOCK, "Bloc de Demonium");
 		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Celestium corrompu");
 
+		// --- Creatures des Terres du demon ---
+		add("entity.celestium.parasite", "Parasite");
+		add("entity.celestium.corrupted_villager", "Villageois corrompu");
+		addItem(ModItems.PARASITE_SPAWN_EGG, "Œuf de parasite");
+		addItem(ModItems.CORRUPTED_VILLAGER_SPAWN_EGG, "Œuf de villageois corrompu");
+
+		addBlock(ModBlocks.SUMMONING_ALTAR, "Autel d'invocation");
+		add("message.celestium.altar.summoned", "L'autel s'embrase. Quelque chose répond.");
+
 		WoodSet demon = ModBlocks.BOIS_DU_DEMON;
 		addBlock(demon.log, "Rondin de bois du démon");
 		addBlock(demon.wood, "Bois du démon");

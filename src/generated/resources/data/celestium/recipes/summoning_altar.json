@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "celestium:corrupted_celestium_block"
+    },
+    "D": {
+      "item": "celestium:demonium_ingot"
+    },
+    "P": {
+      "item": "celestium:bois_du_demon_planks"
+    }
+  },
+  "pattern": [
+    " D ",
+    "DCD",
+    "PPP"
+  ],
+  "result": {
+    "item": "celestium:summoning_altar"
+  },
+  "show_notification": true
+}

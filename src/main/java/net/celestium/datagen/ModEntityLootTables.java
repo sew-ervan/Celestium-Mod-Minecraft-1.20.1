@@ -38,6 +38,19 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 10.0F))))));
 
 		this.add(ModEntities.MINI_WARDEN.get(), LootTable.lootTable());
+
+		// Le parasite ne rend presque rien : c'est le nombre qui paie, pas la piece.
+		this.add(ModEntities.PARASITE.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.DEMONIUM_FRAGMENT.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))))));
+
+		this.add(ModEntities.CORRUPTED_VILLAGER.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.DEMONIUM_FRAGMENT.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))));
 	}
 
 	/**
@@ -46,6 +59,10 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 	 */
 	@Override
 	protected Stream<EntityType<?>> getKnownEntityTypes() {
-		return Stream.of(ModEntities.DEMON_SWORDSMAN.get(), ModEntities.MINI_WARDEN.get());
+		return Stream.of(
+				ModEntities.DEMON_SWORDSMAN.get(),
+				ModEntities.MINI_WARDEN.get(),
+				ModEntities.PARASITE.get(),
+				ModEntities.CORRUPTED_VILLAGER.get());
 	}
 }

@@ -141,6 +141,14 @@ public class ModItems {
 	public static final RegistryObject<Item> DEMON_SWORDSMAN_SPAWN_EGG = ITEMS.register("demon_swordsman_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.DEMON_SWORDSMAN, 0x2B0A0A, 0xB01818, new Item.Properties()));
 
+	public static final RegistryObject<Item> PARASITE_SPAWN_EGG = ITEMS.register("parasite_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.PARASITE, 0x3B0D10, 0x8E2B22, new Item.Properties()));
+
+	public static final RegistryObject<Item> CORRUPTED_VILLAGER_SPAWN_EGG =
+			ITEMS.register("corrupted_villager_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.CORRUPTED_VILLAGER, 0x4A2C1A, 0x8E2B22,
+							new Item.Properties()));
+
 	private ModItems() {
 	}
 }

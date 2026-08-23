@@ -9,6 +9,8 @@ import net.celestium.init.ModEntities;
 import net.celestium.init.ModSpells;
 import net.celestium.init.ModItems;
 import net.celestium.init.ModMenus;
+import net.celestium.init.ModStructurePieces;
+import net.celestium.init.ModStructureTypes;
 import net.celestium.init.ModSounds;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,6 +43,8 @@ public class CelestiumMod {
 		ModSounds.SOUNDS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
 		ModMenus.MENUS.register(modBus);
+		ModStructureTypes.STRUCTURE_TYPES.register(modBus);
+		ModStructurePieces.STRUCTURE_PIECES.register(modBus);
 
 		modBus.addListener(this::onCommonSetup);
 	}

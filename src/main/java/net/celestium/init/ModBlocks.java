@@ -3,6 +3,7 @@ package net.celestium.init;
 import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.feature.celestium.CelestiumStorageBlock;
+import net.celestium.feature.altar.SummoningAltarBlock;
 import net.celestium.feature.portal.CelestialPortalBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -79,6 +80,15 @@ public class ModBlocks {
 	/**
 	 * Minerai de Demonium, present uniquement dans les terres du demon. Le pendant demoniaque du Celestium :
 	 */
+	/** Autel d'invocation : offrir un lingot de Demonium y rappelle le demon epeiste. */
+	public static final RegistryObject<Block> SUMMONING_ALTAR = register("summoning_altar",
+			() -> new SummoningAltarBlock(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_RED)
+					.sound(SoundType.STONE)
+					.strength(6.0F, 1200.0F)
+					.requiresCorrectToolForDrops()
+					.lightLevel(state -> 7)));
+
 	public static final RegistryObject<Block> DEMONIUM_ORE = register("demonium_ore",
 			() -> new DropExperienceBlock(
 					BlockBehaviour.Properties.of()

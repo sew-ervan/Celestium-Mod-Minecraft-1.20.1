@@ -67,7 +67,9 @@ public final class DemoniumTextures {
 		}
 
 		partialCorruption(root);
-		System.out.println((written + 1) + " textures ecrites");
+		derive(root, "entity/miniwarden_texture.png", "entity/parasite.png", "parasite");
+		derive(root, "block/celestium_block.png", "block/summoning_altar.png", "autel");
+		System.out.println((written + 3) + " textures ecrites");
 	}
 
 	/**
@@ -77,6 +79,19 @@ public final class DemoniumTextures {
 	 * donc ni a l'un ni a l'autre : c'est un bloc de Celestium que la corruption gagne, ce qui
 	 * raconte visuellement a quoi sert le cadre du portail.
 	 */
+	/** Corrompt une texture quelconque vers une destination libre. */
+	private static void derive(Path root, String from, String to, String seed) throws IOException {
+		Path source = root.resolve(from);
+		if (!source.toFile().isFile()) {
+			System.out.println("ABSENT  " + source);
+			return;
+		}
+		BufferedImage image = ImageIO.read(source.toFile());
+		Path target = root.resolve(to);
+		ImageIO.write(corrupt(image, seed), "PNG", target.toFile());
+		System.out.printf("OK      %-46s %dx%d%n", target, image.getWidth(), image.getHeight());
+	}
+
 	private static void partialCorruption(Path root) throws IOException {
 		BufferedImage clean = ImageIO.read(root.resolve("block/celestium_block.png").toFile());
 		BufferedImage tainted = corrupt(clean, "corrupted_celestium");
