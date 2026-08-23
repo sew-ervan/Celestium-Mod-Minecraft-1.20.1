@@ -45,6 +45,8 @@ public class DataGenerators {
 		generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
 		generator.addProvider(event.includeServer(), new ModWorldGenProvider(output, lookup));
 
+		generator.addProvider(event.includeServer(), new ModBiomeTagsProvider(output, lookup, fileHelper));
+
 		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(output, lookup, fileHelper);
 		generator.addProvider(event.includeServer(), blockTags);
 		generator.addProvider(event.includeServer(),

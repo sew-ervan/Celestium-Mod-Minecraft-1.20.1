@@ -6,6 +6,9 @@ import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.mob.MiniWardenEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -46,6 +49,22 @@ public class ModEntities {
 					.build("celestial_bolt"));
 
 	private ModEntities() {
+	}
+
+	/**
+	 * Declare ou et quand les creatures peuvent apparaitre.
+	 *
+	 * <p>Sans cet enregistrement, un modificateur de biome a beau les proposer, le jeu ne sait pas
+	 * a quelles conditions les poser et elles n'apparaissent jamais.
+	 *
+	 * <p>Le gardien miniature n'est volontairement pas declare : il reste accessible par oeuf de
+	 * spawn uniquement, comme dans le mod d'origine.
+	 */
+	public static void registerSpawnPlacements() {
+		SpawnPlacements.register(DEMON_SWORDSMAN.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Monster::checkMonsterSpawnRules);
 	}
 
 	@SubscribeEvent

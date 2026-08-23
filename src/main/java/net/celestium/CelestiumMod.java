@@ -51,6 +51,7 @@ public class CelestiumMod {
 			ModSpells.init();
 			ModNetwork.register();
 			ModBlocks.BOIS_DU_DEMON.registerFlammability();
+			ModEntities.registerSpawnPlacements();
 		});
 	}
 
