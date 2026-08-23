@@ -35,7 +35,14 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(ModItems.DEMONIUM_FRAGMENT.get())
-								.apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 10.0F))))));
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 10.0F)))))
+				// Le coeur tombe a coup sur : c'est le trophee de la rencontre, pas une loterie.
+				// Le Pillage n'en ajoute pas non plus — deux coeurs pour un demon n'aurait pas de
+				// sens, et leur rarete est ce qui donne son poids au troc qu'ils ouvrent.
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.DEMON_HEART.get())
+								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))));
 
 		this.add(ModEntities.MINI_WARDEN.get(), LootTable.lootTable());
 

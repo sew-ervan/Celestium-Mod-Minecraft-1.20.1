@@ -47,6 +47,8 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(ModBlocks.LUCKY_BLOCK, "Lucky Block");
 
 		// --- Demonium ---
+		addItem(ModItems.DEMON_HEART, "Demon Heart");
+
 		addItem(ModItems.DEMONIUM_FRAGMENT, "Demonium Scrap");
 		addItem(ModItems.DEMONIUM_INGOT, "Demonium Ingot");
 		addItem(ModItems.DEMONIUM_STICK, "Demonium Rod");

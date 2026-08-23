@@ -52,6 +52,8 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.LUCKY_BLOCK, "Bloc chance");
 
 		// --- Demonium ---
+		addItem(ModItems.DEMON_HEART, "Cœur du démon");
+
 		addItem(ModItems.DEMONIUM_FRAGMENT, "Fragment de Demonium");
 		addItem(ModItems.DEMONIUM_INGOT, "Lingot de Demonium");
 		addItem(ModItems.DEMONIUM_STICK, "Bâton de Demonium");

@@ -59,6 +59,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 		handheld(ModItems.CORRUPTED_CELESTIUM_SHOVEL);
 		handheld(ModItems.CORRUPTED_CELESTIUM_HOE);
 
+		flat(ModItems.DEMON_HEART);
+
 		flat(ModItems.DEMONIUM_FRAGMENT);
 		flat(ModItems.DEMONIUM_INGOT);
 		flat(ModItems.DEMONIUM_STICK);

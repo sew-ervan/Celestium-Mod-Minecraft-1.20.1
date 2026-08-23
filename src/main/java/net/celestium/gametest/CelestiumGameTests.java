@@ -5,6 +5,8 @@ import net.celestium.core.registry.ModTags;
 import net.celestium.core.material.ModArmorMaterials;
 import net.celestium.feature.celestium.ArmorSetEffects;
 import net.celestium.feature.magie.Faction;
+import net.celestium.feature.mob.CorruptedVillagerEntity;
+import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.corruption.DimensionMining;
 import net.celestium.feature.portal.DemonPortalShape;
@@ -24,7 +26,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -294,6 +298,75 @@ public class CelestiumGameTests {
 				"La pioche en Celestium corrompu n'extrait pas le Demonium");
 		helper.assertFalse(new ItemStack(Items.IRON_PICKAXE).isCorrectToolForDrops(ore),
 				"La pioche en fer extrait le Demonium");
+
+		helper.succeed();
+	}
+
+	/** Le demon laisse son coeur, a coup sur. */
+	@GameTest(template = ARENA, timeoutTicks = 200)
+	public static void demonSwordsmanDropsHeart(GameTestHelper helper) {
+		helper.setBlock(new BlockPos(1, 0, 1), Blocks.STONE);
+
+		DemonSwordsmanEntity demon = helper.spawn(ModEntities.DEMON_SWORDSMAN.get(), 1, 1, 1);
+		demon.kill();
+
+		helper.succeedWhen(() -> helper.assertItemEntityPresent(
+				ModItems.DEMON_HEART.get(), new BlockPos(1, 1, 1), 6.0));
+	}
+
+	/**
+	 * Les villageois corrompus ne reconnaissent que qui porte leur matiere.
+	 *
+	 * <p>C'est ce qui permet a une creature hostile de tenir boutique : sans armure on est charge,
+	 * avec on est servi.
+	 */
+	@GameTest(template = ARENA)
+	public static void corruptedVillagerRecognisesTheirOwn(GameTestHelper helper) {
+		Player stranger = helper.makeMockPlayer();
+		helper.assertFalse(CorruptedVillagerEntity.recognises(stranger),
+				"Un joueur sans armure passe pour un des leurs");
+
+		Player kin = helper.makeMockPlayer();
+		kin.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.CORRUPTED_CELESTIUM_HELMET.get()));
+		helper.assertTrue(CorruptedVillagerEntity.recognises(kin),
+				"Un joueur en Celestium corrompu n'est pas reconnu");
+
+		Player demonKin = helper.makeMockPlayer();
+		demonKin.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.DEMONIUM_CHESTPLATE.get()));
+		helper.assertTrue(CorruptedVillagerEntity.recognises(demonKin),
+				"Un joueur en Demonium n'est pas reconnu");
+
+		Player imposter = helper.makeMockPlayer();
+		imposter.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.CELESTIUM_HELMET.get()));
+		helper.assertFalse(CorruptedVillagerEntity.recognises(imposter),
+				"Le Celestium pur suffit a se faire passer pour un des leurs");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Le troc se paie en Demonium, sauf l'offre du coeur.
+	 *
+	 * <p>La monnaie doit se ramasser sur place : une devise apportee de l'Overworld ferait de leur
+	 * boutique une extension du commerce d'a cote.
+	 */
+	@GameTest(template = ARENA)
+	public static void corruptedVillagerTradesInDemonium(GameTestHelper helper) {
+		MerchantOffers offers = CorruptedVillagerTrades.create(RandomSource.create(1234L));
+
+		helper.assertTrue(!offers.isEmpty(), "Les villageois corrompus n'ont rien a echanger");
+
+		long paidInDemonium = offers.stream()
+				.filter(offer -> offer.getBaseCostA().is(ModItems.DEMONIUM_FRAGMENT.get()))
+				.count();
+		long paidInHearts = offers.stream()
+				.filter(offer -> offer.getBaseCostA().is(ModItems.DEMON_HEART.get()))
+				.count();
+
+		helper.assertTrue(paidInDemonium + paidInHearts == offers.size(),
+				"Une offre se paie dans une autre monnaie que le Demonium ou le coeur");
+		helper.assertTrue(paidInHearts == 1,
+				"Le coeur du demon n'ouvre pas exactement une offre");
 
 		helper.succeed();
 	}

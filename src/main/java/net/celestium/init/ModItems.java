@@ -13,6 +13,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -137,6 +138,17 @@ public class ModItems {
 	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_BOOTS =
 			ITEMS.register("corrupted_celestium_boots",
 					() -> new ModArmorItem(ModArmorMaterials.CORRUPTED_CELESTIUM, ArmorItem.Type.BOOTS));
+
+	// --- Le trophee du demon ---
+
+	/**
+	 * Ce que le demon epeiste laisse en mourant.
+	 *
+	 * <p>Un seul par demon abattu. Les villageois corrompus le reverent : c'est la seule chose
+	 * contre laquelle ils cedent leurs reserves.
+	 */
+	public static final RegistryObject<Item> DEMON_HEART = ITEMS.register("demon_heart",
+			() -> new Item(new Item.Properties().fireResistant().stacksTo(16).rarity(Rarity.EPIC)));
 
 	// --- Demonium : matieres premieres ---
 

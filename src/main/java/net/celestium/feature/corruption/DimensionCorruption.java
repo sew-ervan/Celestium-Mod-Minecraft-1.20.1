@@ -66,8 +66,14 @@ public final class DimensionCorruption {
 		applyCorruption(player, countProtectivePieces(player));
 	}
 
-	/** Compte les pieces portees qui repoussent la corruption. */
-	private static int countProtectivePieces(Player player) {
+	/**
+	 * Compte les pieces portees qui repoussent la corruption.
+	 *
+	 * <p>Publique parce que la corruption n'est pas seule a s'y interesser : les villageois
+	 * corrompus jugent un visiteur a ce qu'il porte, et ne reconnaissent des leurs que qui en a
+	 * au moins une piece sur le dos.
+	 */
+	public static int countProtectivePieces(Player player) {
 		int worn = 0;
 		for (ItemStack stack : player.getArmorSlots()) {
 			if (stack.getItem() instanceof ModArmorItem armor && protects(armor.getArmorMaterial())) {
