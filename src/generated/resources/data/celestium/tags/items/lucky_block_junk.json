@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:dirt",
+    "minecraft:gravel",
+    "minecraft:cobblestone",
+    "minecraft:rotten_flesh",
+    "minecraft:poisonous_potato",
+    "minecraft:dead_bush"
+  ]
+}

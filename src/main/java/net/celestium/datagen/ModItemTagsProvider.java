@@ -51,8 +51,49 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 		tag(ItemTags.WOODEN_PRESSURE_PLATES).add(demon.pressurePlate.get().asItem());
 		tag(ItemTags.WOODEN_BUTTONS).add(demon.button.get().asItem());
 
-		// Recompenses du bloc chance. La table de butin tire une entree au hasard dans ce tag :
-		// modifier l'equilibrage du bloc revient a editer cette liste, sans toucher au code.
+		// --- Blocs chance ---
+		//
+		// Trois listes de recompenses et une de rebuts. La table de butin de chaque bloc tire une
+		// entree entre sa liste et celle des rebuts : modifier l'equilibrage revient a editer ces
+		// listes, sans toucher au code. Les poids qui decident du rapport entre les deux vivent
+		// dans ModBlockLootTables, et dependent du nombre d'items declares ici.
+
+		// Ce qu'on ramasse quand le tirage tourne mal. Partage par les trois blocs : la deception
+		// est la meme, seule sa frequence change.
+		tag(ModTags.Items.LUCKY_BLOCK_JUNK).add(
+				Items.DIRT,
+				Items.GRAVEL,
+				Items.COBBLESTONE,
+				Items.ROTTEN_FLESH,
+				Items.POISONOUS_POTATO,
+				Items.DEAD_BUSH);
+
+		// Bloc chance corrompu : on gagne une fois sur deux, mais on gagne mieux.
+		tag(ModTags.Items.CORRUPTED_LUCKY_BLOCK_REWARDS).add(
+				ModItems.CORRUPTED_CELESTIUM_INGOT.get(),
+				ModItems.CORRUPTED_CELESTIUM_PICKAXE.get(),
+				ModItems.CELESTIUM_INGOT.get(),
+				ModBlocks.CELESTIUM_BLOCK.get().asItem(),
+				Items.DIAMOND_BLOCK,
+				Items.NETHERITE_SCRAP,
+				Items.ENCHANTED_GOLDEN_APPLE,
+				Items.EXPERIENCE_BOTTLE,
+				Items.END_CRYSTAL,
+				Items.TOTEM_OF_UNDYING);
+
+		// Bloc chance du demon : un tirage sur six, et les meilleures recompenses du mod. Le coeur
+		// du demon y figure — c'est la seule facon d'en obtenir un sans affronter son proprietaire.
+		tag(ModTags.Items.DEMON_LUCKY_BLOCK_REWARDS).add(
+				ModItems.DEMON_HEART.get(),
+				ModItems.DEMONIUM_INGOT.get(),
+				ModItems.DEMONIUM_SWORD.get(),
+				ModItems.DEMONIUM_CHESTPLATE.get(),
+				ModBlocks.DEMONIUM_BLOCK.get().asItem(),
+				ModItems.CELESTIUM_SWORD.get(),
+				Items.NETHERITE_INGOT,
+				Items.NETHER_STAR);
+
+		// Recompenses du bloc chance ordinaire : le tout-venant, obtenu presque a chaque fois.
 		tag(ModTags.Items.LUCKY_BLOCK_REWARDS).add(
 				ModItems.CELESTIUM_FRAGMENT.get(),
 				ModItems.CELESTIUM_INGOT.get(),
@@ -73,6 +114,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 				Items.DIAMOND_HORSE_ARMOR,
 				Items.AMETHYST_BLOCK,
 				Items.BEACON,
-				Items.DIRT);
+				Items.SCULK_CATALYST);
 	}
 }

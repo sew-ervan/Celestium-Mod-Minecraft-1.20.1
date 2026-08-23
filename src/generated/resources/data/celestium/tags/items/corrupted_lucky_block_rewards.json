@@ -1,0 +1,14 @@
+{
+  "values": [
+    "celestium:corrupted_celestium_ingot",
+    "celestium:corrupted_celestium_pickaxe",
+    "celestium:celestium_ingot",
+    "celestium:celestium_block",
+    "minecraft:diamond_block",
+    "minecraft:netherite_scrap",
+    "minecraft:enchanted_golden_apple",
+    "minecraft:experience_bottle",
+    "minecraft:end_crystal",
+    "minecraft:totem_of_undying"
+  ]
+}

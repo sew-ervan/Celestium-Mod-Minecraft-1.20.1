@@ -63,6 +63,32 @@ public class ModBlocks {
 					.lightLevel(state -> 1)));
 
 	/**
+	 * Le bloc chance corrompu : une chance sur deux environ, mais de meilleures recompenses.
+	 *
+	 * <p>Les trois blocs chance forment une echelle ou l'on echange la frequence contre la valeur.
+	 * Celui-ci en occupe le milieu.
+	 */
+	public static final RegistryObject<Block> CORRUPTED_LUCKY_BLOCK = register("corrupted_lucky_block",
+			() -> new Block(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_RED)
+					.sound(SoundType.COPPER)
+					.strength(2.0F, 12.0F)
+					.lightLevel(state -> 2)));
+
+	/**
+	 * Le bloc chance du demon : il ne donne presque jamais rien de bon.
+	 *
+	 * <p>Environ un tirage sur six. En echange, ce qu'il donne ne se trouve nulle part ailleurs en
+	 * pareille quantite. C'est le pari le plus mauvais du mod, et le plus paye.
+	 */
+	public static final RegistryObject<Block> DEMON_LUCKY_BLOCK = register("demon_lucky_block",
+			() -> new Block(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.NETHER)
+					.sound(SoundType.COPPER)
+					.strength(2.5F, 15.0F)
+					.lightLevel(state -> 4)));
+
+	/**
 	 * Celestium corrompu : le cadre du portail vers les terres du demon.
 	 *
 	 * <p>Il ne se mine pas, il se fabrique — un bloc de Celestium que les fragments arraches au

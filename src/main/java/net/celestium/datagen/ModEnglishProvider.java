@@ -45,6 +45,8 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(ModBlocks.CELESTIUM_ORE, "Celestium Ore");
 		addBlock(ModBlocks.CELESTIUM_BLOCK, "Block of Celestium");
 		addBlock(ModBlocks.LUCKY_BLOCK, "Lucky Block");
+		addBlock(ModBlocks.CORRUPTED_LUCKY_BLOCK, "Corrupted Lucky Block");
+		addBlock(ModBlocks.DEMON_LUCKY_BLOCK, "Demon Lucky Block");
 
 		// --- Demonium ---
 		addItem(ModItems.DEMON_HEART, "Demon Heart");

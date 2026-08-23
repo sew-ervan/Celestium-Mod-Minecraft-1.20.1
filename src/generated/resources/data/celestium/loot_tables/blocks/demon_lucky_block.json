@@ -7,20 +7,20 @@
         {
           "type": "minecraft:tag",
           "expand": true,
-          "name": "celestium:lucky_block_rewards",
+          "name": "celestium:demon_lucky_block_rewards",
           "quality": 5,
-          "weight": 20
+          "weight": 6
         },
         {
           "type": "minecraft:tag",
           "expand": true,
           "name": "celestium:lucky_block_junk",
           "quality": -5,
-          "weight": 10
+          "weight": 40
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "celestium:blocks/lucky_block"
+  "random_sequence": "celestium:blocks/demon_lucky_block"
 }

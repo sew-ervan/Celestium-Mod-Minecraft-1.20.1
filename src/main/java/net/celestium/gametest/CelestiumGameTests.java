@@ -29,6 +29,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffers;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -82,20 +85,44 @@ public class CelestiumGameTests {
 		helper.succeed();
 	}
 
-	/** Le bloc chance rend exactement un objet, tire dans le tag des recompenses. */
+	/** Chaque bloc chance rend exactement un objet, tresor ou rebut, jamais lui-meme. */
 	@GameTest(template = ARENA)
-	public static void luckyBlockDropsOneReward(GameTestHelper helper) {
-		BlockPos pos = new BlockPos(1, 1, 1);
-		helper.setBlock(pos, ModBlocks.LUCKY_BLOCK.get());
+	public static void luckyBlockDropsOneItem(GameTestHelper helper) {
+		assertSingleDraw(helper, ModBlocks.LUCKY_BLOCK.get(), ModTags.Items.LUCKY_BLOCK_REWARDS);
+		assertSingleDraw(helper, ModBlocks.CORRUPTED_LUCKY_BLOCK.get(),
+				ModTags.Items.CORRUPTED_LUCKY_BLOCK_REWARDS);
+		assertSingleDraw(helper, ModBlocks.DEMON_LUCKY_BLOCK.get(),
+				ModTags.Items.DEMON_LUCKY_BLOCK_REWARDS);
 
-		List<ItemStack> drops = dropsOf(helper, pos);
+		helper.succeed();
+	}
 
-		helper.assertTrue(drops.size() == 1,
-				"Le bloc chance a rendu " + drops.size() + " objets au lieu d'un seul");
-		helper.assertTrue(drops.get(0).is(ModTags.Items.LUCKY_BLOCK_REWARDS),
-				"Le bloc chance a rendu un objet absent du tag des recompenses");
-		helper.assertTrue(!drops.get(0).is(ModBlocks.LUCKY_BLOCK.get().asItem()),
-				"Le bloc chance se rend lui-meme");
+	/**
+	 * Les trois blocs chance se classent du plus chanceux au moins chanceux.
+	 *
+	 * <p>C'est la seule propriete qui compte vraiment, et elle ne se lit pas dans les poids : elle
+	 * depend a la fois de ceux-ci et du nombre d'items declares dans chaque tag. Ajouter une
+	 * recompense au bloc du demon le rendrait plus chanceux que le corrompu sans qu'aucune ligne
+	 * de reglage n'ait bouge — ce test le verrait.
+	 *
+	 * <p>Le tirage est repete : sur trois cents essais, l'ecart entre quatre-vingts pour cent et
+	 * dix-sept ne tient pas du hasard.
+	 */
+	@GameTest(template = ARENA)
+	public static void luckyBlocksRankFromLuckyToCursed(GameTestHelper helper) {
+		double ordinary = treasureRate(helper, ModBlocks.LUCKY_BLOCK.get(),
+				ModTags.Items.LUCKY_BLOCK_REWARDS);
+		double corrupted = treasureRate(helper, ModBlocks.CORRUPTED_LUCKY_BLOCK.get(),
+				ModTags.Items.CORRUPTED_LUCKY_BLOCK_REWARDS);
+		double demon = treasureRate(helper, ModBlocks.DEMON_LUCKY_BLOCK.get(),
+				ModTags.Items.DEMON_LUCKY_BLOCK_REWARDS);
+
+		helper.assertTrue(ordinary > corrupted,
+				"Le bloc chance ordinaire (" + percent(ordinary) + ") n'est pas plus chanceux que le"
+						+ " corrompu (" + percent(corrupted) + ")");
+		helper.assertTrue(corrupted > demon,
+				"Le bloc chance corrompu (" + percent(corrupted) + ") n'est pas plus chanceux que celui"
+						+ " du demon (" + percent(demon) + ")");
 
 		helper.succeed();
 	}
@@ -369,6 +396,44 @@ public class CelestiumGameTests {
 				"Le coeur du demon n'ouvre pas exactement une offre");
 
 		helper.succeed();
+	}
+
+	/** Nombre de tirages servant a estimer la chance d'un bloc. */
+	private static final int DRAWS = 300;
+
+	/** Verifie qu'un bloc chance rend une seule chose, prise dans son tresor ou dans les rebuts. */
+	private static void assertSingleDraw(GameTestHelper helper, Block block, TagKey<Item> treasure) {
+		BlockPos pos = new BlockPos(1, 1, 1);
+		helper.setBlock(pos, block);
+
+		List<ItemStack> drops = dropsOf(helper, pos);
+
+		helper.assertTrue(drops.size() == 1,
+				block.getName().getString() + " a rendu " + drops.size() + " objets au lieu d'un seul");
+		helper.assertTrue(
+				drops.get(0).is(treasure) || drops.get(0).is(ModTags.Items.LUCKY_BLOCK_JUNK),
+				block.getName().getString() + " a rendu un objet absent de ses deux listes");
+		helper.assertTrue(!drops.get(0).is(block.asItem()),
+				block.getName().getString() + " se rend lui-meme");
+	}
+
+	/** Proportion de tirages qui donnent un tresor plutot qu'un rebut. */
+	private static double treasureRate(GameTestHelper helper, Block block, TagKey<Item> treasure) {
+		BlockPos pos = new BlockPos(1, 1, 1);
+		helper.setBlock(pos, block);
+
+		int treasures = 0;
+		for (int draw = 0; draw < DRAWS; draw++) {
+			List<ItemStack> drops = dropsOf(helper, pos);
+			if (drops.size() == 1 && drops.get(0).is(treasure)) {
+				treasures++;
+			}
+		}
+		return (double) treasures / DRAWS;
+	}
+
+	private static String percent(double rate) {
+		return Math.round(rate * 100.0) + " %";
 	}
 
 	/** Butin d'un bloc casse a mains nues, sans Fortune ni Toucher de soie. */

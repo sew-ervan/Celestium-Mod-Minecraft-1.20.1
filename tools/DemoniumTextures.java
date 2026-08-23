@@ -80,6 +80,10 @@ public final class DemoniumTextures {
 		partialCorruption(root, "item/celestium_boots.png", "item/corrupted_celestium_boots.png");
 		partialCorruption(root, "models/armor/celestium_layer_1.png", "models/armor/corrupted_celestium_layer_1.png");
 		partialCorruption(root, "models/armor/celestium_layer_2.png", "models/armor/corrupted_celestium_layer_2.png");
+
+		// Les trois blocs chance partagent une silhouette : seule leur teinte dit lequel on casse.
+		partialCorruption(root, "block/lucky_block.png", "block/corrupted_lucky_block.png");
+		derive(root, "block/lucky_block.png", "block/demon_lucky_block.png", "demon_lucky_block");
 		derive(root, "entity/miniwarden_texture.png", "entity/parasite.png", "parasite");
 		derive(root, "block/celestium_block.png", "block/summoning_altar.png", "autel");
 		System.out.println((written + 10) + " textures ecrites");

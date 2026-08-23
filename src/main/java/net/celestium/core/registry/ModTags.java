@@ -48,6 +48,22 @@ public final class ModTags {
 		 */
 		public static final TagKey<Item> LUCKY_BLOCK_REWARDS = tag("lucky_block_rewards");
 
+		/**
+		 * Recompenses du bloc chance corrompu : plus rares que les precedentes, parce qu'on les
+		 * obtient moins souvent.
+		 */
+		public static final TagKey<Item> CORRUPTED_LUCKY_BLOCK_REWARDS =
+				tag("corrupted_lucky_block_rewards");
+
+		/**
+		 * Recompenses du bloc chance du demon. Ce sont les meilleures du mod, et c'est voulu : ce
+		 * bloc ne donne presque jamais rien de bon, donc ce qu'il donne doit valoir l'attente.
+		 */
+		public static final TagKey<Item> DEMON_LUCKY_BLOCK_REWARDS = tag("demon_lucky_block_rewards");
+
+		/** Ce qu'on ramasse quand le tirage tourne mal, quel que soit le bloc. */
+		public static final TagKey<Item> LUCKY_BLOCK_JUNK = tag("lucky_block_junk");
+
 		/** Rondins du bois du demon, pour la recette de planches. */
 		public static final TagKey<Item> BOIS_DU_DEMON_LOGS = tag("bois_du_demon_logs");
 

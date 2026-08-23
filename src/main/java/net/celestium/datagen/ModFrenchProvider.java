@@ -50,6 +50,8 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.CELESTIUM_ORE, "Minerai de Celestium");
 		addBlock(ModBlocks.CELESTIUM_BLOCK, "Bloc de Celestium");
 		addBlock(ModBlocks.LUCKY_BLOCK, "Bloc chance");
+		addBlock(ModBlocks.CORRUPTED_LUCKY_BLOCK, "Bloc chance corrompu");
+		addBlock(ModBlocks.DEMON_LUCKY_BLOCK, "Bloc chance du démon");
 
 		// --- Demonium ---
 		addItem(ModItems.DEMON_HEART, "Cœur du démon");

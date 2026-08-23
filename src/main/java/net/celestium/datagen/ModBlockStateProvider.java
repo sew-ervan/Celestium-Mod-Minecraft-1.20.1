@@ -38,6 +38,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleCube(ModBlocks.CELESTIUM_ORE.get());
 		simpleCube(ModBlocks.CELESTIUM_BLOCK.get());
 		simpleCube(ModBlocks.LUCKY_BLOCK.get());
+		simpleCube(ModBlocks.CORRUPTED_LUCKY_BLOCK.get());
+		simpleCube(ModBlocks.DEMON_LUCKY_BLOCK.get());
 
 		simpleCube(ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
 		simpleCube(ModBlocks.SUMMONING_ALTAR.get());
