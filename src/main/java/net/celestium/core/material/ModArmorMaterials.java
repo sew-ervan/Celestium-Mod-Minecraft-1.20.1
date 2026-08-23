@@ -29,12 +29,10 @@ public enum ModArmorMaterials implements ArmorMaterial {
 			"celestium:textures/models/armor/celestium_layer_1.png",
 			"celestium:textures/models/armor/celestium_layer_2.png"),
 
-	// Le Demonium n'a pas encore de couches d'armure propres : il emprunte celles du netherite,
-	// que le client possede deja. Rien n'est copie, seul le chemin est reference.
 	DEMONIUM("demonium", 20, new int[]{4, 6, 8, 4}, 12, 3.0F, 0.6F,
 			SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ModItems.DEMONIUM_INGOT.get()),
-			"minecraft:textures/models/armor/netherite_layer_1.png",
-			"minecraft:textures/models/armor/netherite_layer_2.png");
+			"celestium:textures/models/armor/demonium_layer_1.png",
+			"celestium:textures/models/armor/demonium_layer_2.png");
 
 	/** Durabilite de base par emplacement, dans l'ordre bottes / jambieres / plastron / casque. */
 	private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};

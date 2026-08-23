@@ -44,23 +44,22 @@ public class ModItemModelProvider extends ItemModelProvider {
 		flat(ModItems.BACKPACK_SMALL);
 		texturedFlat(ModItems.BACKPACK_MEDIUM, "backpack");
 
-		// Le Demonium n'a pas encore de textures propres. Plutot que de dupliquer celles du
-		// Celestium, ses modeles pointent vers des textures vanilla : le client les possede deja,
-		// rien n'est copie, et le rendu reste distinct.
-		flatVanilla(ModItems.DEMONIUM_FRAGMENT, "item/netherite_scrap");
-		flatVanilla(ModItems.DEMONIUM_INGOT, "item/netherite_ingot");
-		handheldVanilla(ModItems.DEMONIUM_STICK, "item/blaze_rod");
+		// Les textures du Demonium sont derivees de celles du Celestium par corruption : meme
+		// silhouette, teinte basculee vers le rouge, surface brulee.
+		flat(ModItems.DEMONIUM_FRAGMENT);
+		flat(ModItems.DEMONIUM_INGOT);
+		flat(ModItems.DEMONIUM_STICK);
 
-		handheldVanilla(ModItems.DEMONIUM_SWORD, "item/netherite_sword");
-		handheldVanilla(ModItems.DEMONIUM_PICKAXE, "item/netherite_pickaxe");
-		handheldVanilla(ModItems.DEMONIUM_AXE, "item/netherite_axe");
-		handheldVanilla(ModItems.DEMONIUM_SHOVEL, "item/netherite_shovel");
-		handheldVanilla(ModItems.DEMONIUM_HOE, "item/netherite_hoe");
+		handheld(ModItems.DEMONIUM_SWORD);
+		handheld(ModItems.DEMONIUM_PICKAXE);
+		handheld(ModItems.DEMONIUM_AXE);
+		handheld(ModItems.DEMONIUM_SHOVEL);
+		handheld(ModItems.DEMONIUM_HOE);
 
-		flatVanilla(ModItems.DEMONIUM_HELMET, "item/netherite_helmet");
-		flatVanilla(ModItems.DEMONIUM_CHESTPLATE, "item/netherite_chestplate");
-		flatVanilla(ModItems.DEMONIUM_LEGGINGS, "item/netherite_leggings");
-		flatVanilla(ModItems.DEMONIUM_BOOTS, "item/netherite_boots");
+		flat(ModItems.DEMONIUM_HELMET);
+		flat(ModItems.DEMONIUM_CHESTPLATE);
+		flat(ModItems.DEMONIUM_LEGGINGS);
+		flat(ModItems.DEMONIUM_BOOTS);
 
 		spawnEgg(ModItems.MINI_WARDEN_SPAWN_EGG);
 		spawnEgg(ModItems.DEMON_SWORDSMAN_SPAWN_EGG);
@@ -70,16 +69,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 	private void flat(RegistryObject<Item> item) {
 		String name = name(item);
 		withExistingParent(name, mcLoc("item/generated")).texture("layer0", modLoc("item/" + name));
-	}
-
-	/** Objet plat dont la texture est empruntee au jeu de base. */
-	private void flatVanilla(RegistryObject<Item> item, String vanillaTexture) {
-		withExistingParent(name(item), mcLoc("item/generated")).texture("layer0", mcLoc(vanillaTexture));
-	}
-
-	/** Objet tenu par le manche dont la texture est empruntee au jeu de base. */
-	private void handheldVanilla(RegistryObject<Item> item, String vanillaTexture) {
-		withExistingParent(name(item), mcLoc("item/handheld")).texture("layer0", mcLoc(vanillaTexture));
 	}
 
 	/** Objet plat dont la texture porte un autre nom que l'item. */
