@@ -66,10 +66,17 @@ public final class DemoniumTextures {
 			written++;
 		}
 
-		partialCorruption(root);
+		partialCorruption(root, "block/celestium_block.png", "block/corrupted_celestium_block.png");
+		partialCorruption(root, "item/celestium_ingot.png", "item/corrupted_celestium_ingot.png");
+		partialCorruption(root, "item/celestium_helmet.png", "item/corrupted_celestium_helmet.png");
+		partialCorruption(root, "item/celestium_chestplate.png", "item/corrupted_celestium_chestplate.png");
+		partialCorruption(root, "item/celestium_leggings.png", "item/corrupted_celestium_leggings.png");
+		partialCorruption(root, "item/celestium_boots.png", "item/corrupted_celestium_boots.png");
+		partialCorruption(root, "models/armor/celestium_layer_1.png", "models/armor/corrupted_celestium_layer_1.png");
+		partialCorruption(root, "models/armor/celestium_layer_2.png", "models/armor/corrupted_celestium_layer_2.png");
 		derive(root, "entity/miniwarden_texture.png", "entity/parasite.png", "parasite");
 		derive(root, "block/celestium_block.png", "block/summoning_altar.png", "autel");
-		System.out.println((written + 3) + " textures ecrites");
+		System.out.println((written + 10) + " textures ecrites");
 	}
 
 	/**
@@ -92,8 +99,13 @@ public final class DemoniumTextures {
 		System.out.printf("OK      %-46s %dx%d%n", target, image.getWidth(), image.getHeight());
 	}
 
-	private static void partialCorruption(Path root) throws IOException {
-		BufferedImage clean = ImageIO.read(root.resolve("block/celestium_block.png").toFile());
+	private static void partialCorruption(Path root, String from, String to) throws IOException {
+		Path source = root.resolve(from);
+		if (!source.toFile().isFile()) {
+			System.out.println("ABSENT  " + source);
+			return;
+		}
+		BufferedImage clean = ImageIO.read(source.toFile());
 		BufferedImage tainted = corrupt(clean, "corrupted_celestium");
 		BufferedImage blend = new BufferedImage(clean.getWidth(), clean.getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
@@ -105,7 +117,7 @@ public final class DemoniumTextures {
 			}
 		}
 
-		Path target = root.resolve("block/corrupted_celestium_block.png");
+		Path target = root.resolve(to);
 		ImageIO.write(blend, "PNG", target.toFile());
 		System.out.printf("OK      %-46s melange%n", target);
 	}

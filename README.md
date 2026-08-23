@@ -70,13 +70,19 @@ Le mod se parcourt dans cet ordre, et chaque étape en verrouille la suivante :
 2. **Celestium corrompu** — quatre blocs de Celestium, quatre obsidiennes pleureuses et un crâne
    de wither squelette donnent huit blocs corrompus. La corruption ne peut venir d'aucun matériau
    des Terres du démon, sans quoi l'accès dépendrait de ce qu'il débloque.
-3. **Le portail** — un cadre en Celestium corrompu, dix blocs au minimum, allumé avec un fragment
+3. **L'armure en Celestium corrompu** — sans elle, les Terres du démon ralentissent, engourdissent,
+   aveuglent puis rongent. Chaque pièce portée repousse un cran ; la parure complète annule tout.
+   Elle se fabrique dès l'Overworld, sans quoi elle serait nécessaire pour atteindre ce qui permet
+   de la fabriquer.
+4. **Le portail** — un cadre en Celestium corrompu, dix blocs au minimum, allumé avec un fragment
    céleste. Il faut s'y tenir quatre secondes, comme celui du Nether.
-4. **Les Terres du démon** — nuit permanente, six fois plus petites que l'Overworld. Le Demonium
+5. **Les Terres du démon** — nuit permanente, six fois plus petites que l'Overworld. Le Demonium
    s'y trouve dans les mêmes couches que le diamant, et c'est le **seul** minerai du monde. Le
    bois du démon y pousse, des villages corrompus y abritent l'autel d'invocation, et le démon
    épéiste n'existe que là.
-5. **Le Demonium** — équipement complet, opposé au Celestium plutôt que supérieur.
+6. **Le Demonium** — équipement complet, opposé au Celestium plutôt que supérieur. Il protège lui
+   aussi de la corruption : une fois établi, on troque la tenue de voyage contre un vrai
+   équipement.
 
 L'autel accepte un lingot de Demonium et rappelle le boss, seule façon de le combattre à volonté.
 

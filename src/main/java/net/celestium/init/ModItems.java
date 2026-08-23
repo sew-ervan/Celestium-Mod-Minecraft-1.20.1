@@ -80,6 +80,27 @@ public class ModItems {
 	public static final RegistryObject<Item> CELESTIUM_BOOTS = ITEMS.register("celestium_boots",
 			() -> new ModArmorItem(ModArmorMaterials.CELESTIUM, ArmorItem.Type.BOOTS));
 
+	// --- Celestium corrompu : de quoi ouvrir le portail et survivre derriere ---
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_INGOT =
+			ITEMS.register("corrupted_celestium_ingot", () -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_HELMET =
+			ITEMS.register("corrupted_celestium_helmet",
+					() -> new ModArmorItem(ModArmorMaterials.CORRUPTED_CELESTIUM, ArmorItem.Type.HELMET));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_CHESTPLATE =
+			ITEMS.register("corrupted_celestium_chestplate",
+					() -> new ModArmorItem(ModArmorMaterials.CORRUPTED_CELESTIUM, ArmorItem.Type.CHESTPLATE));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_LEGGINGS =
+			ITEMS.register("corrupted_celestium_leggings",
+					() -> new ModArmorItem(ModArmorMaterials.CORRUPTED_CELESTIUM, ArmorItem.Type.LEGGINGS));
+
+	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_BOOTS =
+			ITEMS.register("corrupted_celestium_boots",
+					() -> new ModArmorItem(ModArmorMaterials.CORRUPTED_CELESTIUM, ArmorItem.Type.BOOTS));
+
 	// --- Demonium : matieres premieres ---
 
 	public static final RegistryObject<Item> DEMONIUM_FRAGMENT = ITEMS.register("demonium_fragment",

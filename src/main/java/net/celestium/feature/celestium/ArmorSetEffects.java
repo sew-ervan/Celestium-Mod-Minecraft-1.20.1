@@ -54,6 +54,7 @@ public final class ArmorSetEffects {
 	public static void applyFor(ModArmorMaterials material, ArmorItem.Type type, LivingEntity wearer) {
 		switch (material) {
 			case CELESTIUM -> celestium(type, wearer);
+			case CORRUPTED_CELESTIUM -> corruptedCelestium(type, wearer);
 			case DEMONIUM -> demonium(type, wearer);
 		}
 	}
@@ -64,6 +65,16 @@ public final class ArmorSetEffects {
 			case CHESTPLATE -> refresh(wearer, MobEffects.FIRE_RESISTANCE, SHORT_DURATION, 1, true);
 			case LEGGINGS -> refresh(wearer, MobEffects.MOVEMENT_SPEED, SHORT_DURATION, 2, true);
 			case BOOTS -> refresh(wearer, MobEffects.JUMP, SHORT_DURATION, 2, false);
+		}
+	}
+
+	/**
+	 * La parure corrompue n'accorde qu'une resistance au feu : sa valeur tient a la protection
+	 * qu'elle offre contre la corruption des Terres du demon, pas a ses effets.
+	 */
+	private static void corruptedCelestium(ArmorItem.Type type, LivingEntity wearer) {
+		if (type == ArmorItem.Type.CHESTPLATE) {
+			refresh(wearer, MobEffects.FIRE_RESISTANCE, SHORT_DURATION, 0, true);
 		}
 	}
 

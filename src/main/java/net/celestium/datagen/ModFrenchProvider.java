@@ -71,6 +71,17 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.DEMONIUM_BLOCK, "Bloc de Demonium");
 		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Celestium corrompu");
 
+		// --- Celestium corrompu ---
+		addItem(ModItems.CORRUPTED_CELESTIUM_INGOT, "Lingot de Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_HELMET, "Casque en Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_CHESTPLATE, "Plastron en Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_LEGGINGS, "Jambières en Celestium corrompu");
+		addItem(ModItems.CORRUPTED_CELESTIUM_BOOTS, "Bottes en Celestium corrompu");
+
+		add("message.celestium.corruption.unprotected", "La corruption te ronge. Il te faut une armure.");
+		add("death.attack.corruption", "%1$s a été rongé par la corruption");
+		add("death.attack.corruption.player", "%1$s a été rongé par la corruption en affrontant %2$s");
+
 		// --- Creatures des Terres du demon ---
 		add("entity.celestium.parasite", "Parasite");
 		add("entity.celestium.corrupted_villager", "Villageois corrompu");

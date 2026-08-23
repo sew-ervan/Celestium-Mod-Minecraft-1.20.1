@@ -46,6 +46,12 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 		// Les textures du Demonium sont derivees de celles du Celestium par corruption : meme
 		// silhouette, teinte basculee vers le rouge, surface brulee.
+		flat(ModItems.CORRUPTED_CELESTIUM_INGOT);
+		flat(ModItems.CORRUPTED_CELESTIUM_HELMET);
+		flat(ModItems.CORRUPTED_CELESTIUM_CHESTPLATE);
+		flat(ModItems.CORRUPTED_CELESTIUM_LEGGINGS);
+		flat(ModItems.CORRUPTED_CELESTIUM_BOOTS);
+
 		flat(ModItems.DEMONIUM_FRAGMENT);
 		flat(ModItems.DEMONIUM_INGOT);
 		flat(ModItems.DEMONIUM_STICK);

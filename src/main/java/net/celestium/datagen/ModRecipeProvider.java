@@ -67,6 +67,22 @@ public class ModRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_celestium_block", has(ModBlocks.CELESTIUM_BLOCK.get()))
 				.save(writer, CelestiumMod.id("corrupted_celestium_block"));
 
+		// Le bloc corrompu se detaille en lingots, et inversement, comme tout materiau du mod.
+		unpack(writer, RecipeCategory.MISC, ModItems.CORRUPTED_CELESTIUM_INGOT.get(),
+				ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get(), "corrupted_celestium_ingot_from_block");
+		pack(writer, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get(),
+				ModItems.CORRUPTED_CELESTIUM_INGOT.get(), "corrupted_celestium_block_from_ingots");
+
+		// La tenue du voyage, fabricable des l'Overworld.
+		armour(writer, ModItems.CORRUPTED_CELESTIUM_HELMET.get(),
+				ModItems.CORRUPTED_CELESTIUM_INGOT.get(), "III", "I I");
+		armour(writer, ModItems.CORRUPTED_CELESTIUM_CHESTPLATE.get(),
+				ModItems.CORRUPTED_CELESTIUM_INGOT.get(), "I I", "III", "III");
+		armour(writer, ModItems.CORRUPTED_CELESTIUM_LEGGINGS.get(),
+				ModItems.CORRUPTED_CELESTIUM_INGOT.get(), "III", "I I", "I I");
+		armour(writer, ModItems.CORRUPTED_CELESTIUM_BOOTS.get(),
+				ModItems.CORRUPTED_CELESTIUM_INGOT.get(), "I I", "I I");
+
 		// L'autel : du Demonium travaille sur un socle de bois du demon, autour d'un coeur corrompu.
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SUMMONING_ALTAR.get())
 				.pattern(" D ")

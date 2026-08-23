@@ -29,6 +29,16 @@ public enum ModArmorMaterials implements ArmorMaterial {
 			"celestium:textures/models/armor/celestium_layer_1.png",
 			"celestium:textures/models/armor/celestium_layer_2.png"),
 
+	/**
+	 * Parure de transition : elle protege de la corruption des Terres du demon, ce qui est sa
+	 * raison d'etre. Ses valeurs restent modestes, entre le fer et le diamant : on la porte pour
+	 * survivre au voyage, pas pour se battre.
+	 */
+	CORRUPTED_CELESTIUM("corrupted_celestium", 18, new int[]{2, 5, 6, 2}, 10, 1.5F, 0.1F,
+			SoundEvents.ARMOR_EQUIP_IRON, () -> Ingredient.of(ModItems.CORRUPTED_CELESTIUM_INGOT.get()),
+			"celestium:textures/models/armor/corrupted_celestium_layer_1.png",
+			"celestium:textures/models/armor/corrupted_celestium_layer_2.png"),
+
 	DEMONIUM("demonium", 20, new int[]{4, 6, 8, 4}, 12, 3.0F, 0.6F,
 			SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ModItems.DEMONIUM_INGOT.get()),
 			"celestium:textures/models/armor/demonium_layer_1.png",
