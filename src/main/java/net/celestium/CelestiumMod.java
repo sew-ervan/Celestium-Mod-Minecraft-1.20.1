@@ -1,7 +1,7 @@
 package net.celestium;
 
 import com.mojang.logging.LogUtils;
-import net.celestium.core.material.CelestiumTier;
+import net.celestium.core.material.ModTiers;
 import net.celestium.core.network.ModNetwork;
 import net.celestium.init.ModBlocks;
 import net.celestium.init.ModCreativeTabs;
@@ -47,7 +47,7 @@ public class CelestiumMod {
 
 	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
-			CelestiumTier.registerSorting();
+			ModTiers.registerSorting();
 			ModSpells.init();
 			ModNetwork.register();
 			ModBlocks.BOIS_DU_DEMON.registerFlammability();

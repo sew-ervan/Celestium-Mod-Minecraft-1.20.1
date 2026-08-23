@@ -1,6 +1,6 @@
 package net.celestium.feature.celestium;
 
-import net.celestium.core.material.CelestiumTier;
+import net.celestium.core.material.ModTiers;
 import net.celestium.feature.magie.SpellCaster;
 import net.celestium.init.ModSpells;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 public class CelestiumSwordItem extends SwordItem {
 
 	public CelestiumSwordItem() {
-		super(CelestiumTier.CELESTIUM, 3, -2.4F, new Item.Properties().fireResistant());
+		super(ModTiers.CELESTIUM, 3, -2.4F, new Item.Properties().fireResistant());
 	}
 
 	@Override

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "celestium:demonium_ingot"
+    },
+    "S": {
+      "item": "celestium:demonium_stick"
+    }
+  },
+  "pattern": [
+    "I",
+    "S",
+    "S"
+  ],
+  "result": {
+    "item": "celestium:demonium_shovel"
+  },
+  "show_notification": true
+}

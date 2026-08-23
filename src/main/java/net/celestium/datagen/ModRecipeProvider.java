@@ -38,7 +38,43 @@ public class ModRecipeProvider extends RecipeProvider {
 	@Override
 	protected void buildRecipes(Consumer<FinishedRecipe> writer) {
 		celestium(writer);
+		demonium(writer);
 		woodSet(writer, ModBlocks.BOIS_DU_DEMON);
+	}
+
+	/**
+	 * Le Demonium suit la meme progression que le Celestium : fragment, lingot, bloc, baton, puis
+	 * outils et armure. Seules les matieres changent, les formes restent celles du jeu de base.
+	 */
+	private void demonium(Consumer<FinishedRecipe> writer) {
+		Item fragment = ModItems.DEMONIUM_FRAGMENT.get();
+		Item ingot = ModItems.DEMONIUM_INGOT.get();
+		Item stick = ModItems.DEMONIUM_STICK.get();
+		ItemLike block = ModBlocks.DEMONIUM_BLOCK.get();
+
+		pack(writer, RecipeCategory.MISC, ingot, fragment, "demonium_ingot_from_fragments");
+		unpack(writer, RecipeCategory.MISC, fragment, ingot, "demonium_fragment_from_ingot");
+
+		pack(writer, RecipeCategory.BUILDING_BLOCKS, block, ingot, "demonium_block_from_ingots");
+		unpack(writer, RecipeCategory.MISC, ingot, block, "demonium_ingot_from_block");
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, stick, 4)
+				.pattern("F")
+				.pattern("F")
+				.define('F', fragment)
+				.unlockedBy("has_demonium_fragment", has(fragment))
+				.save(writer, CelestiumMod.id("demonium_stick_from_fragments"));
+
+		tool(writer, ModItems.DEMONIUM_PICKAXE.get(), ingot, stick, "III", " S ", " S ");
+		tool(writer, ModItems.DEMONIUM_SWORD.get(), ingot, stick, "I", "I", "S");
+		tool(writer, ModItems.DEMONIUM_AXE.get(), ingot, stick, "II", "IS", " S");
+		tool(writer, ModItems.DEMONIUM_SHOVEL.get(), ingot, stick, "I", "S", "S");
+		tool(writer, ModItems.DEMONIUM_HOE.get(), ingot, stick, "II", " S", " S");
+
+		armour(writer, ModItems.DEMONIUM_HELMET.get(), ingot, "III", "I I");
+		armour(writer, ModItems.DEMONIUM_CHESTPLATE.get(), ingot, "I I", "III", "III");
+		armour(writer, ModItems.DEMONIUM_LEGGINGS.get(), ingot, "III", "I I", "I I");
+		armour(writer, ModItems.DEMONIUM_BOOTS.get(), ingot, "I I", "I I");
 	}
 
 	private void celestium(Consumer<FinishedRecipe> writer) {

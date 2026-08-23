@@ -9,6 +9,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.List;
@@ -23,9 +25,13 @@ import java.util.List;
 public final class ModConfiguredFeatures {
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CELESTIUM_ORE = key("celestium_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMONIUM_ORE = key("demonium_ore");
 
 	/** Nombre de blocs par filon. Etait de 3 dans le mod d'origine. */
 	private static final int VEIN_SIZE = 4;
+
+	/** Le Demonium se presente en filons plus gros, mais dans un monde bien moins accueillant. */
+	private static final int DEMONIUM_VEIN_SIZE = 6;
 
 	private ModConfiguredFeatures() {
 	}
@@ -39,6 +45,14 @@ public final class ModConfiguredFeatures {
 
 		context.register(CELESTIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
 				new OreConfiguration(targets, VEIN_SIZE)));
+
+		// Le Demonium ne se trouve que dans le Nether : il remplace la netherrack, pas la pierre.
+		context.register(DEMONIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
+				new OreConfiguration(
+						List.of(OreConfiguration.target(
+								new BlockMatchTest(Blocks.NETHERRACK),
+								ModBlocks.DEMONIUM_ORE.get().defaultBlockState())),
+						DEMONIUM_VEIN_SIZE)));
 	}
 
 	private static ResourceKey<ConfiguredFeature<?, ?>> key(String name) {

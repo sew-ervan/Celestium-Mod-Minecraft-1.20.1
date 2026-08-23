@@ -28,15 +28,20 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 		Block ore = ModBlocks.CELESTIUM_ORE.get();
 		Block storage = ModBlocks.CELESTIUM_BLOCK.get();
 
-		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ore, storage);
+		Block demoniumOre = ModBlocks.DEMONIUM_ORE.get();
+		Block demoniumBlock = ModBlocks.DEMONIUM_BLOCK.get();
+
+		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ore, storage, demoniumOre, demoniumBlock);
 
 		// Le mod d'origine testait le niveau de l'outil dans le code du bloc. En 1.20.1 c'est le
 		// role des tags : le minerai et le bloc compact exigent au moins un outil en diamant.
-		tag(BlockTags.NEEDS_DIAMOND_TOOL).add(ore, storage);
+		tag(BlockTags.NEEDS_DIAMOND_TOOL).add(ore, storage, demoniumOre, demoniumBlock);
 		tag(ModTags.Blocks.NEEDS_CELESTIUM_TOOL).add(storage);
 
 		tag(ModTags.Forge.BLOCK_ORES_CELESTIUM).add(ore);
 		tag(ModTags.Forge.BLOCK_STORAGE_BLOCKS_CELESTIUM).add(storage);
+		tag(ModTags.Forge.BLOCK_ORES_DEMONIUM).add(demoniumOre);
+		tag(ModTags.Forge.BLOCK_STORAGE_BLOCKS_DEMONIUM).add(demoniumBlock);
 
 		// --- Bois du demon ---
 

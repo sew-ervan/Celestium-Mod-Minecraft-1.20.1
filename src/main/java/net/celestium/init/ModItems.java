@@ -1,18 +1,20 @@
 package net.celestium.init;
 
 import net.celestium.CelestiumMod;
-import net.celestium.core.material.CelestiumTier;
+import net.celestium.core.material.ModArmorMaterials;
+import net.celestium.core.material.ModTiers;
 import net.celestium.feature.backpack.BackpackItem;
 import net.celestium.feature.backpack.BackpackTier;
-import net.celestium.feature.celestium.CelestiumArmorItem;
 import net.celestium.feature.celestium.CelestiumIngotItem;
 import net.celestium.feature.celestium.CelestiumSwordItem;
+import net.celestium.feature.celestium.ModArmorItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,13 +27,16 @@ import net.minecraftforge.registries.RegistryObject;
  * les noms affiches en jeu sont en francais et vivent dans les fichiers de langue. Les identifiants
  * generes par MCreator melangeaient les deux et comportaient des fautes ({@code fragementceleste},
  * {@code piocheen_celestium}), figees dans les sauvegardes et les recettes.
+ *
+ * <p>Les deux materiaux suivent la meme progression — fragment, lingot, bloc, outils, armure — mais
+ * ne se valent pas : voir {@link ModTiers} et {@link ModArmorMaterials}.
  */
 public class ModItems {
 
 	public static final DeferredRegister<Item> ITEMS =
 			DeferredRegister.create(ForgeRegistries.ITEMS, CelestiumMod.MOD_ID);
 
-	// --- Matieres premieres ---
+	// --- Celestium : matieres premieres ---
 
 	public static final RegistryObject<Item> CELESTIUM_FRAGMENT = ITEMS.register("celestium_fragment",
 			() -> new Item(new Item.Properties().fireResistant()));
@@ -42,38 +47,80 @@ public class ModItems {
 	public static final RegistryObject<Item> CELESTIUM_STICK = ITEMS.register("celestium_stick",
 			() -> new Item(new Item.Properties()));
 
-	// --- Outils ---
+	// --- Celestium : outils ---
 	// Les valeurs d'attaque et de vitesse suivent les ecarts vanilla entre types d'outils ;
-	// ce qui distingue le Celestium des autres materiaux est porte par CelestiumTier.
+	// ce qui distingue un materiau d'un autre est porte par ModTiers.
 
 	public static final RegistryObject<Item> CELESTIUM_SWORD = ITEMS.register("celestium_sword",
 			CelestiumSwordItem::new);
 
 	public static final RegistryObject<Item> CELESTIUM_PICKAXE = ITEMS.register("celestium_pickaxe",
-			() -> new PickaxeItem(CelestiumTier.CELESTIUM, 1, -2.8F, new Item.Properties().fireResistant()));
+			() -> new PickaxeItem(ModTiers.CELESTIUM, 1, -2.8F, new Item.Properties().fireResistant()));
 
 	public static final RegistryObject<Item> CELESTIUM_AXE = ITEMS.register("celestium_axe",
-			() -> new AxeItem(CelestiumTier.CELESTIUM, 5.0F, -3.0F, new Item.Properties().fireResistant()));
+			() -> new AxeItem(ModTiers.CELESTIUM, 5.0F, -3.0F, new Item.Properties().fireResistant()));
 
 	public static final RegistryObject<Item> CELESTIUM_SHOVEL = ITEMS.register("celestium_shovel",
-			() -> new ShovelItem(CelestiumTier.CELESTIUM, 1.5F, -3.0F, new Item.Properties().fireResistant()));
+			() -> new ShovelItem(ModTiers.CELESTIUM, 1.5F, -3.0F, new Item.Properties().fireResistant()));
 
 	public static final RegistryObject<Item> CELESTIUM_HOE = ITEMS.register("celestium_hoe",
-			() -> new HoeItem(CelestiumTier.CELESTIUM, -4, 0.0F, new Item.Properties().fireResistant()));
+			() -> new HoeItem(ModTiers.CELESTIUM, -4, 0.0F, new Item.Properties().fireResistant()));
 
-	// --- Armure ---
+	// --- Celestium : armure ---
 
 	public static final RegistryObject<Item> CELESTIUM_HELMET = ITEMS.register("celestium_helmet",
-			() -> new CelestiumArmorItem(ArmorItem.Type.HELMET));
+			() -> new ModArmorItem(ModArmorMaterials.CELESTIUM, ArmorItem.Type.HELMET));
 
 	public static final RegistryObject<Item> CELESTIUM_CHESTPLATE = ITEMS.register("celestium_chestplate",
-			() -> new CelestiumArmorItem(ArmorItem.Type.CHESTPLATE));
+			() -> new ModArmorItem(ModArmorMaterials.CELESTIUM, ArmorItem.Type.CHESTPLATE));
 
 	public static final RegistryObject<Item> CELESTIUM_LEGGINGS = ITEMS.register("celestium_leggings",
-			() -> new CelestiumArmorItem(ArmorItem.Type.LEGGINGS));
+			() -> new ModArmorItem(ModArmorMaterials.CELESTIUM, ArmorItem.Type.LEGGINGS));
 
 	public static final RegistryObject<Item> CELESTIUM_BOOTS = ITEMS.register("celestium_boots",
-			() -> new CelestiumArmorItem(ArmorItem.Type.BOOTS));
+			() -> new ModArmorItem(ModArmorMaterials.CELESTIUM, ArmorItem.Type.BOOTS));
+
+	// --- Demonium : matieres premieres ---
+
+	public static final RegistryObject<Item> DEMONIUM_FRAGMENT = ITEMS.register("demonium_fragment",
+			() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DEMONIUM_INGOT = ITEMS.register("demonium_ingot",
+			() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DEMONIUM_STICK = ITEMS.register("demonium_stick",
+			() -> new Item(new Item.Properties().fireResistant()));
+
+	// --- Demonium : outils ---
+
+	public static final RegistryObject<Item> DEMONIUM_SWORD = ITEMS.register("demonium_sword",
+			() -> new SwordItem(ModTiers.DEMONIUM, 4, -2.4F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DEMONIUM_PICKAXE = ITEMS.register("demonium_pickaxe",
+			() -> new PickaxeItem(ModTiers.DEMONIUM, 1, -2.8F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DEMONIUM_AXE = ITEMS.register("demonium_axe",
+			() -> new AxeItem(ModTiers.DEMONIUM, 6.0F, -3.0F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DEMONIUM_SHOVEL = ITEMS.register("demonium_shovel",
+			() -> new ShovelItem(ModTiers.DEMONIUM, 1.5F, -3.0F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DEMONIUM_HOE = ITEMS.register("demonium_hoe",
+			() -> new HoeItem(ModTiers.DEMONIUM, -4, 0.0F, new Item.Properties().fireResistant()));
+
+	// --- Demonium : armure ---
+
+	public static final RegistryObject<Item> DEMONIUM_HELMET = ITEMS.register("demonium_helmet",
+			() -> new ModArmorItem(ModArmorMaterials.DEMONIUM, ArmorItem.Type.HELMET));
+
+	public static final RegistryObject<Item> DEMONIUM_CHESTPLATE = ITEMS.register("demonium_chestplate",
+			() -> new ModArmorItem(ModArmorMaterials.DEMONIUM, ArmorItem.Type.CHESTPLATE));
+
+	public static final RegistryObject<Item> DEMONIUM_LEGGINGS = ITEMS.register("demonium_leggings",
+			() -> new ModArmorItem(ModArmorMaterials.DEMONIUM, ArmorItem.Type.LEGGINGS));
+
+	public static final RegistryObject<Item> DEMONIUM_BOOTS = ITEMS.register("demonium_boots",
+			() -> new ModArmorItem(ModArmorMaterials.DEMONIUM, ArmorItem.Type.BOOTS));
 
 	// --- Sacs celestes ---
 

@@ -51,6 +51,25 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.CELESTIUM_BLOCK, "Bloc de Celestium");
 		addBlock(ModBlocks.LUCKY_BLOCK, "Bloc chance");
 
+		// --- Demonium ---
+		addItem(ModItems.DEMONIUM_FRAGMENT, "Fragment de Demonium");
+		addItem(ModItems.DEMONIUM_INGOT, "Lingot de Demonium");
+		addItem(ModItems.DEMONIUM_STICK, "Bâton de Demonium");
+
+		addItem(ModItems.DEMONIUM_SWORD, "Épée en Demonium");
+		addItem(ModItems.DEMONIUM_PICKAXE, "Pioche en Demonium");
+		addItem(ModItems.DEMONIUM_AXE, "Hache en Demonium");
+		addItem(ModItems.DEMONIUM_SHOVEL, "Pelle en Demonium");
+		addItem(ModItems.DEMONIUM_HOE, "Houe en Demonium");
+
+		addItem(ModItems.DEMONIUM_HELMET, "Casque en Demonium");
+		addItem(ModItems.DEMONIUM_CHESTPLATE, "Plastron en Demonium");
+		addItem(ModItems.DEMONIUM_LEGGINGS, "Jambières en Demonium");
+		addItem(ModItems.DEMONIUM_BOOTS, "Bottes en Demonium");
+
+		addBlock(ModBlocks.DEMONIUM_ORE, "Minerai de Demonium");
+		addBlock(ModBlocks.DEMONIUM_BLOCK, "Bloc de Demonium");
+
 		WoodSet demon = ModBlocks.BOIS_DU_DEMON;
 		addBlock(demon.log, "Rondin de bois du démon");
 		addBlock(demon.wood, "Bois du démon");

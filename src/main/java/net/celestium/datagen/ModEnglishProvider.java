@@ -46,6 +46,25 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(ModBlocks.CELESTIUM_BLOCK, "Block of Celestium");
 		addBlock(ModBlocks.LUCKY_BLOCK, "Lucky Block");
 
+		// --- Demonium ---
+		addItem(ModItems.DEMONIUM_FRAGMENT, "Demonium Scrap");
+		addItem(ModItems.DEMONIUM_INGOT, "Demonium Ingot");
+		addItem(ModItems.DEMONIUM_STICK, "Demonium Rod");
+
+		addItem(ModItems.DEMONIUM_SWORD, "Demonium Sword");
+		addItem(ModItems.DEMONIUM_PICKAXE, "Demonium Pickaxe");
+		addItem(ModItems.DEMONIUM_AXE, "Demonium Axe");
+		addItem(ModItems.DEMONIUM_SHOVEL, "Demonium Shovel");
+		addItem(ModItems.DEMONIUM_HOE, "Demonium Hoe");
+
+		addItem(ModItems.DEMONIUM_HELMET, "Demonium Helmet");
+		addItem(ModItems.DEMONIUM_CHESTPLATE, "Demonium Chestplate");
+		addItem(ModItems.DEMONIUM_LEGGINGS, "Demonium Leggings");
+		addItem(ModItems.DEMONIUM_BOOTS, "Demonium Boots");
+
+		addBlock(ModBlocks.DEMONIUM_ORE, "Demonium Ore");
+		addBlock(ModBlocks.DEMONIUM_BLOCK, "Block of Demonium");
+
 		WoodSet demon = ModBlocks.BOIS_DU_DEMON;
 		addBlock(demon.log, "Demon Wood Log");
 		addBlock(demon.wood, "Demon Wood");

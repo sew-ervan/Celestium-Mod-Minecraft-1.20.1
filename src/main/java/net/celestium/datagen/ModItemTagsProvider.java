@@ -33,6 +33,11 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 		tag(ModTags.Forge.ORES_CELESTIUM).add(ModBlocks.CELESTIUM_ORE.get().asItem());
 		tag(ModTags.Forge.STORAGE_BLOCKS_CELESTIUM).add(ModBlocks.CELESTIUM_BLOCK.get().asItem());
 
+		tag(ModTags.Forge.NUGGETS_DEMONIUM).add(ModItems.DEMONIUM_FRAGMENT.get());
+		tag(ModTags.Forge.INGOTS_DEMONIUM).add(ModItems.DEMONIUM_INGOT.get());
+		tag(ModTags.Forge.ORES_DEMONIUM).add(ModBlocks.DEMONIUM_ORE.get().asItem());
+		tag(ModTags.Forge.STORAGE_BLOCKS_DEMONIUM).add(ModBlocks.DEMONIUM_BLOCK.get().asItem());
+
 		tag(ModTags.Items.BOIS_DU_DEMON_LOGS).add(demon.log.get().asItem(), demon.wood.get().asItem());
 
 		tag(ItemTags.LOGS).addTag(ModTags.Items.BOIS_DU_DEMON_LOGS);

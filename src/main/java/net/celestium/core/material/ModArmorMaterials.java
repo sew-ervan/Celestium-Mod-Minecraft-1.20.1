@@ -11,19 +11,30 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 /**
- * Materiau d'armure du Celestium.
+ * Materiaux d'armure du mod.
  *
- * <p>Reprend les valeurs de l'armure generee par MCreator (defense 4/7/8/4, resistance 3.5,
- * repoussee 0.2, durabilite x25) mais sous forme d'enum partagee au lieu d'une classe anonyme
- * redeclaree dans la classe de base de l'armure.
+ * <p>L'armure en Celestium redeclarait ce materiau dans une classe anonyme, au sein de sa propre
+ * classe de base. Une enum partagee sert desormais les deux parures.
+ *
+ * <p>Le Celestium protege mieux et encaisse davantage ; le Demonium, plus leger, mise sur la
+ * resistance a la poussee et se repare a bien meilleur compte.
  *
  * <p>En 1.20.1 les methodes de {@link ArmorMaterial} sont indexees par {@link ArmorItem.Type} et
  * non plus par {@code EquipmentSlot} : c'est l'un des points de rupture du portage depuis 1.19.2.
  */
-public enum CelestiumArmorMaterial implements ArmorMaterial {
+public enum ModArmorMaterials implements ArmorMaterial {
 
 	CELESTIUM("celestium", 25, new int[]{4, 7, 8, 4}, 9, 3.5F, 0.2F,
-			() -> Ingredient.of(ModItems.CELESTIUM_INGOT.get()));
+			SoundEvents.ARMOR_EQUIP_DIAMOND, () -> Ingredient.of(ModItems.CELESTIUM_INGOT.get()),
+			"celestium:textures/models/armor/celestium_layer_1.png",
+			"celestium:textures/models/armor/celestium_layer_2.png"),
+
+	// Le Demonium n'a pas encore de couches d'armure propres : il emprunte celles du netherite,
+	// que le client possede deja. Rien n'est copie, seul le chemin est reference.
+	DEMONIUM("demonium", 20, new int[]{4, 6, 8, 4}, 12, 3.0F, 0.6F,
+			SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ModItems.DEMONIUM_INGOT.get()),
+			"minecraft:textures/models/armor/netherite_layer_1.png",
+			"minecraft:textures/models/armor/netherite_layer_2.png");
 
 	/** Durabilite de base par emplacement, dans l'ordre bottes / jambieres / plastron / casque. */
 	private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
@@ -34,17 +45,34 @@ public enum CelestiumArmorMaterial implements ArmorMaterial {
 	private final int enchantmentValue;
 	private final float toughness;
 	private final float knockbackResistance;
+	private final SoundEvent equipSound;
 	private final Supplier<Ingredient> repairIngredient;
+	private final String outerLayer;
+	private final String innerLayer;
 
-	CelestiumArmorMaterial(String name, int durabilityMultiplier, int[] defenceByType, int enchantmentValue,
-			float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+	ModArmorMaterials(String name, int durabilityMultiplier, int[] defenceByType, int enchantmentValue,
+			float toughness, float knockbackResistance, SoundEvent equipSound,
+			Supplier<Ingredient> repairIngredient, String outerLayer, String innerLayer) {
 		this.name = name;
 		this.durabilityMultiplier = durabilityMultiplier;
 		this.defenceByType = defenceByType;
 		this.enchantmentValue = enchantmentValue;
 		this.toughness = toughness;
 		this.knockbackResistance = knockbackResistance;
+		this.equipSound = equipSound;
 		this.repairIngredient = repairIngredient;
+		this.outerLayer = outerLayer;
+		this.innerLayer = innerLayer;
+	}
+
+	/** Chemin de la couche de texture, les jambieres etant seules a utiliser la couche interne. */
+	public String getLayerTexture(ArmorItem.Type type) {
+		return type == ArmorItem.Type.LEGGINGS ? this.innerLayer : this.outerLayer;
+	}
+
+	/** Nom court du materiau, sans espace de noms : sert a nommer les couches de texture. */
+	public String getShortName() {
+		return this.name;
 	}
 
 	@Override
@@ -64,7 +92,7 @@ public enum CelestiumArmorMaterial implements ArmorMaterial {
 
 	@Override
 	public SoundEvent getEquipSound() {
-		return SoundEvents.ARMOR_EQUIP_DIAMOND;
+		return this.equipSound;
 	}
 
 	@Override

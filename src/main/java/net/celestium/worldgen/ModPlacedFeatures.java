@@ -28,6 +28,9 @@ public final class ModPlacedFeatures {
 	/** Placement propre a la dimension celeste, sans commune mesure avec celui de la surface. */
 	public static final ResourceKey<PlacedFeature> CELESTIUM_ORE_CELESTIAL = key("celestium_ore_celestial");
 
+	/** Filons de Demonium, repartis sur toute la hauteur du Nether. */
+	public static final ResourceKey<PlacedFeature> DEMONIUM_ORE = key("demonium_ore");
+
 	// Valeurs relevees a la demande du serveur. Le mod d'origine en donnait 2 filons de 3 blocs
 	// entre -64 et -48, soit une bande de seize blocs au fond du monde : le Celestium y etait
 	// pratiquement introuvable. Ces trois constantes se reglent independamment.
@@ -40,6 +43,10 @@ public final class ModPlacedFeatures {
 	private static final int CELESTIAL_VEINS_PER_CHUNK = 14;
 	private static final int CELESTIAL_MIN_HEIGHT = 0;
 	private static final int CELESTIAL_MAX_HEIGHT = 128;
+
+	private static final int DEMONIUM_VEINS_PER_CHUNK = 8;
+	private static final int DEMONIUM_MIN_HEIGHT = 8;
+	private static final int DEMONIUM_MAX_HEIGHT = 120;
 
 	private ModPlacedFeatures() {
 	}
@@ -55,6 +62,16 @@ public final class ModPlacedFeatures {
 						HeightRangePlacement.uniform(
 								VerticalAnchor.absolute(MIN_HEIGHT),
 								VerticalAnchor.absolute(MAX_HEIGHT)),
+						BiomeFilter.biome())));
+
+		context.register(DEMONIUM_ORE, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.DEMONIUM_ORE),
+				List.of(
+						CountPlacement.of(DEMONIUM_VEINS_PER_CHUNK),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(
+								VerticalAnchor.absolute(DEMONIUM_MIN_HEIGHT),
+								VerticalAnchor.absolute(DEMONIUM_MAX_HEIGHT)),
 						BiomeFilter.biome())));
 
 		context.register(CELESTIUM_ORE_CELESTIAL, new PlacedFeature(

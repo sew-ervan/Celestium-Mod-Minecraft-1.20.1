@@ -39,6 +39,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleCube(ModBlocks.CELESTIUM_BLOCK.get());
 		simpleCube(ModBlocks.LUCKY_BLOCK.get());
 
+		// Meme parti pris que pour les items : textures vanilla en attendant les tiennes.
+		simpleCubeWith(ModBlocks.DEMONIUM_ORE.get(), mcLoc("block/ancient_debris_side"));
+		simpleCubeWith(ModBlocks.DEMONIUM_BLOCK.get(), mcLoc("block/netherite_block"));
+
 		portal();
 
 		woodSet(ModBlocks.BOIS_DU_DEMON);
@@ -64,6 +68,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	/** Bloc plein a texture unique, plus son modele d'item. */
 	private void simpleCube(Block block) {
 		simpleBlockWithItem(block, cubeAll(block));
+	}
+
+	/** Bloc plein dont la texture est empruntee au jeu de base. */
+	private void simpleCubeWith(Block block, ResourceLocation texture) {
+		simpleBlockWithItem(block, models().cubeAll(name(block), texture));
 	}
 
 	/** Genere les dix blocs d'une essence a partir de ses quatre textures. */

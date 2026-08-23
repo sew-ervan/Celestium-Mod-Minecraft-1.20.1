@@ -1,6 +1,8 @@
 {
   "values": [
     "celestium:celestium_ore",
-    "celestium:celestium_block"
+    "celestium:celestium_block",
+    "celestium:demonium_ore",
+    "celestium:demonium_block"
   ]
 }

@@ -70,8 +70,15 @@ public final class ModTags {
 		public static final TagKey<Item> STORAGE_BLOCKS_CELESTIUM = itemTag("storage_blocks/celestium");
 		public static final TagKey<Item> ORES_CELESTIUM = itemTag("ores/celestium");
 
+		public static final TagKey<Item> INGOTS_DEMONIUM = itemTag("ingots/demonium");
+		public static final TagKey<Item> NUGGETS_DEMONIUM = itemTag("nuggets/demonium");
+		public static final TagKey<Item> STORAGE_BLOCKS_DEMONIUM = itemTag("storage_blocks/demonium");
+		public static final TagKey<Item> ORES_DEMONIUM = itemTag("ores/demonium");
+
 		public static final TagKey<Block> BLOCK_ORES_CELESTIUM = blockTag("ores/celestium");
 		public static final TagKey<Block> BLOCK_STORAGE_BLOCKS_CELESTIUM = blockTag("storage_blocks/celestium");
+		public static final TagKey<Block> BLOCK_ORES_DEMONIUM = blockTag("ores/demonium");
+		public static final TagKey<Block> BLOCK_STORAGE_BLOCKS_DEMONIUM = blockTag("storage_blocks/demonium");
 
 		private Forge() {
 		}

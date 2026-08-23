@@ -62,6 +62,26 @@ public class ModBlocks {
 					.lightLevel(state -> 1)));
 
 	/**
+	 * Minerai de Demonium, present uniquement dans le Nether. Le pendant demoniaque du Celestium :
+	 * plus accessible, mais dans un monde qui l'est moins.
+	 */
+	public static final RegistryObject<Block> DEMONIUM_ORE = register("demonium_ore",
+			() -> new DropExperienceBlock(
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.NETHER)
+							.sound(SoundType.NETHER_ORE)
+							.strength(4.0F, 8.0F)
+							.requiresCorrectToolForDrops(),
+					UniformInt.of(2, 6)));
+
+	public static final RegistryObject<Block> DEMONIUM_BLOCK = register("demonium_block",
+			() -> new Block(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_RED)
+					.sound(SoundType.NETHERITE_BLOCK)
+					.strength(50.0F, 1200.0F)
+					.requiresCorrectToolForDrops()));
+
+	/**
 	 * La surface d'un portail celeste. Elle n'a pas d'item : on ne la pose pas, on allume un cadre.
 	 * Indestructible et sans butin, comme un portail du Nether.
 	 */

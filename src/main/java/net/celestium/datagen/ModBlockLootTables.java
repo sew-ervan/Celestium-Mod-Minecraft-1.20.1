@@ -46,6 +46,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
 
 		this.dropSelf(ModBlocks.CELESTIUM_BLOCK.get());
+		this.dropSelf(ModBlocks.DEMONIUM_BLOCK.get());
+
+		this.add(ModBlocks.DEMONIUM_ORE.get(), block -> createSilkTouchDispatchTable(block,
+				this.applyExplosionDecay(block,
+						LootItem.lootTableItem(ModItems.DEMONIUM_FRAGMENT.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F)))
+								.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
 
 		// Tout le comportement du bloc chance tient ici : un tirage unique dans le tag des
 		// recompenses. Le bloc lui-meme ne se rend pas.

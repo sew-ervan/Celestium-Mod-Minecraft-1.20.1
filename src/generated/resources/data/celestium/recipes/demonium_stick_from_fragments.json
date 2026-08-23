@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "celestium:demonium_fragment"
+    }
+  },
+  "pattern": [
+    "F",
+    "F"
+  ],
+  "result": {
+    "count": 4,
+    "item": "celestium:demonium_stick"
+  },
+  "show_notification": true
+}

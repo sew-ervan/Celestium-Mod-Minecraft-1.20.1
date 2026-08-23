@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "celestium:demonium_ingot"
+    }
+  },
+  "pattern": [
+    "III",
+    "I I"
+  ],
+  "result": {
+    "item": "celestium:demonium_helmet"
+  },
+  "show_notification": true
+}

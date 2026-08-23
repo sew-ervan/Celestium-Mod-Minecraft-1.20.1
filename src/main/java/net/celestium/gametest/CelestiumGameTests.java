@@ -2,7 +2,8 @@ package net.celestium.gametest;
 
 import net.celestium.CelestiumMod;
 import net.celestium.core.registry.ModTags;
-import net.celestium.feature.celestium.CelestiumArmorEffects;
+import net.celestium.core.material.ModArmorMaterials;
+import net.celestium.feature.celestium.ArmorSetEffects;
 import net.celestium.feature.magie.Faction;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.portal.CelestialPortalShape;
@@ -96,7 +97,7 @@ public class CelestiumGameTests {
 		Player player = helper.makeMockPlayer();
 		player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.CELESTIUM_HELMET.get()));
 
-		CelestiumArmorEffects.applyFor(ArmorItem.Type.HELMET, player);
+		ArmorSetEffects.applyFor(ModArmorMaterials.CELESTIUM, ArmorItem.Type.HELMET, player);
 
 		helper.assertTrue(player.hasEffect(MobEffects.NIGHT_VISION),
 				"Le casque en Celestium n'accorde pas la vision nocturne");
@@ -104,7 +105,7 @@ public class CelestiumGameTests {
 		// Le refactor tient dans ce point : un effet encore largement valide n'est pas reconstruit
 		// a chaque tick. Les trois autres pieces le faisaient vingt fois par seconde.
 		int durationBefore = player.getEffect(MobEffects.NIGHT_VISION).getDuration();
-		CelestiumArmorEffects.applyFor(ArmorItem.Type.HELMET, player);
+		ArmorSetEffects.applyFor(ModArmorMaterials.CELESTIUM, ArmorItem.Type.HELMET, player);
 		int durationAfter = player.getEffect(MobEffects.NIGHT_VISION).getDuration();
 
 		helper.assertTrue(durationAfter == durationBefore,
