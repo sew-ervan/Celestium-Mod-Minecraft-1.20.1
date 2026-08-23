@@ -5,16 +5,20 @@
     "C": {
       "item": "celestium:celestium_block"
     },
-    "D": {
-      "item": "celestium:demonium_fragment"
+    "O": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "W": {
+      "item": "minecraft:wither_skeleton_skull"
     }
   },
   "pattern": [
-    " D ",
-    "DCD",
-    " D "
+    "OCO",
+    "CWC",
+    "OCO"
   ],
   "result": {
+    "count": 8,
     "item": "celestium:corrupted_celestium_block"
   },
   "show_notification": true

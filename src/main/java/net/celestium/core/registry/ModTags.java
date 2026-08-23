@@ -5,7 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.block.Block;
 
 /** Tous les tags du mod, declares en un seul endroit. */
@@ -27,6 +27,19 @@ public final class ModTags {
 		}
 	}
 
+	public static final class Structures {
+
+		/** Toutes les structures du mod, pour un {@code /locate structure #celestium:structures}. */
+		public static final TagKey<Structure> ALL = tag("structures");
+
+		private Structures() {
+		}
+
+		private static TagKey<Structure> tag(String name) {
+			return TagKey.create(Registries.STRUCTURE, CelestiumMod.id(name));
+		}
+	}
+
 	public static final class Items {
 
 		/**
@@ -43,22 +56,6 @@ public final class ModTags {
 
 		private static TagKey<Item> tag(String name) {
 			return TagKey.create(Registries.ITEM, CelestiumMod.id(name));
-		}
-	}
-
-	public static final class Biomes {
-
-		/**
-		 * Biomes ou le demon epeiste peut apparaitre : les lieux sombres et hostiles de la surface,
-		 * plus le Deep Dark.
-		 */
-		public static final TagKey<Biome> DEMON_SWORDSMAN_SPAWNS = tag("demon_swordsman_spawns");
-
-		private Biomes() {
-		}
-
-		private static TagKey<Biome> tag(String name) {
-			return TagKey.create(Registries.BIOME, CelestiumMod.id(name));
 		}
 	}
 

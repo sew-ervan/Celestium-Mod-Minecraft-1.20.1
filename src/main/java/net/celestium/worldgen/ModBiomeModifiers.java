@@ -29,17 +29,6 @@ import java.util.List;
 public final class ModBiomeModifiers {
 
 	public static final ResourceKey<BiomeModifier> ADD_CELESTIUM_ORE = key("add_celestium_ore");
-	public static final ResourceKey<BiomeModifier> ADD_DEMON_SWORDSMAN = key("add_demon_swordsman");
-
-	/**
-	 * Poids d'apparition du demon epeiste.
-	 *
-	 * <p>Pour donner l'echelle : un zombie pese 95, une araignee 100, un enderman 10, une sorciere
-	 * 5. Le total des poids d'un biome sombre tourne autour de 400. A 3, le demon represente donc
-	 * moins d'un pour cent des apparitions hostiles — soit une rencontre par plusieurs nuits, ce
-	 * qui convient a un boss de 220 points de vie dote de sa propre barre de vie.
-	 */
-	private static final int DEMON_SPAWN_WEIGHT = 3;
 
 	private ModBiomeModifiers() {
 	}
@@ -52,13 +41,6 @@ public final class ModBiomeModifiers {
 				biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
 				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.CELESTIUM_ORE)),
 				GenerationStep.Decoration.UNDERGROUND_ORES));
-
-		// Le mod d'origine avait ces reglages saisis dans MCreator mais desactives : la creature
-		// n'apparaissait jamais autrement que par oeuf de spawn.
-		context.register(ADD_DEMON_SWORDSMAN, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
-				biomes.getOrThrow(ModTags.Biomes.DEMON_SWORDSMAN_SPAWNS),
-				List.of(new MobSpawnSettings.SpawnerData(
-						ModEntities.DEMON_SWORDSMAN.get(), DEMON_SPAWN_WEIGHT, 1, 1))));
 	}
 
 	private static ResourceKey<BiomeModifier> key(String name) {

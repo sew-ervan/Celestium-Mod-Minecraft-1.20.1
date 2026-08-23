@@ -44,17 +44,27 @@ public class ModRecipeProvider extends RecipeProvider {
 	}
 
 	/**
-	 * La corruption du Celestium : quatre fragments arraches au demon epeiste souillent un bloc de
-	 * Celestium. C'est la seule recette qui melange les deux materiaux, et elle ouvre le portail.
+	 * La corruption du Celestium, seule facon d'ouvrir le portail.
+	 *
+	 * <p>Elle ne peut dependre d'aucun materiau des Terres du demon : le demon epeiste n'y est
+	 * accessible qu'une fois le portail franchi, et faire du Demonium l'ingredient de son propre
+	 * acces rendait la progression impossible. La souillure vient donc du Nether, seul endroit du
+	 * jeu de base ou l'on trouve de quoi corrompre : un crane de wither squelette et de
+	 * l'obsidienne pleureuse.
+	 *
+	 * <p>Huit blocs par tour de recette, pour un cadre minimal qui en reclame dix : deux voyages
+	 * dans une forteresse suffisent, sans que l'acces devienne une formalite.
 	 */
 	private void corruption(Consumer<FinishedRecipe> writer) {
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get())
-				.pattern(" D ")
-				.pattern("DCD")
-				.pattern(" D ")
-				.define('D', ModItems.DEMONIUM_FRAGMENT.get())
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,
+						ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get(), 8)
+				.pattern("OCO")
+				.pattern("CWC")
+				.pattern("OCO")
+				.define('O', Items.CRYING_OBSIDIAN)
 				.define('C', ModBlocks.CELESTIUM_BLOCK.get())
-				.unlockedBy("has_demonium_fragment", has(ModItems.DEMONIUM_FRAGMENT.get()))
+				.define('W', Items.WITHER_SKELETON_SKULL)
+				.unlockedBy("has_celestium_block", has(ModBlocks.CELESTIUM_BLOCK.get()))
 				.save(writer, CelestiumMod.id("corrupted_celestium_block"));
 
 		// L'autel : du Demonium travaille sur un socle de bois du demon, autour d'un coeur corrompu.

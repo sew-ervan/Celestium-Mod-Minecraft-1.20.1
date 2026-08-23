@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_demonium_fragment": {
+    "has_celestium_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "celestium:demonium_fragment"
+              "celestium:celestium_block"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_demonium_fragment",
+      "has_celestium_block",
       "has_the_recipe"
     ]
   ],

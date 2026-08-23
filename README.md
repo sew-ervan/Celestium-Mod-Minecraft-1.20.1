@@ -67,16 +67,22 @@ java tools/DemoniumTextures.java src/main/resources/assets/celestium/textures
 Le mod se parcourt dans cet ordre, et chaque étape en verrouille la suivante :
 
 1. **Celestium** — se mine dans l'Overworld, entre les altitudes -64 et -40.
-2. **Le démon épéiste** — boss de 220 points de vie, apparaît seul et rarement dans les forêts
-   denses, marais, mangroves et le Deep Dark. Il passe en seconde phase sous la moitié de sa vie.
-   C'est la **seule** source de Demonium avant le portail.
-3. **Celestium corrompu** — quatre fragments de Demonium souillent un bloc de Celestium.
-4. **Le portail** — un cadre en Celestium corrompu, allumé avec un fragment céleste.
-5. **Les Terres du démon** — nuit permanente. Le Demonium s'y mine à quatorze filons par chunk,
-   le bois du démon y pousse, et des villages corrompus y abritent l'autel d'invocation.
+2. **Celestium corrompu** — quatre blocs de Celestium, quatre obsidiennes pleureuses et un crâne
+   de wither squelette donnent huit blocs corrompus. La corruption ne peut venir d'aucun matériau
+   des Terres du démon, sans quoi l'accès dépendrait de ce qu'il débloque.
+3. **Le portail** — un cadre en Celestium corrompu, dix blocs au minimum, allumé avec un fragment
+   céleste. Il faut s'y tenir quatre secondes, comme celui du Nether.
+4. **Les Terres du démon** — nuit permanente, six fois plus petites que l'Overworld. Le Demonium
+   s'y trouve dans les mêmes couches que le diamant, et c'est le **seul** minerai du monde. Le
+   bois du démon y pousse, des villages corrompus y abritent l'autel d'invocation, et le démon
+   épéiste n'existe que là.
+5. **Le Demonium** — équipement complet, opposé au Celestium plutôt que supérieur.
 
-L'autel accepte un lingot de Demonium et rappelle le boss : de quoi refaire le plein de fragments
-sans errer des nuits durant dans l'Overworld.
+L'autel accepte un lingot de Demonium et rappelle le boss, seule façon de le combattre à volonté.
+
+Pour situer une structure : `/locate structure #celestium:structures`. La commande ne cherche que
+dans la dimension courante — le village depuis les Terres du démon, le cimetière depuis
+l'Overworld.
 
 ## Compatibilité des mondes
 

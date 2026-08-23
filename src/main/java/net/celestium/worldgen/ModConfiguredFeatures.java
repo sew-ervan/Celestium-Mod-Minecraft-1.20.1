@@ -15,8 +15,6 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.List;
@@ -44,22 +42,15 @@ public final class ModConfiguredFeatures {
 	}
 
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-		List<OreConfiguration.TargetBlockState> targets = List.of(
-				OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES),
-						ModBlocks.CELESTIUM_ORE.get().defaultBlockState()),
-				OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-						ModBlocks.CELESTIUM_ORE.get().defaultBlockState()));
-
 		context.register(CELESTIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
-				new OreConfiguration(targets, VEIN_SIZE)));
+				new OreConfiguration(targets(ModBlocks.CELESTIUM_ORE.get()), VEIN_SIZE)));
 
-		// Le Demonium ne se trouve que dans le Nether : il remplace la netherrack, pas la pierre.
+		// Le Demonium se loge dans la roche des Terres du demon, dont le relief est engendre par le
+		// bruit de l'Overworld : ce sont donc les memes blocs remplacables que pour le Celestium.
+		// Cibler la netherrack, comme lorsque le minerai vivait dans le Nether, l'empechait
+		// purement et simplement d'apparaitre.
 		context.register(DEMONIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
-				new OreConfiguration(
-						List.of(OreConfiguration.target(
-								new BlockMatchTest(Blocks.NETHERRACK),
-								ModBlocks.DEMONIUM_ORE.get().defaultBlockState())),
-						DEMONIUM_VEIN_SIZE)));
+				new OreConfiguration(targets(ModBlocks.DEMONIUM_ORE.get()), DEMONIUM_VEIN_SIZE)));
 
 		// Le seul arbre qui pousse sur les terres du demon : tronc droit et houppier compact.
 		context.register(DEMON_TREE, new ConfiguredFeature<>(Feature.TREE,
@@ -71,6 +62,15 @@ public final class ModConfiguredFeatures {
 						new TwoLayersFeatureSize(1, 0, 1))
 						.ignoreVines()
 						.build()));
+	}
+
+	/** Un minerai remplace la pierre en surface et le deepslate en profondeur. */
+	private static List<OreConfiguration.TargetBlockState> targets(net.minecraft.world.level.block.Block ore) {
+		return List.of(
+				OreConfiguration.target(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES),
+						ore.defaultBlockState()),
+				OreConfiguration.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
+						ore.defaultBlockState()));
 	}
 
 	private static ResourceKey<ConfiguredFeature<?, ?>> key(String name) {

@@ -33,9 +33,6 @@ public final class ModPlacedFeatures {
 	/** Arbres des terres du demon. */
 	public static final ResourceKey<PlacedFeature> DEMON_TREE = key("demon_tree");
 
-	/** Filons de Demonium, repartis sur toute la hauteur du Nether. */
-	public static final ResourceKey<PlacedFeature> DEMONIUM_ORE = key("demonium_ore");
-
 	// Valeurs relevees a la demande du serveur. Le mod d'origine en donnait 2 filons de 3 blocs
 	// entre -64 et -48, soit une bande de seize blocs au fond du monde : le Celestium y etait
 	// pratiquement introuvable. Ces trois constantes se reglent independamment.
@@ -43,15 +40,11 @@ public final class ModPlacedFeatures {
 	private static final int MIN_HEIGHT = -64;
 	private static final int MAX_HEIGHT = -40;
 
-	// Dans la dimension celeste le Celestium est la regle et non l'exception : filons bien plus
-	// nombreux, repartis sur toute la hauteur jouable. C'est ce qui justifie le voyage.
-	private static final int WASTES_VEINS_PER_CHUNK = 14;
-	private static final int WASTES_MIN_HEIGHT = 0;
-	private static final int WASTES_MAX_HEIGHT = 128;
-
-	private static final int DEMONIUM_VEINS_PER_CHUNK = 8;
-	private static final int DEMONIUM_MIN_HEIGHT = 8;
-	private static final int DEMONIUM_MAX_HEIGHT = 120;
+	// Le Demonium se cherche exactement la ou se cherche le diamant : meme bande, meme repartition
+	// en triangle qui concentre les filons vers le bas. C'est le seul minerai de la dimension.
+	private static final int WASTES_VEINS_PER_CHUNK = 7;
+	private static final int WASTES_MIN_HEIGHT = -64;
+	private static final int WASTES_MAX_HEIGHT = 16;
 
 	private ModPlacedFeatures() {
 	}
@@ -69,16 +62,6 @@ public final class ModPlacedFeatures {
 								VerticalAnchor.absolute(MAX_HEIGHT)),
 						BiomeFilter.biome())));
 
-		context.register(DEMONIUM_ORE, new PlacedFeature(
-				configured.getOrThrow(ModConfiguredFeatures.DEMONIUM_ORE),
-				List.of(
-						CountPlacement.of(DEMONIUM_VEINS_PER_CHUNK),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(
-								VerticalAnchor.absolute(DEMONIUM_MIN_HEIGHT),
-								VerticalAnchor.absolute(DEMONIUM_MAX_HEIGHT)),
-						BiomeFilter.biome())));
-
 		context.register(DEMON_TREE, new PlacedFeature(
 				configured.getOrThrow(ModConfiguredFeatures.DEMON_TREE),
 				List.of(
@@ -92,7 +75,7 @@ public final class ModPlacedFeatures {
 				List.of(
 						CountPlacement.of(WASTES_VEINS_PER_CHUNK),
 						InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(
+						HeightRangePlacement.triangle(
 								VerticalAnchor.absolute(WASTES_MIN_HEIGHT),
 								VerticalAnchor.absolute(WASTES_MAX_HEIGHT)),
 						BiomeFilter.biome())));

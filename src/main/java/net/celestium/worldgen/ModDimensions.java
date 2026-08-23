@@ -48,8 +48,19 @@ public final class ModDimensions {
 	/** Lumiere d'ambiance elevee, sans quoi une nuit permanente serait injouable. */
 	private static final float AMBIENT_LIGHT = 0.55F;
 
-	private static final int MIN_Y = 0;
-	private static final int HEIGHT = 256;
+	/**
+	 * Le monde demoniaque est six fois plus petit que l'Overworld : mille blocs parcourus ici en
+	 * valent six mille la-bas. Meme principe que le Nether, dont le rapport est de huit.
+	 */
+	private static final double COORDINATE_SCALE = 6.0;
+
+	/**
+	 * Memes bornes verticales que l'Overworld. Le generateur de bruit reutilise est concu pour
+	 * cette plage : s'en ecarter deformait le relief, et privait la dimension des couches
+	 * profondes ou se trouve le Demonium.
+	 */
+	private static final int MIN_Y = -64;
+	private static final int HEIGHT = 384;
 
 	private ModDimensions() {
 	}
@@ -61,7 +72,7 @@ public final class ModDimensions {
 				false,
 				false,
 				true,
-				1.0,
+				COORDINATE_SCALE,
 				true,
 				false,
 				MIN_Y,

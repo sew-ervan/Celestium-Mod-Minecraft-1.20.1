@@ -78,10 +78,12 @@ public class ModEntities {
 	 * spawn uniquement, comme dans le mod d'origine.
 	 */
 	public static void registerSpawnPlacements() {
+		// Le demon epeiste ne hante que sa propre dimension, en nuit permanente : exiger
+		// l'obscurite y serait sans objet.
 		SpawnPlacements.register(DEMON_SWORDSMAN.get(),
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				Monster::checkMonsterSpawnRules);
+				Monster::checkAnyLightMonsterSpawnRules);
 
 		// Les terres du demon sont en nuit permanente : exiger l'obscurite y serait sans effet,
 		// mais la regle vanilla verifie aussi le sol et la place disponible.

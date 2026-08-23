@@ -12,22 +12,33 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 /**
- * Le voyage entre l'Overworld et la dimension demoniaque.
+ * Le voyage entre l'Overworld et les Terres du demon.
  *
- * <p>A l'arrivee, un portail existant est cherche autour des memes coordonnees ; s'il n'y en a
- * pas, un cadre complet est bati sur place pour garantir le retour. Sans cette construction, un
- * joueur arrivant dans la dimension demoniaque s'y retrouverait prisonnier.
+ * <p>Le passage n'est pas immediat : il faut se tenir dans le portail un moment avant qu'il
+ * n'emporte, comme celui du Nether. Une fois arrive, un delai empeche de repartir aussitot, sans
+ * quoi le joueur ferait des allers-retours a chaque pas.
+ *
+ * <p>A l'arrivee, un portail existant est cherche autour des coordonnees correspondantes ; s'il
+ * n'y en a pas, un cadre complet est bati sur place. Sans cette construction, un joueur arrivant
+ * dans les Terres du demon y serait prisonnier.
  */
 public final class DemonPortalTravel implements ITeleporter {
+
+	/** Duree passee dans le portail avant qu'il n'emporte, en ticks. Le Nether en demande 80. */
+	private static final int WARMUP_TICKS = 80;
 
 	/** Rayon de recherche d'un portail deja existant a l'arrivee, en blocs. */
 	private static final int SEARCH_RADIUS = 8;
@@ -37,16 +48,48 @@ public final class DemonPortalTravel implements ITeleporter {
 	private static final int BUILT_WIDTH = 2;
 	private static final int BUILT_HEIGHT = 3;
 
+	/** Compte le temps passe dans le portail, par entite. */
+	private static final Map<UUID, Progress> PROGRESS = new HashMap<>();
+
 	private DemonPortalTravel() {
 	}
 
-	/** Declenche le voyage quand une entite traverse la surface du portail. */
+	/** Avancement d'une entite vers le passage, et dernier tick ou elle a ete vue dans le portail. */
+	private static final class Progress {
+		private int ticks;
+		private long lastSeen;
+	}
+
+	/**
+	 * Appele a chaque tick tant qu'une entite occupe la surface du portail.
+	 *
+	 * <p>Le compteur repart de zero des qu'un tick est manque : sortir du portail annule donc
+	 * l'attente, exactement comme en vanilla.
+	 */
 	public static void onEntityInPortal(Entity entity) {
 		if (entity.isOnPortalCooldown() || !(entity.level() instanceof ServerLevel origin)) {
 			return;
 		}
-		entity.setPortalCooldown();
 
+		long now = origin.getGameTime();
+		Progress progress = PROGRESS.computeIfAbsent(entity.getUUID(), id -> new Progress());
+
+		if (progress.lastSeen != now - 1) {
+			progress.ticks = 0;
+		}
+		progress.lastSeen = now;
+		progress.ticks++;
+
+		if (progress.ticks < WARMUP_TICKS) {
+			return;
+		}
+
+		PROGRESS.remove(entity.getUUID());
+		entity.setPortalCooldown();
+		travel(entity, origin);
+	}
+
+	private static void travel(Entity entity, ServerLevel origin) {
 		MinecraftServer server = origin.getServer();
 		ResourceKey<Level> targetKey = origin.dimension() == ModDimensions.DEMON_LEVEL
 				? Level.OVERWORLD
@@ -63,15 +106,46 @@ public final class DemonPortalTravel implements ITeleporter {
 		}
 	}
 
+	/** Oublie l'attente d'une entite qui disparait, pour ne pas retenir son identifiant. */
+	public static void forget(Entity entity) {
+		PROGRESS.remove(entity.getUUID());
+	}
+
 	@Override
 	public PortalInfo getPortalInfo(Entity entity, ServerLevel destination,
 			Function<ServerLevel, PortalInfo> defaultPortalInfo) {
 
-		BlockPos arrival = findOrBuildPortal(destination, entity.blockPosition());
+		BlockPos target = scaledPosition(entity, destination);
+		BlockPos arrival = findOrBuildPortal(destination, target);
 		return new PortalInfo(Vec3.atBottomCenterOf(arrival), Vec3.ZERO, entity.getYRot(), entity.getXRot());
 	}
 
-	/** L'entite conserve son elan : rien a recalculer au-dela du placement. */
+	/**
+	 * Convertit la position de depart dans l'echelle du monde d'arrivee.
+	 *
+	 * <p>Les Terres du demon sont six fois plus petites que l'Overworld : six mille blocs la-bas
+	 * en valent mille ici. Sans cette conversion, la dimension serait aussi vaste que l'Overworld
+	 * et son echelle declaree ne servirait a rien.
+	 */
+	private static BlockPos scaledPosition(Entity entity, ServerLevel destination) {
+		DimensionType from = entity.level().dimensionType();
+		double scale = DimensionType.getTeleportationScale(from, destination.dimensionType());
+
+		int x = (int) Math.round(entity.getX() * scale);
+		int z = (int) Math.round(entity.getZ() * scale);
+
+		return new BlockPos(
+				Mth_clamp(x, destination),
+				Math.min(entity.getBlockY(), destination.getMaxBuildHeight() - 8),
+				Mth_clamp(z, destination));
+	}
+
+	/** Ramene une coordonnee horizontale dans la bordure du monde d'arrivee. */
+	private static int Mth_clamp(int coordinate, ServerLevel destination) {
+		int limit = (int) destination.getWorldBorder().getSize() / 2 - 16;
+		return Math.max(-limit, Math.min(limit, coordinate));
+	}
+
 	@Override
 	public boolean playTeleportSound(ServerPlayer player, ServerLevel origin, ServerLevel destination) {
 		return true;
@@ -101,10 +175,10 @@ public final class DemonPortalTravel implements ITeleporter {
 	}
 
 	/**
-	 * Bâtit un cadre complet et allume le portail.
+	 * Batit un cadre complet et allume le portail.
 	 *
-	 * <p>Une plateforme est posee sous le cadre : sans elle, un portail cree au-dessus d'un
-	 * ravin laisserait le joueur tomber a l'arrivee.
+	 * <p>Une plateforme est posee sous le cadre : sans elle, un portail cree au-dessus d'un ravin
+	 * laisserait le joueur tomber a l'arrivee.
 	 */
 	private static BlockPos buildPortal(ServerLevel level, BlockPos around) {
 		int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, around.getX(), around.getZ());

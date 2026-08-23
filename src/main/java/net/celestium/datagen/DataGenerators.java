@@ -43,9 +43,16 @@ public class DataGenerators {
 
 		// Donnees serveur : recettes, tags, tables de butin.
 		generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
-		generator.addProvider(event.includeServer(), new ModWorldGenProvider(output, lookup));
+		// Les structures, biomes et dimensions sont definis ici. Les fournisseurs qui les designent
+		// ensuite -- les tags de structures -- doivent lire les registres enrichis par ce
+		// fournisseur, et non ceux du jeu de base, ou les cles resteraient introuvables.
+		ModWorldGenProvider worldGen = new ModWorldGenProvider(output, lookup);
+		generator.addProvider(event.includeServer(), worldGen);
 
-		generator.addProvider(event.includeServer(), new ModBiomeTagsProvider(output, lookup, fileHelper));
+		CompletableFuture<HolderLookup.Provider> withModRegistries = worldGen.getRegistryProvider();
+
+		generator.addProvider(event.includeServer(),
+				new ModStructureTagsProvider(output, withModRegistries, fileHelper));
 
 		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(output, lookup, fileHelper);
 		generator.addProvider(event.includeServer(), blockTags);
