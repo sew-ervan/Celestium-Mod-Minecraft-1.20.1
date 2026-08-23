@@ -53,7 +53,8 @@ public class DataGenerators {
 				new ModItemTagsProvider(output, lookup, blockTags.contentsGetter(), fileHelper));
 
 		generator.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(),
-				List.of(new LootTableProvider.SubProviderEntry(
-						ModBlockLootTables::new, LootContextParamSets.BLOCK))));
+				List.of(
+						new LootTableProvider.SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK),
+						new LootTableProvider.SubProviderEntry(ModEntityLootTables::new, LootContextParamSets.ENTITY))));
 	}
 }

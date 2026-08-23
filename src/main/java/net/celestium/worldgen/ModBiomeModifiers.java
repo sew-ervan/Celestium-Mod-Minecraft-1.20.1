@@ -30,7 +30,6 @@ public final class ModBiomeModifiers {
 
 	public static final ResourceKey<BiomeModifier> ADD_CELESTIUM_ORE = key("add_celestium_ore");
 	public static final ResourceKey<BiomeModifier> ADD_DEMON_SWORDSMAN = key("add_demon_swordsman");
-	public static final ResourceKey<BiomeModifier> ADD_DEMONIUM_ORE = key("add_demonium_ore");
 
 	/**
 	 * Poids d'apparition du demon epeiste.
@@ -52,11 +51,6 @@ public final class ModBiomeModifiers {
 		context.register(ADD_CELESTIUM_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
 				biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
 				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.CELESTIUM_ORE)),
-				GenerationStep.Decoration.UNDERGROUND_ORES));
-
-		context.register(ADD_DEMONIUM_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-				biomes.getOrThrow(BiomeTags.IS_NETHER),
-				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.DEMONIUM_ORE)),
 				GenerationStep.Decoration.UNDERGROUND_ORES));
 
 		// Le mod d'origine avait ces reglages saisis dans MCreator mais desactives : la creature

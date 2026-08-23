@@ -5,11 +5,13 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
@@ -26,7 +28,10 @@ public final class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> CELESTIUM_ORE = key("celestium_ore");
 
 	/** Placement propre a la dimension celeste, sans commune mesure avec celui de la surface. */
-	public static final ResourceKey<PlacedFeature> CELESTIUM_ORE_CELESTIAL = key("celestium_ore_celestial");
+	public static final ResourceKey<PlacedFeature> DEMONIUM_ORE_WASTES = key("demonium_ore_wastes");
+
+	/** Arbres des terres du demon. */
+	public static final ResourceKey<PlacedFeature> DEMON_TREE = key("demon_tree");
 
 	/** Filons de Demonium, repartis sur toute la hauteur du Nether. */
 	public static final ResourceKey<PlacedFeature> DEMONIUM_ORE = key("demonium_ore");
@@ -40,9 +45,9 @@ public final class ModPlacedFeatures {
 
 	// Dans la dimension celeste le Celestium est la regle et non l'exception : filons bien plus
 	// nombreux, repartis sur toute la hauteur jouable. C'est ce qui justifie le voyage.
-	private static final int CELESTIAL_VEINS_PER_CHUNK = 14;
-	private static final int CELESTIAL_MIN_HEIGHT = 0;
-	private static final int CELESTIAL_MAX_HEIGHT = 128;
+	private static final int WASTES_VEINS_PER_CHUNK = 14;
+	private static final int WASTES_MIN_HEIGHT = 0;
+	private static final int WASTES_MAX_HEIGHT = 128;
 
 	private static final int DEMONIUM_VEINS_PER_CHUNK = 8;
 	private static final int DEMONIUM_MIN_HEIGHT = 8;
@@ -74,14 +79,22 @@ public final class ModPlacedFeatures {
 								VerticalAnchor.absolute(DEMONIUM_MAX_HEIGHT)),
 						BiomeFilter.biome())));
 
-		context.register(CELESTIUM_ORE_CELESTIAL, new PlacedFeature(
-				configured.getOrThrow(ModConfiguredFeatures.CELESTIUM_ORE),
+		context.register(DEMON_TREE, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.DEMON_TREE),
 				List.of(
-						CountPlacement.of(CELESTIAL_VEINS_PER_CHUNK),
+						CountPlacement.of(3),
+						InSquarePlacement.spread(),
+						HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
+						BiomeFilter.biome())));
+
+		context.register(DEMONIUM_ORE_WASTES, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.DEMONIUM_ORE),
+				List.of(
+						CountPlacement.of(WASTES_VEINS_PER_CHUNK),
 						InSquarePlacement.spread(),
 						HeightRangePlacement.uniform(
-								VerticalAnchor.absolute(CELESTIAL_MIN_HEIGHT),
-								VerticalAnchor.absolute(CELESTIAL_MAX_HEIGHT)),
+								VerticalAnchor.absolute(WASTES_MIN_HEIGHT),
+								VerticalAnchor.absolute(WASTES_MAX_HEIGHT)),
 						BiomeFilter.biome())));
 	}
 

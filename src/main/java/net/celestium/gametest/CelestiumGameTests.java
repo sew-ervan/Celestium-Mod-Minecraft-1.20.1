@@ -193,12 +193,12 @@ public class CelestiumGameTests {
 
 		// Montants gauche et droit, seuil et linteau compris.
 		for (int y = -1; y <= innerHeight; y++) {
-			helper.setBlock(origin.offset(-1, y, 0), ModBlocks.CELESTIUM_BLOCK.get());
-			helper.setBlock(origin.offset(innerWidth, y, 0), ModBlocks.CELESTIUM_BLOCK.get());
+			helper.setBlock(origin.offset(-1, y, 0), ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
+			helper.setBlock(origin.offset(innerWidth, y, 0), ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
 		}
 		for (int x = 0; x < innerWidth; x++) {
-			helper.setBlock(origin.offset(x, -1, 0), ModBlocks.CELESTIUM_BLOCK.get());
-			helper.setBlock(origin.offset(x, innerHeight, 0), ModBlocks.CELESTIUM_BLOCK.get());
+			helper.setBlock(origin.offset(x, -1, 0), ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
+			helper.setBlock(origin.offset(x, innerHeight, 0), ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
 		}
 
 		CelestialPortalShape shape =

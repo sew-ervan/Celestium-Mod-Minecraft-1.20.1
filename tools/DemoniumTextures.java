@@ -66,7 +66,33 @@ public final class DemoniumTextures {
 			written++;
 		}
 
-		System.out.println(written + " textures ecrites");
+		partialCorruption(root);
+		System.out.println((written + 1) + " textures ecrites");
+	}
+
+	/**
+	 * Le Celestium corrompu : une corruption a mi-chemin.
+	 *
+	 * <p>Le bloc melange pixel a pixel la version saine et la version corrompue. Il ne ressemble
+	 * donc ni a l'un ni a l'autre : c'est un bloc de Celestium que la corruption gagne, ce qui
+	 * raconte visuellement a quoi sert le cadre du portail.
+	 */
+	private static void partialCorruption(Path root) throws IOException {
+		BufferedImage clean = ImageIO.read(root.resolve("block/celestium_block.png").toFile());
+		BufferedImage tainted = corrupt(clean, "corrupted_celestium");
+		BufferedImage blend = new BufferedImage(clean.getWidth(), clean.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+
+		for (int y = 0; y < clean.getHeight(); y++) {
+			for (int x = 0; x < clean.getWidth(); x++) {
+				Random noise = new Random(7L + x * 6151L + y * 45989L);
+				blend.setRGB(x, y, noise.nextDouble() < 0.45 ? tainted.getRGB(x, y) : clean.getRGB(x, y));
+			}
+		}
+
+		Path target = root.resolve("block/corrupted_celestium_block.png");
+		ImageIO.write(blend, "PNG", target.toFile());
+		System.out.printf("OK      %-46s melange%n", target);
 	}
 
 	private static BufferedImage corrupt(BufferedImage source, String seedName) {

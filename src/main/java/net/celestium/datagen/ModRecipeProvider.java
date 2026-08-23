@@ -39,7 +39,23 @@ public class ModRecipeProvider extends RecipeProvider {
 	protected void buildRecipes(Consumer<FinishedRecipe> writer) {
 		celestium(writer);
 		demonium(writer);
+		corruption(writer);
 		woodSet(writer, ModBlocks.BOIS_DU_DEMON);
+	}
+
+	/**
+	 * La corruption du Celestium : quatre fragments arraches au demon epeiste souillent un bloc de
+	 * Celestium. C'est la seule recette qui melange les deux materiaux, et elle ouvre le portail.
+	 */
+	private void corruption(Consumer<FinishedRecipe> writer) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get())
+				.pattern(" D ")
+				.pattern("DCD")
+				.pattern(" D ")
+				.define('D', ModItems.DEMONIUM_FRAGMENT.get())
+				.define('C', ModBlocks.CELESTIUM_BLOCK.get())
+				.unlockedBy("has_demonium_fragment", has(ModItems.DEMONIUM_FRAGMENT.get()))
+				.save(writer, CelestiumMod.id("corrupted_celestium_block"));
 	}
 
 	/**

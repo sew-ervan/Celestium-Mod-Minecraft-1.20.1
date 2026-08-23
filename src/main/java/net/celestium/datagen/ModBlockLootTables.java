@@ -47,6 +47,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
 		this.dropSelf(ModBlocks.CELESTIUM_BLOCK.get());
 		this.dropSelf(ModBlocks.DEMONIUM_BLOCK.get());
+		this.dropSelf(ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
 
 		this.add(ModBlocks.DEMONIUM_ORE.get(), block -> createSilkTouchDispatchTable(block,
 				this.applyExplosionDecay(block,

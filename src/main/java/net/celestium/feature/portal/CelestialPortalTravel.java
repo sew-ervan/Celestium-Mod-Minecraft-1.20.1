@@ -49,9 +49,9 @@ public final class CelestialPortalTravel implements ITeleporter {
 		entity.setPortalCooldown();
 
 		MinecraftServer server = origin.getServer();
-		ResourceKey<Level> targetKey = origin.dimension() == ModDimensions.CELESTIAL_LEVEL
+		ResourceKey<Level> targetKey = origin.dimension() == ModDimensions.DEMON_LEVEL
 				? Level.OVERWORLD
-				: ModDimensions.CELESTIAL_LEVEL;
+				: ModDimensions.DEMON_LEVEL;
 
 		ServerLevel destination = server.getLevel(targetKey);
 		if (destination == null) {
@@ -112,7 +112,7 @@ public final class CelestialPortalTravel implements ITeleporter {
 		int floor = Math.max(level.getMinBuildHeight() + 1, Math.min(surface, level.getMaxBuildHeight() - 8));
 		BlockPos base = new BlockPos(around.getX(), floor, around.getZ());
 
-		BlockState frame = ModBlocks.CELESTIUM_BLOCK.get().defaultBlockState();
+		BlockState frame = ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get().defaultBlockState();
 
 		// Plateforme d'appui, un bloc plus large que le cadre de chaque cote.
 		for (int dx = -1; dx <= BUILT_WIDTH; dx++) {

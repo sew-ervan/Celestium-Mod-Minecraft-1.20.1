@@ -23,10 +23,10 @@ public class ModFrenchProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add("itemGroup.celestium.celestial_univers", "Celestial Univers");
 
-		// --- Dimension celeste ---
-		add("biome.celestium.celestial_void", "Vide céleste");
-		add("message.celestium.portal.entered", "Tu franchis le voile céleste.");
-		add("message.celestium.portal.returned", "Tu retrouves le monde d'en bas.");
+		// --- Dimension demoniaque ---
+		add("biome.celestium.demon_wastes", "Terres du démon");
+		add("message.celestium.portal.entered", "Tu franchis le voile. Les terres du démon te happent.");
+		add("message.celestium.portal.returned", "Tu regagnes le monde des vivants.");
 
 		// --- Progrès ---
 		add("advancements.premier_celestium.title", "Premier Celestium");
@@ -69,6 +69,7 @@ public class ModFrenchProvider extends LanguageProvider {
 
 		addBlock(ModBlocks.DEMONIUM_ORE, "Minerai de Demonium");
 		addBlock(ModBlocks.DEMONIUM_BLOCK, "Bloc de Demonium");
+		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Celestium corrompu");
 
 		WoodSet demon = ModBlocks.BOIS_DU_DEMON;
 		addBlock(demon.log, "Rondin de bois du démon");

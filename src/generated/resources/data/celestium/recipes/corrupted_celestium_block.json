@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "celestium:celestium_block"
+    },
+    "D": {
+      "item": "celestium:demonium_fragment"
+    }
+  },
+  "pattern": [
+    " D ",
+    "DCD",
+    " D "
+  ],
+  "result": {
+    "item": "celestium:corrupted_celestium_block"
+  },
+  "show_notification": true
+}

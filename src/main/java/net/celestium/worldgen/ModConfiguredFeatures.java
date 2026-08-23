@@ -8,7 +8,13 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
@@ -26,6 +32,7 @@ public final class ModConfiguredFeatures {
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CELESTIUM_ORE = key("celestium_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMONIUM_ORE = key("demonium_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMON_TREE = key("demon_tree");
 
 	/** Nombre de blocs par filon. Etait de 3 dans le mod d'origine. */
 	private static final int VEIN_SIZE = 4;
@@ -53,6 +60,17 @@ public final class ModConfiguredFeatures {
 								new BlockMatchTest(Blocks.NETHERRACK),
 								ModBlocks.DEMONIUM_ORE.get().defaultBlockState())),
 						DEMONIUM_VEIN_SIZE)));
+
+		// Le seul arbre qui pousse sur les terres du demon : tronc droit et houppier compact.
+		context.register(DEMON_TREE, new ConfiguredFeature<>(Feature.TREE,
+				new TreeConfiguration.TreeConfigurationBuilder(
+						BlockStateProvider.simple(ModBlocks.BOIS_DU_DEMON.log.get()),
+						new StraightTrunkPlacer(5, 3, 2),
+						BlockStateProvider.simple(ModBlocks.BOIS_DU_DEMON.leaves.get()),
+						new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
+						new TwoLayersFeatureSize(1, 0, 1))
+						.ignoreVines()
+						.build()));
 	}
 
 	private static ResourceKey<ConfiguredFeature<?, ?>> key(String name) {

@@ -28,19 +28,19 @@ import java.util.OptionalLong;
  *
  * <p>Trois registres se repondent ici. Le {@link DimensionType} decrit les regles physiques du
  * monde ; le {@link LevelStem} associe ces regles a un generateur de terrain ; et la cle
- * {@link #CELESTIAL_LEVEL} sert au reste du mod a designer la dimension pour y teleporter.
+ * {@link #DEMON_LEVEL} sert au reste du mod a designer la dimension pour y teleporter.
  */
 public final class ModDimensions {
 
 	/** Cle du monde, telle qu'utilisee pour la teleportation. */
-	public static final ResourceKey<Level> CELESTIAL_LEVEL =
-			ResourceKey.create(Registries.DIMENSION, CelestiumMod.id("celestial"));
+	public static final ResourceKey<Level> DEMON_LEVEL =
+			ResourceKey.create(Registries.DIMENSION, CelestiumMod.id("demon"));
 
-	public static final ResourceKey<LevelStem> CELESTIAL_STEM =
-			ResourceKey.create(Registries.LEVEL_STEM, CelestiumMod.id("celestial"));
+	public static final ResourceKey<LevelStem> DEMON_STEM =
+			ResourceKey.create(Registries.LEVEL_STEM, CelestiumMod.id("demon"));
 
-	public static final ResourceKey<DimensionType> CELESTIAL_TYPE =
-			ResourceKey.create(Registries.DIMENSION_TYPE, CelestiumMod.id("celestial"));
+	public static final ResourceKey<DimensionType> DEMON_TYPE =
+			ResourceKey.create(Registries.DIMENSION_TYPE, CelestiumMod.id("demon"));
 
 	/** Minuit fixe : le ciel reste etoile en permanence. */
 	private static final long FIXED_TIME = 18_000L;
@@ -55,7 +55,7 @@ public final class ModDimensions {
 	}
 
 	public static void bootstrapType(BootstapContext<DimensionType> context) {
-		context.register(CELESTIAL_TYPE, new DimensionType(
+		context.register(DEMON_TYPE, new DimensionType(
 				OptionalLong.of(FIXED_TIME),
 				true,
 				false,
@@ -80,9 +80,9 @@ public final class ModDimensions {
 		HolderGetter<NoiseGeneratorSettings> noises = context.lookup(Registries.NOISE_SETTINGS);
 
 		NoiseBasedChunkGenerator generator = new NoiseBasedChunkGenerator(
-				new FixedBiomeSource(biomes.getOrThrow(ModBiomes.CELESTIAL_VOID)),
+				new FixedBiomeSource(biomes.getOrThrow(ModBiomes.DEMON_WASTES)),
 				noises.getOrThrow(NoiseGeneratorSettings.OVERWORLD));
 
-		context.register(CELESTIAL_STEM, new LevelStem(types.getOrThrow(CELESTIAL_TYPE), generator));
+		context.register(DEMON_STEM, new LevelStem(types.getOrThrow(DEMON_TYPE), generator));
 	}
 }

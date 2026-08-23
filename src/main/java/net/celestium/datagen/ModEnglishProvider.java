@@ -18,10 +18,10 @@ public class ModEnglishProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add("itemGroup.celestium.celestial_univers", "Celestial Univers");
 
-		// --- Celestial dimension ---
-		add("biome.celestium.celestial_void", "Celestial Void");
-		add("message.celestium.portal.entered", "You cross the celestial veil.");
-		add("message.celestium.portal.returned", "You return to the world below.");
+		// --- Demon dimension ---
+		add("biome.celestium.demon_wastes", "Demon Wastes");
+		add("message.celestium.portal.entered", "You cross the veil. The demon wastes claim you.");
+		add("message.celestium.portal.returned", "You return to the world of the living.");
 
 		// --- Advancements ---
 		add("advancements.premier_celestium.title", "First Celestium");
@@ -64,6 +64,7 @@ public class ModEnglishProvider extends LanguageProvider {
 
 		addBlock(ModBlocks.DEMONIUM_ORE, "Demonium Ore");
 		addBlock(ModBlocks.DEMONIUM_BLOCK, "Block of Demonium");
+		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Corrupted Celestium");
 
 		WoodSet demon = ModBlocks.BOIS_DU_DEMON;
 		addBlock(demon.log, "Demon Wood Log");

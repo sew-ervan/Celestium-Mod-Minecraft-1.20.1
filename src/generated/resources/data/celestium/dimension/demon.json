@@ -1,10 +1,10 @@
 {
-  "type": "celestium:celestial",
+  "type": "celestium:demon",
   "generator": {
     "type": "minecraft:noise",
     "biome_source": {
       "type": "minecraft:fixed",
-      "biome": "celestium:celestial_void"
+      "biome": "celestium:demon_wastes"
     },
     "settings": "minecraft:overworld"
   }

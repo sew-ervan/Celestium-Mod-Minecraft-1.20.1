@@ -62,7 +62,7 @@ public class CelestialPortalBlock extends Block {
 		boolean alongPortal = direction.getAxis() == Direction.Axis.Y
 				|| direction.getAxis() == portalAxis;
 
-		if (alongPortal && !neighbour.is(this) && !neighbour.is(ModBlocks.CELESTIUM_BLOCK.get())) {
+		if (alongPortal && !neighbour.is(this) && !neighbour.is(ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get())) {
 			return Blocks.AIR.defaultBlockState();
 		}
 		return super.updateShape(state, direction, neighbour, level, pos, neighbourPos);
@@ -106,7 +106,7 @@ public class CelestialPortalBlock extends Block {
 	public static void announceArrival(ServerPlayer player, ServerLevel destination) {
 		player.displayClientMessage(
 				net.minecraft.network.chat.Component.translatable(
-						destination.dimension() == net.celestium.worldgen.ModDimensions.CELESTIAL_LEVEL
+						destination.dimension() == net.celestium.worldgen.ModDimensions.DEMON_LEVEL
 								? "message.celestium.portal.entered"
 								: "message.celestium.portal.returned"),
 				true);

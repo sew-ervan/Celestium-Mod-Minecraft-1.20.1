@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "celestium:block/corrupted_celestium_block"
+    }
+  }
+}

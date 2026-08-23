@@ -62,8 +62,22 @@ public class ModBlocks {
 					.lightLevel(state -> 1)));
 
 	/**
-	 * Minerai de Demonium, present uniquement dans le Nether. Le pendant demoniaque du Celestium :
-	 * plus accessible, mais dans un monde qui l'est moins.
+	 * Celestium corrompu : le cadre du portail vers les terres du demon.
+	 *
+	 * <p>Il ne se mine pas, il se fabrique — un bloc de Celestium que les fragments arraches au
+	 * demon epeiste viennent souiller. C'est ce qui verrouille l'acces a la dimension derriere le
+	 * boss.
+	 */
+	public static final RegistryObject<Block> CORRUPTED_CELESTIUM_BLOCK = register("corrupted_celestium_block",
+			() -> new Block(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_RED)
+					.sound(SoundType.AMETHYST)
+					.strength(50.0F, 1200.0F)
+					.requiresCorrectToolForDrops()
+					.lightLevel(state -> 3)));
+
+	/**
+	 * Minerai de Demonium, present uniquement dans les terres du demon. Le pendant demoniaque du Celestium :
 	 */
 	public static final RegistryObject<Block> DEMONIUM_ORE = register("demonium_ore",
 			() -> new DropExperienceBlock(

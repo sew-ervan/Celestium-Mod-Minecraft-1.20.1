@@ -3,6 +3,7 @@
     "celestium:celestium_ore",
     "celestium:celestium_block",
     "celestium:demonium_ore",
-    "celestium:demonium_block"
+    "celestium:demonium_block",
+    "celestium:corrupted_celestium_block"
   ]
 }

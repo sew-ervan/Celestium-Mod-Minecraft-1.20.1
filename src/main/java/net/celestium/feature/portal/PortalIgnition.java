@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 /**
  * Allumage d'un portail celeste.
  *
- * <p>Le rituel : dresser un cadre en blocs de Celestium, puis frotter un fragment celeste contre
+ * <p>Le rituel : dresser un cadre en blocs de Celestium corrompu, puis frotter un fragment celeste contre
  * l'un de ses blocs. Le fragment est consomme.
  */
 @Mod.EventBusSubscriber(modid = CelestiumMod.MOD_ID)
@@ -34,7 +34,7 @@ public final class PortalIgnition {
 		if (!held.is(ModItems.CELESTIUM_FRAGMENT.get())) {
 			return;
 		}
-		if (!level.getBlockState(event.getPos()).is(ModBlocks.CELESTIUM_BLOCK.get())) {
+		if (!level.getBlockState(event.getPos()).is(ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get())) {
 			return;
 		}
 

@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * Reconnait un cadre de portail celeste et le remplit.
  *
- * <p>Le cadre est fait de blocs de Celestium, sur le modele du portail du Nether : un rectangle
+ * <p>Le cadre est fait de blocs de Celestium corrompu, sur le modele du portail du Nether : un rectangle
  * creux, pose verticalement, oriente selon l'axe X ou Z. L'interieur doit etre vide.
  *
  * <p>Vanilla resout le meme probleme avec {@code PortalShape}, mais cette classe est ecrite pour
@@ -109,7 +109,7 @@ public final class CelestialPortalShape {
 		return isFrame(level, current) ? count : 0;
 	}
 
-	/** Verifie que tout le pourtour du rectangle est bien du bloc de Celestium. */
+	/** Verifie que tout le pourtour du rectangle est bien du bloc de Celestium corrompu. */
 	private boolean isComplete() {
 		Direction right = this.axis == Direction.Axis.X ? Direction.EAST : Direction.SOUTH;
 
@@ -146,7 +146,7 @@ public final class CelestialPortalShape {
 	}
 
 	private static boolean isFrame(LevelAccessor level, BlockPos pos) {
-		return level.getBlockState(pos).is(ModBlocks.CELESTIUM_BLOCK.get());
+		return level.getBlockState(pos).is(ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
 	}
 
 	/** Un emplacement interieur est libre s'il est vide ou deja occupe par un portail. */
