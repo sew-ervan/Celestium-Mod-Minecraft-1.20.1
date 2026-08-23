@@ -22,19 +22,19 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * La surface d'un portail celeste.
+ * La surface d'un portail demoniaque.
  *
  * <p>Traversable, lumineuse, et incassable a la main : elle ne se retire qu'en brisant son cadre,
  * comme un portail du Nether. Toute entite qui la traverse est envoyee dans l'autre monde.
  */
-public class CelestialPortalBlock extends Block {
+public class DemonPortalBlock extends Block {
 
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
 	private static final VoxelShape SHAPE_X = Block.box(0.0, 0.0, 6.0, 16.0, 16.0, 10.0);
 	private static final VoxelShape SHAPE_Z = Block.box(6.0, 0.0, 0.0, 10.0, 16.0, 16.0);
 
-	public CelestialPortalBlock(Properties properties) {
+	public DemonPortalBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Direction.Axis.X));
 	}
@@ -73,7 +73,7 @@ public class CelestialPortalBlock extends Block {
 		if (level.isClientSide() || !entity.canChangeDimensions()) {
 			return;
 		}
-		CelestialPortalTravel.onEntityInPortal(entity);
+		DemonPortalTravel.onEntityInPortal(entity);
 	}
 
 	/** Le portail ne se pose pas a la main : il apparait en allumant un cadre. */

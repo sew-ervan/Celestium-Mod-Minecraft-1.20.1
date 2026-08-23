@@ -68,11 +68,6 @@ public enum ModArmorMaterials implements ArmorMaterial {
 		return type == ArmorItem.Type.LEGGINGS ? this.innerLayer : this.outerLayer;
 	}
 
-	/** Nom court du materiau, sans espace de noms : sert a nommer les couches de texture. */
-	public String getShortName() {
-		return this.name;
-	}
-
 	@Override
 	public int getDurabilityForType(ArmorItem.Type type) {
 		return BASE_DURABILITY[type.getSlot().getIndex()] * this.durabilityMultiplier;

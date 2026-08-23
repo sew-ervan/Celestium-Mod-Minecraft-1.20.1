@@ -15,7 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Allumage d'un portail celeste.
+ * Allumage d'un portail demoniaque.
  *
  * <p>Le rituel : dresser un cadre en blocs de Celestium corrompu, puis frotter un fragment celeste contre
  * l'un de ses blocs. Le fragment est consomme.
@@ -51,7 +51,7 @@ public final class PortalIgnition {
 			return;
 		}
 
-		CelestialPortalShape shape = CelestialPortalShape.find(level, inside);
+		DemonPortalShape shape = DemonPortalShape.find(level, inside);
 		if (shape == null) {
 			return;
 		}

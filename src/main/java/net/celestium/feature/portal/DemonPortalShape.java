@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import javax.annotation.Nullable;
 
 /**
- * Reconnait un cadre de portail celeste et le remplit.
+ * Reconnait un cadre de portail demoniaque et le remplit.
  *
  * <p>Le cadre est fait de blocs de Celestium corrompu, sur le modele du portail du Nether : un rectangle
  * creux, pose verticalement, oriente selon l'axe X ou Z. L'interieur doit etre vide.
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
  * <p>Vanilla resout le meme probleme avec {@code PortalShape}, mais cette classe est ecrite pour
  * l'obsidienne et le portail du Nether : elle n'est pas reutilisable telle quelle.
  */
-public final class CelestialPortalShape {
+public final class DemonPortalShape {
 
 	/** Dimensions interieures acceptees, bornes comprises. */
 	private static final int MIN_WIDTH = 2;
@@ -33,7 +33,7 @@ public final class CelestialPortalShape {
 	private final int width;
 	private final int height;
 
-	private CelestialPortalShape(LevelAccessor level, Direction.Axis axis, BlockPos bottomLeft,
+	private DemonPortalShape(LevelAccessor level, Direction.Axis axis, BlockPos bottomLeft,
 			int width, int height) {
 		this.level = level;
 		this.axis = axis;
@@ -48,13 +48,13 @@ public final class CelestialPortalShape {
 	 * @return la forme trouvee, ou {@code null} si la position n'est pas dans un cadre complet
 	 */
 	@Nullable
-	public static CelestialPortalShape find(LevelAccessor level, BlockPos inside) {
-		CelestialPortalShape onX = findOnAxis(level, inside, Direction.Axis.X);
+	public static DemonPortalShape find(LevelAccessor level, BlockPos inside) {
+		DemonPortalShape onX = findOnAxis(level, inside, Direction.Axis.X);
 		return onX != null ? onX : findOnAxis(level, inside, Direction.Axis.Z);
 	}
 
 	@Nullable
-	private static CelestialPortalShape findOnAxis(LevelAccessor level, BlockPos inside, Direction.Axis axis) {
+	private static DemonPortalShape findOnAxis(LevelAccessor level, BlockPos inside, Direction.Axis axis) {
 		Direction left = axis == Direction.Axis.X ? Direction.WEST : Direction.NORTH;
 		Direction right = left.getOpposite();
 
@@ -77,7 +77,7 @@ public final class CelestialPortalShape {
 			return null;
 		}
 
-		CelestialPortalShape shape = new CelestialPortalShape(level, axis, bottomLeft, width, height);
+		DemonPortalShape shape = new DemonPortalShape(level, axis, bottomLeft, width, height);
 		return shape.isComplete() ? shape : null;
 	}
 
@@ -134,7 +134,7 @@ public final class CelestialPortalShape {
 	/** Remplit l'interieur du cadre de blocs de portail. */
 	public void createPortal() {
 		Direction right = this.axis == Direction.Axis.X ? Direction.EAST : Direction.SOUTH;
-		BlockState portal = ModBlocks.CELESTIAL_PORTAL.get().defaultBlockState()
+		BlockState portal = ModBlocks.DEMON_PORTAL.get().defaultBlockState()
 				.setValue(BlockStateProperties.HORIZONTAL_AXIS, this.axis);
 
 		for (int column = 0; column < this.width; column++) {
@@ -152,6 +152,6 @@ public final class CelestialPortalShape {
 	/** Un emplacement interieur est libre s'il est vide ou deja occupe par un portail. */
 	private static boolean isEmpty(LevelAccessor level, BlockPos pos) {
 		BlockState state = level.getBlockState(pos);
-		return state.isAir() || state.is(ModBlocks.CELESTIAL_PORTAL.get());
+		return state.isAir() || state.is(ModBlocks.DEMON_PORTAL.get());
 	}
 }

@@ -4,7 +4,7 @@ import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.feature.celestium.CelestiumStorageBlock;
 import net.celestium.feature.altar.SummoningAltarBlock;
-import net.celestium.feature.portal.CelestialPortalBlock;
+import net.celestium.feature.portal.DemonPortalBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -109,8 +109,8 @@ public class ModBlocks {
 	 * La surface d'un portail celeste. Elle n'a pas d'item : on ne la pose pas, on allume un cadre.
 	 * Indestructible et sans butin, comme un portail du Nether.
 	 */
-	public static final RegistryObject<Block> CELESTIAL_PORTAL = BLOCKS.register("celestial_portal",
-			() -> new CelestialPortalBlock(BlockBehaviour.Properties.of()
+	public static final RegistryObject<Block> DEMON_PORTAL = BLOCKS.register("demon_portal",
+			() -> new DemonPortalBlock(BlockBehaviour.Properties.of()
 					.mapColor(MapColor.COLOR_PURPLE)
 					.sound(SoundType.GLASS)
 					.noCollission()

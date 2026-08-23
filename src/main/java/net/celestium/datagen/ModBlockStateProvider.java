@@ -2,7 +2,7 @@ package net.celestium.datagen;
 
 import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
-import net.celestium.feature.portal.CelestialPortalBlock;
+import net.celestium.feature.portal.DemonPortalBlock;
 import net.celestium.init.ModBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -55,14 +55,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	 */
 	private void portal() {
 		ModelFile plane = models()
-				.withExistingParent("celestial_portal", mcLoc("block/nether_portal_ns"))
+				.withExistingParent("demon_portal", mcLoc("block/nether_portal_ns"))
 				.texture("portal", modLoc("block/celestium_block"))
 				.renderType("translucent");
 
-		getVariantBuilder(ModBlocks.CELESTIAL_PORTAL.get())
-				.partialState().with(CelestialPortalBlock.AXIS, Direction.Axis.X)
+		getVariantBuilder(ModBlocks.DEMON_PORTAL.get())
+				.partialState().with(DemonPortalBlock.AXIS, Direction.Axis.X)
 				.modelForState().modelFile(plane).addModel()
-				.partialState().with(CelestialPortalBlock.AXIS, Direction.Axis.Z)
+				.partialState().with(DemonPortalBlock.AXIS, Direction.Axis.Z)
 				.modelForState().modelFile(plane).rotationY(90).addModel();
 	}
 

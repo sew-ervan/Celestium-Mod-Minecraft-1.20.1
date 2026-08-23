@@ -54,4 +54,32 @@ Deux règles à tenir :
 
 **Un sort** — une classe qui implémente `feature/magie/Spell`, puis une ligne dans `init/ModSpells.java`. Le coût en énergie, le temps de recharge et le camp requis sont vérifiés par `SpellCaster`, pas par le sort.
 
+**Une texture de Demonium** — ne pas la dessiner : elle se dérive de son équivalent Celestium.
+
+```bash
+java tools/DemoniumTextures.java src/main/resources/assets/celestium/textures
+```
+
 **Un son** — le `.ogg` dans `assets/celestium/sounds/`, l'enregistrement dans `init/ModSounds.java`, la déclaration dans `sounds.json`. Minecraft ne lit **que** l'OGG.
+
+## Progression du jeu
+
+Le mod se parcourt dans cet ordre, et chaque étape en verrouille la suivante :
+
+1. **Celestium** — se mine dans l'Overworld, entre les altitudes -64 et -40.
+2. **Le démon épéiste** — boss de 220 points de vie, apparaît seul et rarement dans les forêts
+   denses, marais, mangroves et le Deep Dark. Il passe en seconde phase sous la moitié de sa vie.
+   C'est la **seule** source de Demonium avant le portail.
+3. **Celestium corrompu** — quatre fragments de Demonium souillent un bloc de Celestium.
+4. **Le portail** — un cadre en Celestium corrompu, allumé avec un fragment céleste.
+5. **Les Terres du démon** — nuit permanente. Le Demonium s'y mine à quatorze filons par chunk,
+   le bois du démon y pousse, et des villages corrompus y abritent l'autel d'invocation.
+
+L'autel accepte un lingot de Demonium et rappelle le boss : de quoi refaire le plein de fragments
+sans errer des nuits durant dans l'Overworld.
+
+## Compatibilité des mondes
+
+Le renommage de la dimension casse les mondes créés avant. Un monde qui référence
+`celestium:celestial` ou `celestium:celestial_void` refuse de charger. Supprimer `run/world` en
+développement, ou repartir d'un monde neuf.

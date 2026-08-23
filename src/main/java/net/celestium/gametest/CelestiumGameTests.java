@@ -6,7 +6,7 @@ import net.celestium.core.material.ModArmorMaterials;
 import net.celestium.feature.celestium.ArmorSetEffects;
 import net.celestium.feature.magie.Faction;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
-import net.celestium.feature.portal.CelestialPortalShape;
+import net.celestium.feature.portal.DemonPortalShape;
 import net.celestium.init.ModBlocks;
 import net.celestium.init.ModEntities;
 import net.celestium.init.ModItems;
@@ -201,15 +201,15 @@ public class CelestiumGameTests {
 			helper.setBlock(origin.offset(x, innerHeight, 0), ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
 		}
 
-		CelestialPortalShape shape =
-				CelestialPortalShape.find(helper.getLevel(), helper.absolutePos(origin));
+		DemonPortalShape shape =
+				DemonPortalShape.find(helper.getLevel(), helper.absolutePos(origin));
 
 		helper.assertTrue(shape != null, "Le cadre en blocs de Celestium n'est pas reconnu");
 		shape.createPortal();
 
 		for (int x = 0; x < innerWidth; x++) {
 			for (int y = 0; y < innerHeight; y++) {
-				helper.assertBlockPresent(ModBlocks.CELESTIAL_PORTAL.get(), origin.offset(x, y, 0));
+				helper.assertBlockPresent(ModBlocks.DEMON_PORTAL.get(), origin.offset(x, y, 0));
 			}
 		}
 

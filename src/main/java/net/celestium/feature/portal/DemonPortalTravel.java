@@ -3,7 +3,6 @@ package net.celestium.feature.portal;
 import net.celestium.init.ModBlocks;
 import net.celestium.worldgen.ModDimensions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -22,13 +21,13 @@ import javax.annotation.Nullable;
 import java.util.function.Function;
 
 /**
- * Le voyage entre l'Overworld et la dimension celeste.
+ * Le voyage entre l'Overworld et la dimension demoniaque.
  *
  * <p>A l'arrivee, un portail existant est cherche autour des memes coordonnees ; s'il n'y en a
  * pas, un cadre complet est bati sur place pour garantir le retour. Sans cette construction, un
- * joueur arrivant dans la dimension celeste s'y retrouverait prisonnier.
+ * joueur arrivant dans la dimension demoniaque s'y retrouverait prisonnier.
  */
-public final class CelestialPortalTravel implements ITeleporter {
+public final class DemonPortalTravel implements ITeleporter {
 
 	/** Rayon de recherche d'un portail deja existant a l'arrivee, en blocs. */
 	private static final int SEARCH_RADIUS = 8;
@@ -38,7 +37,7 @@ public final class CelestialPortalTravel implements ITeleporter {
 	private static final int BUILT_WIDTH = 2;
 	private static final int BUILT_HEIGHT = 3;
 
-	private CelestialPortalTravel() {
+	private DemonPortalTravel() {
 	}
 
 	/** Declenche le voyage quand une entite traverse la surface du portail. */
@@ -58,9 +57,9 @@ public final class CelestialPortalTravel implements ITeleporter {
 			return;
 		}
 
-		Entity arrived = entity.changeDimension(destination, new CelestialPortalTravel());
+		Entity arrived = entity.changeDimension(destination, new DemonPortalTravel());
 		if (arrived instanceof ServerPlayer player) {
-			CelestialPortalBlock.announceArrival(player, destination);
+			DemonPortalBlock.announceArrival(player, destination);
 		}
 	}
 
@@ -92,7 +91,7 @@ public final class CelestialPortalTravel implements ITeleporter {
 			for (int dz = -SEARCH_RADIUS; dz <= SEARCH_RADIUS; dz++) {
 				for (int dy = -SEARCH_VERTICAL; dy <= SEARCH_VERTICAL; dy++) {
 					cursor.set(around.getX() + dx, around.getY() + dy, around.getZ() + dz);
-					if (level.getBlockState(cursor).is(ModBlocks.CELESTIAL_PORTAL.get())) {
+					if (level.getBlockState(cursor).is(ModBlocks.DEMON_PORTAL.get())) {
 						return cursor.immutable();
 					}
 				}
@@ -140,17 +139,11 @@ public final class CelestialPortalTravel implements ITeleporter {
 			level.setBlock(base.offset(dx, BUILT_HEIGHT, 0), frame, Block.UPDATE_ALL);
 		}
 
-		CelestialPortalShape shape = CelestialPortalShape.find(level, base);
+		DemonPortalShape shape = DemonPortalShape.find(level, base);
 		if (shape != null) {
 			shape.createPortal();
 		}
 
 		return base;
-	}
-
-	/** Oriente le cadre construit selon l'axe X. */
-	@SuppressWarnings("unused")
-	private static Direction.Axis builtAxis() {
-		return Direction.Axis.X;
 	}
 }
