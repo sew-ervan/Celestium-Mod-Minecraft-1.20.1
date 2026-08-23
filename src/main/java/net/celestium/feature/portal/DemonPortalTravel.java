@@ -7,6 +7,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -38,7 +41,10 @@ import java.util.function.Function;
 public final class DemonPortalTravel implements ITeleporter {
 
 	/** Duree passee dans le portail avant qu'il n'emporte, en ticks. Le Nether en demande 80. */
-	private static final int WARMUP_TICKS = 80;
+	public static final int WARMUP_TICKS = 80;
+
+	/** Duree du vertige a l'arrivee, en ticks. Assez pour la secousse, trop court pour gener. */
+	private static final int ARRIVAL_DAZE = 60;
 
 	/** Rayon de recherche d'un portail deja existant a l'arrivee, en blocs. */
 	private static final int SEARCH_RADIUS = 8;
@@ -92,12 +98,34 @@ public final class DemonPortalTravel implements ITeleporter {
 		progress.ticks++;
 
 		if (progress.ticks < WARMUP_TICKS) {
+			swirl(entity, origin, progress.ticks);
 			return;
 		}
 
 		PROGRESS.remove(entity.getUUID());
 		entity.setPortalCooldown();
 		travel(entity, origin);
+	}
+
+	/**
+	 * Les braises qui montent autour de qui s'attarde dans le portail.
+	 *
+	 * <p>Elles s'epaississent avec l'attente : rares au debut, denses juste avant le passage. La
+	 * teinte de l'ecran ne se voit que par celui qui traverse ; ces particules-la se voient de
+	 * l'exterieur, et signalent aux autres joueurs que quelqu'un s'en va.
+	 */
+	private static void swirl(Entity entity, ServerLevel level, int ticks) {
+		int density = 1 + ticks * 4 / WARMUP_TICKS;
+
+		level.sendParticles(ParticleTypes.PORTAL,
+				entity.getX(), entity.getY() + entity.getBbHeight() / 2.0, entity.getZ(),
+				density, 0.35, 0.6, 0.35, 0.25);
+
+		if (ticks % 10 == 0) {
+			level.sendParticles(ParticleTypes.SMALL_FLAME,
+					entity.getX(), entity.getY() + 0.1, entity.getZ(),
+					density, 0.3, 0.1, 0.3, 0.01);
+		}
 	}
 
 	private static void travel(Entity entity, ServerLevel origin) {
@@ -114,6 +142,10 @@ public final class DemonPortalTravel implements ITeleporter {
 		Entity arrived = entity.changeDimension(destination, new DemonPortalTravel());
 		if (arrived instanceof ServerPlayer player) {
 			DemonPortalBlock.announceArrival(player, destination);
+
+			// Le tangage de l'arrivee. La teinte de l'ecran s'arrete net au passage : sans ce
+			// relais, on bascule d'un monde a l'autre sans la moindre secousse.
+			player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, ARRIVAL_DAZE, 0, false, false));
 		}
 	}
 

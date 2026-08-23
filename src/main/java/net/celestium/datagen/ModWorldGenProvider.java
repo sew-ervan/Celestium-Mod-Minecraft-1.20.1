@@ -5,6 +5,7 @@ import net.celestium.worldgen.ModBiomeModifiers;
 import net.celestium.worldgen.ModBiomes;
 import net.celestium.worldgen.ModDamageTypes;
 import net.celestium.worldgen.ModDimensions;
+import net.celestium.worldgen.ModNoiseSettings;
 import net.celestium.worldgen.ModConfiguredFeatures;
 import net.celestium.worldgen.ModPlacedFeatures;
 import net.celestium.worldgen.ModStructures;
@@ -35,6 +36,7 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
 			.add(Registries.STRUCTURE, ModStructures::bootstrapStructure)
 			.add(Registries.STRUCTURE_SET, ModStructures::bootstrapSet)
 			.add(Registries.BIOME, ModBiomes::bootstrap)
+			.add(Registries.NOISE_SETTINGS, ModNoiseSettings::bootstrap)
 			.add(Registries.DIMENSION_TYPE, ModDimensions::bootstrapType)
 			.add(Registries.LEVEL_STEM, ModDimensions::bootstrapStem)
 			.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);

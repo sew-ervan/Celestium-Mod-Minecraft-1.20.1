@@ -6,6 +6,6 @@
       "type": "minecraft:fixed",
       "biome": "celestium:demon_wastes"
     },
-    "settings": "minecraft:overworld"
+    "settings": "celestium:demon_wastes"
   }
 }

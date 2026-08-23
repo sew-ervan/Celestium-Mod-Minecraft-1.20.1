@@ -92,7 +92,7 @@ public final class ModDimensions {
 
 		NoiseBasedChunkGenerator generator = new NoiseBasedChunkGenerator(
 				new FixedBiomeSource(biomes.getOrThrow(ModBiomes.DEMON_WASTES)),
-				noises.getOrThrow(NoiseGeneratorSettings.OVERWORLD));
+				noises.getOrThrow(ModNoiseSettings.DEMON_WASTES));
 
 		context.register(DEMON_STEM, new LevelStem(types.getOrThrow(DEMON_TYPE), generator));
 	}
