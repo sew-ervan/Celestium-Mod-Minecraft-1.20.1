@@ -2,6 +2,8 @@ package net.celestium.datagen;
 
 import net.celestium.CelestiumMod;
 import net.celestium.worldgen.ModBiomeModifiers;
+import net.celestium.worldgen.ModBiomes;
+import net.celestium.worldgen.ModDimensions;
 import net.celestium.worldgen.ModConfiguredFeatures;
 import net.celestium.worldgen.ModPlacedFeatures;
 import net.celestium.worldgen.ModStructures;
@@ -30,7 +32,10 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
 			.add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap)
 			.add(Registries.TEMPLATE_POOL, ModStructures::bootstrapPool)
 			.add(Registries.STRUCTURE, ModStructures::bootstrapStructure)
-			.add(Registries.STRUCTURE_SET, ModStructures::bootstrapSet);
+			.add(Registries.STRUCTURE_SET, ModStructures::bootstrapSet)
+			.add(Registries.BIOME, ModBiomes::bootstrap)
+			.add(Registries.DIMENSION_TYPE, ModDimensions::bootstrapType)
+			.add(Registries.LEVEL_STEM, ModDimensions::bootstrapStem);
 
 	public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
 		super(output, registries, BUILDER, Set.of(CelestiumMod.MOD_ID));

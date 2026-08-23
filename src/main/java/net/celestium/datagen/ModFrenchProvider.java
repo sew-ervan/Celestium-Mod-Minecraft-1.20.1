@@ -23,6 +23,11 @@ public class ModFrenchProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add("itemGroup.celestium.celestial_univers", "Celestial Univers");
 
+		// --- Dimension celeste ---
+		add("biome.celestium.celestial_void", "Vide céleste");
+		add("message.celestium.portal.entered", "Tu franchis le voile céleste.");
+		add("message.celestium.portal.returned", "Tu retrouves le monde d'en bas.");
+
 		// --- Progrès ---
 		add("advancements.premier_celestium.title", "Premier Celestium");
 		add("advancements.premier_celestium.descr", "Tu as obtenu ton premier fragment de Celestium.");

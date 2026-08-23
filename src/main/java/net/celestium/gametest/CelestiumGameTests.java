@@ -5,6 +5,7 @@ import net.celestium.core.registry.ModTags;
 import net.celestium.feature.celestium.CelestiumArmorEffects;
 import net.celestium.feature.magie.Faction;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
+import net.celestium.feature.portal.CelestialPortalShape;
 import net.celestium.init.ModBlocks;
 import net.celestium.init.ModEntities;
 import net.celestium.init.ModItems;
@@ -175,6 +176,45 @@ public class CelestiumGameTests {
 		helper.assertTrue(Faction.fromLegacyValue(1) == Faction.CELESTE, "1 devrait valoir celeste");
 
 		helper.succeed();
+	}
+
+	/**
+	 * Un cadre en blocs de Celestium s'allume et se remplit de surface de portail.
+	 *
+	 * <p>Le cadre est bati en dur : deux montants, un seuil et un linteau, pour un interieur de
+	 * deux blocs de large sur trois de haut.
+	 */
+	@GameTest(template = ARENA)
+	public static void celestiumFrameLightsAPortal(GameTestHelper helper) {
+		int innerWidth = 2;
+		int innerHeight = 3;
+		BlockPos origin = new BlockPos(2, 1, 2);
+
+		// Montants gauche et droit, seuil et linteau compris.
+		for (int y = -1; y <= innerHeight; y++) {
+			helper.setBlock(origin.offset(-1, y, 0), ModBlocks.CELESTIUM_BLOCK.get());
+			helper.setBlock(origin.offset(innerWidth, y, 0), ModBlocks.CELESTIUM_BLOCK.get());
+		}
+		for (int x = 0; x < innerWidth; x++) {
+			helper.setBlock(origin.offset(x, -1, 0), ModBlocks.CELESTIUM_BLOCK.get());
+			helper.setBlock(origin.offset(x, innerHeight, 0), ModBlocks.CELESTIUM_BLOCK.get());
+		}
+
+		CelestialPortalShape shape =
+				CelestialPortalShape.find(helper.getLevel(), helper.absolutePos(origin));
+
+		helper.assertTrue(shape != null, "Le cadre en blocs de Celestium n'est pas reconnu");
+		shape.createPortal();
+
+		for (int x = 0; x < innerWidth; x++) {
+			for (int y = 0; y < innerHeight; y++) {
+				helper.assertBlockPresent(ModBlocks.CELESTIAL_PORTAL.get(), origin.offset(x, y, 0));
+			}
+		}
+
+		// Casser un montant doit dissiper toute la surface.
+		helper.setBlock(origin.offset(-1, 0, 0), Blocks.AIR);
+		helper.succeedWhen(() -> helper.assertBlockPresent(Blocks.AIR, origin));
 	}
 
 	/** Butin d'un bloc casse a mains nues, sans Fortune ni Toucher de soie. */

@@ -1,0 +1,11 @@
+{
+  "type": "celestium:celestial",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "celestium:celestial_void"
+    },
+    "settings": "minecraft:overworld"
+  }
+}

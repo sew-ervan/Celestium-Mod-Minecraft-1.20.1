@@ -1,6 +1,7 @@
 {
   "advancements.premier_celestium.descr": "Tu as obtenu ton premier fragment de Celestium.",
   "advancements.premier_celestium.title": "Premier Celestium",
+  "biome.celestium.celestial_void": "Vide céleste",
   "block.celestium.bois_du_demon_button": "Bouton en bois du démon",
   "block.celestium.bois_du_demon_fence": "Barrière en bois du démon",
   "block.celestium.bois_du_demon_fence_gate": "Portillon en bois du démon",
@@ -49,6 +50,8 @@
   "message.celestium.home.none": "Tu n'as pas encore défini de home. Utilise /sethome.",
   "message.celestium.home.set": "Home enregistré en %s, %s, %s.",
   "message.celestium.morph.unavailable": "Le /morph nécessite le mod Identity, qui n'est pas installé sur ce serveur.",
+  "message.celestium.portal.entered": "Tu franchis le voile céleste.",
+  "message.celestium.portal.returned": "Tu retrouves le monde d'en bas.",
   "message.celestium.rtp.already_used": "Tu as déjà utilisé le /rtp aujourd'hui.",
   "message.celestium.rtp.success": "Téléportation réussie.",
   "message.celestium.rtp.wrong_dimension": "Le /rtp ne fonctionne que dans l'Overworld.",

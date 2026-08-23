@@ -18,6 +18,11 @@ public class ModEnglishProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add("itemGroup.celestium.celestial_univers", "Celestial Univers");
 
+		// --- Celestial dimension ---
+		add("biome.celestium.celestial_void", "Celestial Void");
+		add("message.celestium.portal.entered", "You cross the celestial veil.");
+		add("message.celestium.portal.returned", "You return to the world below.");
+
 		// --- Advancements ---
 		add("advancements.premier_celestium.title", "First Celestium");
 		add("advancements.premier_celestium.descr", "You obtained your first Celestium fragment.");

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/nether_portal_ns",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "portal": "celestium:block/celestium_block"
+  }
+}

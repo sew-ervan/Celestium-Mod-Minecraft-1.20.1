@@ -2,7 +2,9 @@ package net.celestium.datagen;
 
 import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
+import net.celestium.feature.portal.CelestialPortalBlock;
 import net.celestium.init.ModBlocks;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -37,7 +39,26 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleCube(ModBlocks.CELESTIUM_BLOCK.get());
 		simpleCube(ModBlocks.LUCKY_BLOCK.get());
 
+		portal();
+
 		woodSet(ModBlocks.BOIS_DU_DEMON);
+	}
+
+	/**
+	 * La surface du portail reprend le modele du portail du Nether, dont l'unique texture est
+	 * remplacee. Faute de texture animee dediee, celle du bloc de Celestium sert de tenant-lieu.
+	 */
+	private void portal() {
+		ModelFile plane = models()
+				.withExistingParent("celestial_portal", mcLoc("block/nether_portal_ns"))
+				.texture("portal", modLoc("block/celestium_block"))
+				.renderType("translucent");
+
+		getVariantBuilder(ModBlocks.CELESTIAL_PORTAL.get())
+				.partialState().with(CelestialPortalBlock.AXIS, Direction.Axis.X)
+				.modelForState().modelFile(plane).addModel()
+				.partialState().with(CelestialPortalBlock.AXIS, Direction.Axis.Z)
+				.modelForState().modelFile(plane).rotationY(90).addModel();
 	}
 
 	/** Bloc plein a texture unique, plus son modele d'item. */
