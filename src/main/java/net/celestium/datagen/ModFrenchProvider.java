@@ -95,6 +95,32 @@ public class ModFrenchProvider extends LanguageProvider {
 		add("death.attack.corruption", "%1$s a été rongé par la corruption");
 		add("death.attack.corruption.player", "%1$s a été rongé par la corruption en affrontant %2$s");
 
+		// Ce que le bloc chance annonce. Le texte est le seul indice de ce qui arrive : il doit se
+		// lire en une seconde, avant que l'evenement ne parle de lui-meme.
+		add("message.celestium.lucky.gift", "Un présent.");
+		add("message.celestium.lucky.burst", "Ça déborde !");
+		add("message.celestium.lucky.experience", "Un torrent de savoir.");
+		add("message.celestium.lucky.blessing", "Quelque chose veille sur toi.");
+		add("message.celestium.lucky.vein", "Le sol s'est enrichi.");
+		add("message.celestium.lucky.beacon", "Une lumière s'élève.");
+		add("message.celestium.lucky.outfit", "De quoi t'armer.");
+		add("message.celestium.lucky.relic", "Le cœur d'un démon, offert.");
+
+		add("message.celestium.lucky.horde", "Tu n'es plus seul.");
+		add("message.celestium.lucky.creepers", "Ça siffle derrière toi...");
+		add("message.celestium.lucky.invasion", "Ils arrivent en nombre !");
+		add("message.celestium.lucky.parasites", "La nuée te submerge !");
+		add("message.celestium.lucky.demon", "Il t'a trouvé.");
+		add("message.celestium.lucky.tnt", "Cours.");
+		add("message.celestium.lucky.detonation", "Trop tard.");
+		add("message.celestium.lucky.lightning", "Le ciel te tombe dessus.");
+		add("message.celestium.lucky.curse", "Quelque chose te ronge.");
+		add("message.celestium.lucky.arrows", "Lève les yeux.");
+		add("message.celestium.lucky.anvils", "Ne reste pas là !");
+		add("message.celestium.lucky.cage", "Enfermé.");
+		add("message.celestium.lucky.lava", "Ça chauffe.");
+		add("message.celestium.lucky.pitfall", "Le sol s'ouvre !");
+
 		// --- Creatures des Terres du demon ---
 		add("entity.celestium.parasite", "Parasite");
 		add("entity.celestium.corrupted_villager", "Villageois corrompu");

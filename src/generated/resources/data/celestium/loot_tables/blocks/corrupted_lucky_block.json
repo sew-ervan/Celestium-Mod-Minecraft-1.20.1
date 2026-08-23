@@ -1,26 +1,4 @@
 {
   "type": "minecraft:block",
-  "pools": [
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:tag",
-          "expand": true,
-          "name": "celestium:corrupted_lucky_block_rewards",
-          "quality": 5,
-          "weight": 15
-        },
-        {
-          "type": "minecraft:tag",
-          "expand": true,
-          "name": "celestium:lucky_block_junk",
-          "quality": -5,
-          "weight": 25
-        }
-      ],
-      "rolls": 1.0
-    }
-  ],
   "random_sequence": "celestium:blocks/corrupted_lucky_block"
 }

@@ -30,6 +30,16 @@ public final class ModBiomeModifiers {
 
 	public static final ResourceKey<BiomeModifier> ADD_CELESTIUM_ORE = key("add_celestium_ore");
 
+	/**
+	 * Chaque bloc chance se seme dans le monde qui lui correspond : l'ordinaire dans l'Overworld,
+	 * le corrompu dans le Nether — d'ou vient la matiere qui corrompt le Celestium — et celui du
+	 * demon dans les Terres du demon, qui recoivent le leur par leur biome plutot que par un
+	 * modificateur.
+	 */
+	public static final ResourceKey<BiomeModifier> ADD_LUCKY_BLOCK = key("add_lucky_block");
+	public static final ResourceKey<BiomeModifier> ADD_CORRUPTED_LUCKY_BLOCK =
+			key("add_corrupted_lucky_block");
+
 	private ModBiomeModifiers() {
 	}
 
@@ -41,6 +51,16 @@ public final class ModBiomeModifiers {
 				biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
 				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.CELESTIUM_ORE)),
 				GenerationStep.Decoration.UNDERGROUND_ORES));
+
+		context.register(ADD_LUCKY_BLOCK, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.LUCKY_BLOCK)),
+				GenerationStep.Decoration.UNDERGROUND_DECORATION));
+
+		context.register(ADD_CORRUPTED_LUCKY_BLOCK, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				biomes.getOrThrow(BiomeTags.IS_NETHER),
+				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.CORRUPTED_LUCKY_BLOCK)),
+				GenerationStep.Decoration.UNDERGROUND_DECORATION));
 	}
 
 	private static ResourceKey<BiomeModifier> key(String name) {

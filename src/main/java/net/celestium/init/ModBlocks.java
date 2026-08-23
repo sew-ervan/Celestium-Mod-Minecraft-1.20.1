@@ -4,6 +4,8 @@ import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.feature.celestium.CelestiumStorageBlock;
 import net.celestium.feature.altar.SummoningAltarBlock;
+import net.celestium.feature.luckyblock.LuckyBlock;
+import net.celestium.feature.luckyblock.LuckyTier;
 import net.celestium.feature.portal.DemonPortalBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -50,13 +52,14 @@ public class ModBlocks {
 					.hasPostProcess((state, level, pos) -> true)));
 
 	/**
-	 * Le comportement du bloc chance tient entierement dans sa table de butin : une entree de tag
-	 * en {@code expand} tire un item au hasard parmi les recompenses. MCreator y consacrait une
-	 * classe de bloc, une procedure, et deux surcharges — l'une pour la casse, l'autre pour
-	 * l'explosion — la que le systeme de butin couvre les deux cas seul.
+	 * Le bloc chance ordinaire : le plus genereux des trois, et le moins spectaculaire.
+	 *
+	 * <p>Les trois blocs partagent leur mecanique et ne different que par leur table d'evenements,
+	 * decrite dans {@link LuckyTier}. Ils forment une echelle ou l'on echange la frequence des
+	 * bonnes surprises contre leur intensite.
 	 */
 	public static final RegistryObject<Block> LUCKY_BLOCK = register("lucky_block",
-			() -> new Block(BlockBehaviour.Properties.of()
+			() -> new LuckyBlock(LuckyTier.ORDINARY, BlockBehaviour.Properties.of()
 					.mapColor(MapColor.GOLD)
 					.sound(SoundType.COPPER)
 					.strength(1.7F, 10.0F)
@@ -69,7 +72,7 @@ public class ModBlocks {
 	 * Celui-ci en occupe le milieu.
 	 */
 	public static final RegistryObject<Block> CORRUPTED_LUCKY_BLOCK = register("corrupted_lucky_block",
-			() -> new Block(BlockBehaviour.Properties.of()
+			() -> new LuckyBlock(LuckyTier.CORRUPTED, BlockBehaviour.Properties.of()
 					.mapColor(MapColor.COLOR_RED)
 					.sound(SoundType.COPPER)
 					.strength(2.0F, 12.0F)
@@ -82,7 +85,7 @@ public class ModBlocks {
 	 * pareille quantite. C'est le pari le plus mauvais du mod, et le plus paye.
 	 */
 	public static final RegistryObject<Block> DEMON_LUCKY_BLOCK = register("demon_lucky_block",
-			() -> new Block(BlockBehaviour.Properties.of()
+			() -> new LuckyBlock(LuckyTier.DEMON, BlockBehaviour.Properties.of()
 					.mapColor(MapColor.NETHER)
 					.sound(SoundType.COPPER)
 					.strength(2.5F, 15.0F)

@@ -90,6 +90,30 @@ public class ModEnglishProvider extends LanguageProvider {
 		add("death.attack.corruption", "%1$s was consumed by the corruption");
 		add("death.attack.corruption.player", "%1$s was consumed by the corruption while fighting %2$s");
 
+		add("message.celestium.lucky.gift", "A gift.");
+		add("message.celestium.lucky.burst", "It's overflowing!");
+		add("message.celestium.lucky.experience", "A flood of knowledge.");
+		add("message.celestium.lucky.blessing", "Something watches over you.");
+		add("message.celestium.lucky.vein", "The ground grew richer.");
+		add("message.celestium.lucky.beacon", "A light rises.");
+		add("message.celestium.lucky.outfit", "Arm yourself.");
+		add("message.celestium.lucky.relic", "A demon's heart, freely given.");
+
+		add("message.celestium.lucky.horde", "You are not alone.");
+		add("message.celestium.lucky.creepers", "Something hisses behind you...");
+		add("message.celestium.lucky.invasion", "They come in numbers!");
+		add("message.celestium.lucky.parasites", "The swarm engulfs you!");
+		add("message.celestium.lucky.demon", "He has found you.");
+		add("message.celestium.lucky.tnt", "Run.");
+		add("message.celestium.lucky.detonation", "Too late.");
+		add("message.celestium.lucky.lightning", "The sky falls on you.");
+		add("message.celestium.lucky.curse", "Something gnaws at you.");
+		add("message.celestium.lucky.arrows", "Look up.");
+		add("message.celestium.lucky.anvils", "Don't stand there!");
+		add("message.celestium.lucky.cage", "Trapped.");
+		add("message.celestium.lucky.lava", "It's getting hot.");
+		add("message.celestium.lucky.pitfall", "The ground opens!");
+
 		// --- Demon Wastes creatures ---
 		add("entity.celestium.parasite", "Parasite");
 		add("entity.celestium.corrupted_villager", "Corrupted Villager");

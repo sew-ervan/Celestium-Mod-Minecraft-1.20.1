@@ -32,6 +32,12 @@ public final class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMONIUM_ORE = key("demonium_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMON_TREE = key("demon_tree");
 
+	/** Les trois blocs chance, semes un par un plutot qu'en filons. */
+	public static final ResourceKey<ConfiguredFeature<?, ?>> LUCKY_BLOCK = key("lucky_block");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_LUCKY_BLOCK =
+			key("corrupted_lucky_block");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMON_LUCKY_BLOCK = key("demon_lucky_block");
+
 	/** Nombre de blocs par filon. Etait de 3 dans le mod d'origine. */
 	private static final int VEIN_SIZE = 4;
 
@@ -51,6 +57,22 @@ public final class ModConfiguredFeatures {
 		// purement et simplement d'apparaitre.
 		context.register(DEMONIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
 				new OreConfiguration(targets(ModBlocks.DEMONIUM_ORE.get()), DEMONIUM_VEIN_SIZE)));
+
+		// Les blocs chance se sement isolement — un filon de blocs chance en donnerait quatre d'un
+		// coup, ce qui ruinerait le pari. Le mecanisme des filons convient neanmoins : c'est le
+		// seul qui sache loger un bloc au milieu de la roche.
+		context.register(LUCKY_BLOCK, new ConfiguredFeature<>(Feature.ORE,
+				new OreConfiguration(targets(ModBlocks.LUCKY_BLOCK.get()), 1)));
+
+		// Le bloc corrompu se cache dans le Nether, d'ou vient la matiere qui corrompt le Celestium.
+		context.register(CORRUPTED_LUCKY_BLOCK, new ConfiguredFeature<>(Feature.ORE,
+				new OreConfiguration(
+						List.of(OreConfiguration.target(new TagMatchTest(BlockTags.BASE_STONE_NETHER),
+								ModBlocks.CORRUPTED_LUCKY_BLOCK.get().defaultBlockState())),
+						1)));
+
+		context.register(DEMON_LUCKY_BLOCK, new ConfiguredFeature<>(Feature.ORE,
+				new OreConfiguration(targets(ModBlocks.DEMON_LUCKY_BLOCK.get()), 1)));
 
 		// Le seul arbre qui pousse sur les terres du demon : tronc droit et houppier compact.
 		context.register(DEMON_TREE, new ConfiguredFeature<>(Feature.TREE,

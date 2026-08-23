@@ -9,6 +9,8 @@ import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.corruption.DimensionMining;
+import net.celestium.feature.luckyblock.LuckyOutcome;
+import net.celestium.feature.luckyblock.LuckyTier;
 import net.celestium.feature.portal.DemonPortalShape;
 import net.celestium.feature.portal.DemonPortalTravel;
 import net.celestium.init.ModBlocks;
@@ -85,37 +87,18 @@ public class CelestiumGameTests {
 		helper.succeed();
 	}
 
-	/** Chaque bloc chance rend exactement un objet, tresor ou rebut, jamais lui-meme. */
-	@GameTest(template = ARENA)
-	public static void luckyBlockDropsOneItem(GameTestHelper helper) {
-		assertSingleDraw(helper, ModBlocks.LUCKY_BLOCK.get(), ModTags.Items.LUCKY_BLOCK_REWARDS);
-		assertSingleDraw(helper, ModBlocks.CORRUPTED_LUCKY_BLOCK.get(),
-				ModTags.Items.CORRUPTED_LUCKY_BLOCK_REWARDS);
-		assertSingleDraw(helper, ModBlocks.DEMON_LUCKY_BLOCK.get(),
-				ModTags.Items.DEMON_LUCKY_BLOCK_REWARDS);
-
-		helper.succeed();
-	}
-
 	/**
 	 * Les trois blocs chance se classent du plus chanceux au moins chanceux.
 	 *
-	 * <p>C'est la seule propriete qui compte vraiment, et elle ne se lit pas dans les poids : elle
-	 * depend a la fois de ceux-ci et du nombre d'items declares dans chaque tag. Ajouter une
-	 * recompense au bloc du demon le rendrait plus chanceux que le corrompu sans qu'aucune ligne
-	 * de reglage n'ait bouge — ce test le verrait.
-	 *
-	 * <p>Le tirage est repete : sur trois cents essais, l'ecart entre quatre-vingts pour cent et
-	 * dix-sept ne tient pas du hasard.
+	 * <p>C'est la propriete qui definit l'echelle, et elle ne se lit pas dans une ligne : elle
+	 * resulte de la somme des poids de chaque table. Rendre un mauvais coup plus rare ou ajouter
+	 * une bonne issue peut la renverser sans qu'aucune intention n'ait ete exprimee.
 	 */
 	@GameTest(template = ARENA)
 	public static void luckyBlocksRankFromLuckyToCursed(GameTestHelper helper) {
-		double ordinary = treasureRate(helper, ModBlocks.LUCKY_BLOCK.get(),
-				ModTags.Items.LUCKY_BLOCK_REWARDS);
-		double corrupted = treasureRate(helper, ModBlocks.CORRUPTED_LUCKY_BLOCK.get(),
-				ModTags.Items.CORRUPTED_LUCKY_BLOCK_REWARDS);
-		double demon = treasureRate(helper, ModBlocks.DEMON_LUCKY_BLOCK.get(),
-				ModTags.Items.DEMON_LUCKY_BLOCK_REWARDS);
+		double ordinary = LuckyTier.ORDINARY.fortuneRate(0.0F);
+		double corrupted = LuckyTier.CORRUPTED.fortuneRate(0.0F);
+		double demon = LuckyTier.DEMON.fortuneRate(0.0F);
 
 		helper.assertTrue(ordinary > corrupted,
 				"Le bloc chance ordinaire (" + percent(ordinary) + ") n'est pas plus chanceux que le"
@@ -123,6 +106,65 @@ public class CelestiumGameTests {
 		helper.assertTrue(corrupted > demon,
 				"Le bloc chance corrompu (" + percent(corrupted) + ") n'est pas plus chanceux que celui"
 						+ " du demon (" + percent(demon) + ")");
+
+		helper.succeed();
+	}
+
+	/**
+	 * La chance et la malchance jouent toutes deux sur le tirage.
+	 *
+	 * <p>C'est ce qui distingue ces blocs d'un simple tirage fixe : une potion de chance doit se
+	 * ressentir, et l'effet de malchance aussi. Le test le verifie sur les trois paliers, car la
+	 * qualite est declaree issue par issue et rien ne garantit qu'on ne l'oublie pas sur l'une.
+	 */
+	@GameTest(template = ARENA)
+	public static void luckShiftsTheOdds(GameTestHelper helper) {
+		for (LuckyTier tier : LuckyTier.values()) {
+			double cursed = tier.fortuneRate(-1.0F);
+			double plain = tier.fortuneRate(0.0F);
+			double blessed = tier.fortuneRate(1.0F);
+
+			helper.assertTrue(blessed > plain,
+					"La chance n'ameliore pas le tirage de " + tier + " (" + percent(plain)
+							+ " puis " + percent(blessed) + ")");
+			helper.assertTrue(cursed < plain,
+					"La malchance n'aggrave pas le tirage de " + tier + " (" + percent(plain)
+							+ " puis " + percent(cursed) + ")");
+		}
+
+		helper.succeed();
+	}
+
+	/**
+	 * Chaque evenement se declenche sans casser.
+	 *
+	 * <p>Vingt-deux effets touchent a autant de coins de l'API — creatures, projectiles, blocs
+	 * tombants, explosions, constructions. Le compilateur en verifie les signatures, pas le
+	 * comportement : une creature que le monde refuse de creer ou un tag vide passeraient la
+	 * compilation et lanceraient une exception au premier bloc casse. Ce test les declenche tous.
+	 *
+	 * <p>Les deux issues explosives sont ecartees : leur code tient en un appel, et faire sauter
+	 * neuf TNT dans une arene de test risquerait d'atteindre les arenes voisines.
+	 */
+	@GameTest(template = ARENA, timeoutTicks = 400)
+	public static void everyLuckyOutcomeFires(GameTestHelper helper) {
+		Player player = helper.makeMockPlayer();
+		BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
+		RandomSource random = RandomSource.create(1234L);
+
+		for (LuckyTier tier : LuckyTier.values()) {
+			helper.assertTrue(!tier.outcomes().isEmpty(), "Le palier " + tier + " n'a aucune issue");
+
+			for (LuckyOutcome outcome : tier.outcomes()) {
+				helper.assertTrue(outcome.message() != null && !outcome.message().isEmpty(),
+						"Une issue de " + tier + " n'annonce rien");
+
+				if (outcome.message().endsWith(".tnt") || outcome.message().endsWith(".detonation")) {
+					continue;
+				}
+				outcome.event().fire(helper.getLevel(), pos, player, random);
+			}
+		}
 
 		helper.succeed();
 	}
@@ -396,40 +438,6 @@ public class CelestiumGameTests {
 				"Le coeur du demon n'ouvre pas exactement une offre");
 
 		helper.succeed();
-	}
-
-	/** Nombre de tirages servant a estimer la chance d'un bloc. */
-	private static final int DRAWS = 300;
-
-	/** Verifie qu'un bloc chance rend une seule chose, prise dans son tresor ou dans les rebuts. */
-	private static void assertSingleDraw(GameTestHelper helper, Block block, TagKey<Item> treasure) {
-		BlockPos pos = new BlockPos(1, 1, 1);
-		helper.setBlock(pos, block);
-
-		List<ItemStack> drops = dropsOf(helper, pos);
-
-		helper.assertTrue(drops.size() == 1,
-				block.getName().getString() + " a rendu " + drops.size() + " objets au lieu d'un seul");
-		helper.assertTrue(
-				drops.get(0).is(treasure) || drops.get(0).is(ModTags.Items.LUCKY_BLOCK_JUNK),
-				block.getName().getString() + " a rendu un objet absent de ses deux listes");
-		helper.assertTrue(!drops.get(0).is(block.asItem()),
-				block.getName().getString() + " se rend lui-meme");
-	}
-
-	/** Proportion de tirages qui donnent un tresor plutot qu'un rebut. */
-	private static double treasureRate(GameTestHelper helper, Block block, TagKey<Item> treasure) {
-		BlockPos pos = new BlockPos(1, 1, 1);
-		helper.setBlock(pos, block);
-
-		int treasures = 0;
-		for (int draw = 0; draw < DRAWS; draw++) {
-			List<ItemStack> drops = dropsOf(helper, pos);
-			if (drops.size() == 1 && drops.get(0).is(treasure)) {
-				treasures++;
-			}
-		}
-		return (double) treasures / DRAWS;
 	}
 
 	private static String percent(double rate) {

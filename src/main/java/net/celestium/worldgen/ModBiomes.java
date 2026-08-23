@@ -69,7 +69,10 @@ public final class ModBiomes {
 		BiomeDefaultFeatures.addDefaultCarversAndLakes(generation);
 		BiomeDefaultFeatures.addDefaultMonsterRoom(generation);
 		BiomeDefaultFeatures.addDefaultUndergroundVariety(generation);
-		BiomeDefaultFeatures.addDefaultSprings(generation);
+
+		// Pas de sources : elles poseraient de l'eau et de la lave dans une dimension qu'on a
+		// justement asséchée en descendant son niveau de la mer sous le plancher du monde. Le
+		// generateur de terrain n'en met plus, mais cette decoration-la en remettrait.
 
 		// Ce qui justifie le voyage : le Demonium ne se trouve que la.
 		generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
@@ -78,6 +81,10 @@ public final class ModBiomes {
 		// Les seuls arbres qui poussent sur cette terre.
 		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
 				features.getOrThrow(ModPlacedFeatures.DEMON_TREE));
+
+		// Le bloc chance du demon ne se trouve que dans cette dimension.
+		generation.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+				features.getOrThrow(ModPlacedFeatures.DEMON_LUCKY_BLOCK));
 
 		return new Biome.BiomeBuilder()
 				.hasPrecipitation(false)

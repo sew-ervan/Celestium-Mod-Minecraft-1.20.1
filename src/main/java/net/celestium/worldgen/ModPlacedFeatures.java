@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import java.util.List;
@@ -32,6 +33,19 @@ public final class ModPlacedFeatures {
 
 	/** Arbres des terres du demon. */
 	public static final ResourceKey<PlacedFeature> DEMON_TREE = key("demon_tree");
+
+	/** Les trois blocs chance, chacun dans son monde. */
+	public static final ResourceKey<PlacedFeature> LUCKY_BLOCK = key("lucky_block");
+	public static final ResourceKey<PlacedFeature> CORRUPTED_LUCKY_BLOCK = key("corrupted_lucky_block");
+	public static final ResourceKey<PlacedFeature> DEMON_LUCKY_BLOCK = key("demon_lucky_block");
+
+	// Frequence des blocs chance, en chunks entre deux tentatives. Ils doivent rester une trouvaille
+	// et non une nuisance : un bloc chance tous les quelques chunks, c'est une surprise ; un par
+	// chunk, c'est une horde permanente. Le corrompu et celui du demon sont plus rares encore,
+	// puisqu'ils frappent plus fort.
+	private static final int LUCKY_RARITY = 6;
+	private static final int CORRUPTED_LUCKY_RARITY = 10;
+	private static final int DEMON_LUCKY_RARITY = 8;
 
 	// Valeurs relevees a la demande du serveur. Le mod d'origine en donnait 2 filons de 3 blocs
 	// entre -64 et -48, soit une bande de seize blocs au fond du monde : le Celestium y etait
@@ -68,6 +82,38 @@ public final class ModPlacedFeatures {
 						CountPlacement.of(3),
 						InSquarePlacement.spread(),
 						HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
+						BiomeFilter.biome())));
+
+		// Les blocs chance couvrent une large tranche d'altitude : on doit pouvoir en croiser en
+		// creusant une cave comme en descendant au fond d'une mine.
+		context.register(LUCKY_BLOCK, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.LUCKY_BLOCK),
+				List.of(
+						RarityFilter.onAverageOnceEvery(LUCKY_RARITY),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(
+								VerticalAnchor.absolute(-48),
+								VerticalAnchor.absolute(80)),
+						BiomeFilter.biome())));
+
+		context.register(CORRUPTED_LUCKY_BLOCK, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.CORRUPTED_LUCKY_BLOCK),
+				List.of(
+						RarityFilter.onAverageOnceEvery(CORRUPTED_LUCKY_RARITY),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(
+								VerticalAnchor.absolute(8),
+								VerticalAnchor.absolute(110)),
+						BiomeFilter.biome())));
+
+		context.register(DEMON_LUCKY_BLOCK, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.DEMON_LUCKY_BLOCK),
+				List.of(
+						RarityFilter.onAverageOnceEvery(DEMON_LUCKY_RARITY),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(
+								VerticalAnchor.absolute(-48),
+								VerticalAnchor.absolute(90)),
 						BiomeFilter.biome())));
 
 		context.register(DEMONIUM_ORE_WASTES, new PlacedFeature(

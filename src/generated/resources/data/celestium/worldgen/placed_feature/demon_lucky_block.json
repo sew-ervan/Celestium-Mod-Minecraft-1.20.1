@@ -1,0 +1,27 @@
+{
+  "feature": "celestium:demon_lucky_block",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 8
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 90
+        },
+        "min_inclusive": {
+          "absolute": -48
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

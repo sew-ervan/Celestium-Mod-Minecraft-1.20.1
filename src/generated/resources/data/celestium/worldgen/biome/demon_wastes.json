@@ -53,11 +53,10 @@
       "minecraft:ore_tuff",
       "celestium:demonium_ore_wastes"
     ],
-    [],
     [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
+      "celestium:demon_lucky_block"
     ],
+    [],
     [
       "minecraft:glow_lichen",
       "celestium:demon_tree"
