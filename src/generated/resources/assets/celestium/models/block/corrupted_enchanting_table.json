@@ -36,7 +36,7 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "all": "celestium:block/corrupted_enchanting_table",
-    "particle": "celestium:block/corrupted_enchanting_table"
+    "all": "celestium:block/corrupted_celestium_block",
+    "particle": "celestium:block/corrupted_celestium_block"
   }
 }

@@ -222,6 +222,10 @@ public class ModItems {
 	public static final RegistryObject<Item> BACKPACK = ITEMS.register("backpack",
 			() -> new BackpackItem(BackpackTier.LARGE));
 
+	/** Vingt rangees : l'interface n'en montre que six et defile pour le reste. */
+	public static final RegistryObject<Item> BACKPACK_HUGE = ITEMS.register("backpack_huge",
+			() -> new BackpackItem(BackpackTier.HUGE));
+
 	// --- Oeufs d'apparition ---
 
 	public static final RegistryObject<Item> MINI_WARDEN_SPAWN_EGG = ITEMS.register("mini_warden_spawn_egg",

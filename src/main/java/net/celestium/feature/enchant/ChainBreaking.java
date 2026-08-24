@@ -11,7 +11,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,9 +26,10 @@ import java.util.Set;
 /**
  * Ce qui arrive en plus quand un outil enchante casse un bloc.
  *
- * <p>Les deux enchantements du mod partagent leur mecanique : ils determinent une liste de blocs
+ * <p>Les quatre enchantements du mod partagent leur mecanique : ils determinent une liste de blocs
  * supplementaires et les cassent comme si le joueur l'avait fait lui-meme, avec le butin, l'usure
- * et l'experience qui vont avec.
+ * et l'experience qui vont avec. Seule la facon de dresser cette liste les distingue — un amas
+ * connexe pour l'abattage et le filon, un carre pour l'excavation et la moisson.
  *
  * <p>Un verrou empeche la recursion. Casser un bloc en declenche l'evenement, donc un abattage qui
  * casserait ses rondins par la voie normale relancerait un abattage sur chacun d'eux, et ainsi de
@@ -43,6 +46,9 @@ public final class ChainBreaking {
 	 * une construction en rondins, et la limite evite d'en raser un quartier d'un coup de hache.
 	 */
 	private static final int TIMBER_LIMIT = 256;
+
+	/** Meme limite pour les gisements, plus basse : aucun filon vanilla ne depasse la vingtaine. */
+	private static final int VEIN_LIMIT = 64;
 
 	/** Empeche un bloc casse par l'enchantement d'en declencher un autre. */
 	private static final ThreadLocal<Boolean> BUSY = ThreadLocal.withInitial(() -> false);
@@ -85,19 +91,63 @@ public final class ChainBreaking {
 
 		if (EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.TIMBER.get(), tool) > 0
 				&& state.is(BlockTags.LOGS)) {
-			return trunk(level, origin, state);
+			return connected(level, origin, state, TIMBER_LIMIT);
+		}
+
+		if (EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.VEIN_MINER.get(), tool) > 0
+				&& state.is(Tags.Blocks.ORES)) {
+			return connected(level, origin, state, VEIN_LIMIT);
+		}
+
+		int harvest = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.HARVEST.get(), tool);
+		if (harvest > 0 && isRipe(state)) {
+			return ripeAround(level, origin, state, HarvestEnchantment.radiusFor(harvest));
 		}
 
 		int excavation = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.EXCAVATION.get(), tool);
 		if (excavation > 0 && tool.isCorrectToolForDrops(state)) {
-			return square(level, player, tool, origin, excavation);
+			return square(level, player, tool, origin, ExcavationEnchantment.radiusFor(excavation));
 		}
 
 		return Set.of();
 	}
 
+	/** Vrai pour une culture arrivee a maturite. */
+	private static boolean isRipe(BlockState state) {
+		return state.getBlock() instanceof CropBlock crop && crop.isMaxAge(state);
+	}
+
 	/**
-	 * Le tronc entier, de proche en proche.
+	 * Les plants mûrs de la meme espece dans le carre.
+	 *
+	 * <p>Seuls les plants arrives a maturite sont pris : passer la houe sur un champ a moitie pousse
+	 * n'y arrache pas les pousses, et l'on peut donc recolter sans regarder ou l'on frappe.
+	 */
+	private static Set<BlockPos> ripeAround(Level level, BlockPos origin, BlockState state, int radius) {
+		Set<BlockPos> found = new HashSet<>();
+
+		for (int dx = -radius; dx <= radius; dx++) {
+			for (int dz = -radius; dz <= radius; dz++) {
+				BlockPos target = origin.offset(dx, 0, dz);
+				if (target.equals(origin)) {
+					continue;
+				}
+
+				BlockState other = level.getBlockState(target);
+				if (other.is(state.getBlock()) && isRipe(other)) {
+					found.add(target);
+				}
+			}
+		}
+
+		return found;
+	}
+
+	/**
+	 * Tout ce qui touche, de proche en proche, et qui est du meme bloc.
+	 *
+	 * <p>La meme methode sert au tronc et au gisement : un arbre et un filon sont l'un comme l'autre
+	 * un amas connexe d'un seul bloc, et rien ne justifie deux parcours.
 	 *
 	 * <p>Le parcours accepte les diagonales : les arbres du jeu de base ont des troncs qui se
 	 * decalent d'un bloc — les acacias, les chenes noueux — et un parcours strictement orthogonal
@@ -106,12 +156,12 @@ public final class ChainBreaking {
 	 * <p>Seuls les rondins de la meme essence sont emportes. Sans ce filtre, un chene pousse contre
 	 * un bouleau ferait tomber les deux.
 	 */
-	private static Set<BlockPos> trunk(Level level, BlockPos origin, BlockState state) {
+	private static Set<BlockPos> connected(Level level, BlockPos origin, BlockState state, int limit) {
 		Set<BlockPos> found = new HashSet<>();
 		Deque<BlockPos> pending = new ArrayDeque<>();
 		pending.add(origin);
 
-		while (!pending.isEmpty() && found.size() < TIMBER_LIMIT) {
+		while (!pending.isEmpty() && found.size() < limit) {
 			BlockPos current = pending.removeFirst();
 
 			for (int dx = -1; dx <= 1; dx++) {
@@ -147,9 +197,8 @@ public final class ChainBreaking {
 	 * terre autour d'un filon ferait de l'excavation une pelle universelle.
 	 */
 	private static Set<BlockPos> square(Level level, Player player, ItemStack tool, BlockPos origin,
-			int enchantLevel) {
+			int radius) {
 
-		int radius = ExcavationEnchantment.radiusFor(enchantLevel);
 		Direction facing = Direction.orderedByNearest(player)[0];
 
 		Set<BlockPos> found = new HashSet<>();
@@ -194,8 +243,25 @@ public final class ChainBreaking {
 				return;
 			}
 
+			BlockState before = level.getBlockState(target);
+
 			// destroyBlock cote serveur s'occupe du butin, de l'experience et de l'usure.
 			player.gameMode.destroyBlock(target);
+
+			replantIfCrop(level, target, before);
+		}
+	}
+
+	/**
+	 * Remet une pousse a la place du plant recolte.
+	 *
+	 * <p>C'est la moitie de l'interet de la moisson : recolter un carre de sept sans replanter ne
+	 * ferait que deplacer la corvee du cassage vers la semaille. La graine n'est pas prelevee dans
+	 * l'inventaire — celle du plant recolte y pourvoit, et la recolte en rend toujours au moins une.
+	 */
+	private static void replantIfCrop(Level level, BlockPos pos, BlockState before) {
+		if (before.getBlock() instanceof CropBlock crop && level.getBlockState(pos).isAir()) {
+			level.setBlockAndUpdate(pos, crop.defaultBlockState());
 		}
 	}
 }

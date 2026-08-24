@@ -67,8 +67,8 @@
     }
   ],
   "textures": {
-    "eye": "celestium:block/corrupted_celestium_block",
-    "frame": "celestium:block/corrupted_portal_frame",
-    "particle": "celestium:block/corrupted_portal_frame"
+    "eye": "celestium:block/celestium_block",
+    "frame": "celestium:block/corrupted_celestium_block",
+    "particle": "celestium:block/corrupted_celestium_block"
   }
 }

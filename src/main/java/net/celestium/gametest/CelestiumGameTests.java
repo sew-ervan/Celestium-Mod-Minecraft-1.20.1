@@ -225,7 +225,11 @@ public class CelestiumGameTests {
 	 */
 	@GameTest(template = ARENA)
 	public static void modEnchantmentsComeOnlyFromTheCorruptedTable(GameTestHelper helper) {
-		for (Enchantment enchantment : List.of(ModEnchantments.TIMBER.get(), ModEnchantments.EXCAVATION.get())) {
+		for (Enchantment enchantment : List.of(
+				ModEnchantments.TIMBER.get(),
+				ModEnchantments.EXCAVATION.get(),
+				ModEnchantments.VEIN_MINER.get(),
+				ModEnchantments.HARVEST.get())) {
 			helper.assertFalse(enchantment.isDiscoverable(),
 					enchantment.getDescriptionId() + " apparait sur une table d'enchantement ordinaire");
 			helper.assertFalse(enchantment.isTradeable(),
@@ -340,9 +344,23 @@ public class CelestiumGameTests {
 	 */
 	@GameTest(template = ARENA, timeoutTicks = 200)
 	public static void demonSwordsmanEntersSecondPhase(GameTestHelper helper) {
-		helper.setBlock(new BlockPos(1, 0, 1), Blocks.STONE);
+		// Un enclos, et pas un seul bloc. Sur un bloc isole, le demon finissait par en descendre —
+		// de lui-meme ou pousse par une creature venue d'une arene voisine — et une creature tombee
+		// dans le vide cesse de reflechir avant d'avoir pu changer de phase. Le test echouait alors
+		// une fois sur plusieurs, sans que rien de son sujet ne soit en cause.
+		for (int dx = 0; dx <= 4; dx++) {
+			for (int dz = 0; dz <= 4; dz++) {
+				helper.setBlock(new BlockPos(dx, 0, dz), Blocks.STONE);
 
-		DemonSwordsmanEntity demon = helper.spawn(ModEntities.DEMON_SWORDSMAN.get(), 1, 1, 1);
+				boolean onEdge = dx == 0 || dx == 4 || dz == 0 || dz == 4;
+				if (onEdge) {
+					helper.setBlock(new BlockPos(dx, 1, dz), Blocks.STONE);
+					helper.setBlock(new BlockPos(dx, 2, dz), Blocks.STONE);
+				}
+			}
+		}
+
+		DemonSwordsmanEntity demon = helper.spawn(ModEntities.DEMON_SWORDSMAN.get(), 2, 1, 2);
 
 		helper.assertTrue(!demon.isSecondPhase(),
 				"Le demon commence deja en seconde phase");

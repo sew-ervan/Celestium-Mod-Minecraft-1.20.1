@@ -82,11 +82,13 @@ public class ModEnglishProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.TIMBER, "Timber");
 		addEnchantment(ModEnchantments.EXCAVATION, "Excavation");
 
-		add("message.celestium.enchant.granted", "%1$s %2$s");
-		add("message.celestium.enchant.wrong_tool",
-				"The table only recognises axes, pickaxes and shovels.");
+		addEnchantment(ModEnchantments.VEIN_MINER, "Vein Miner");
+		addEnchantment(ModEnchantments.HARVEST, "Harvest");
+
+		add("container.celestium.corrupted_enchanting", "Corrupted Enchanting Table");
+		add("message.celestium.enchant.cost", "%1$s levels");
+		add("message.celestium.enchant.empty", "Place a tool to see what it can receive.");
 		add("message.celestium.enchant.already_maxed", "This tool can go no further.");
-		add("message.celestium.enchant.too_poor", "You lack the experience levels.");
 
 		add("message.celestium.corrupted.entered", "Two worlds collide here. Don't linger.");
 		add("message.celestium.corrupted.returned", "The world settles back into shape.");
@@ -199,7 +201,8 @@ public class ModEnglishProvider extends LanguageProvider {
 		addItem(ModItems.DEMON_SWORDSMAN_SPAWN_EGG, "Demon Swordsman Spawn Egg");
 
 		// --- Celestial backpacks ---
-		addItem(ModItems.BACKPACK, "Celestial Backpack");
+		addItem(ModItems.BACKPACK, "Large Celestial Backpack");
+		addItem(ModItems.BACKPACK_HUGE, "Huge Celestial Backpack");
 		addItem(ModItems.BACKPACK_MEDIUM, "Medium Celestial Backpack");
 		addItem(ModItems.BACKPACK_SMALL, "Small Celestial Backpack");
 

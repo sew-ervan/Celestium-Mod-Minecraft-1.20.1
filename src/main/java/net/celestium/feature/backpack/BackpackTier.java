@@ -10,18 +10,20 @@ import net.minecraft.util.StringRepresentable;
  */
 public enum BackpackTier implements StringRepresentable {
 
-	SMALL("small", 3, 3),
-	MEDIUM("medium", 9, 9),
-	LARGE("large", 18, 9);
+	SMALL("small", 2),
+	MEDIUM("medium", 5),
+	LARGE("large", 10),
+	HUGE("huge", 20);
+
+	/** Neuf colonnes pour tous : c'est la largeur d'un coffre, et l'oeil y est habitue. */
+	public static final int COLUMNS = 9;
 
 	private final String name;
-	private final int size;
-	private final int columns;
+	private final int rows;
 
-	BackpackTier(String name, int size, int columns) {
+	BackpackTier(String name, int rows) {
 		this.name = name;
-		this.size = size;
-		this.columns = columns;
+		this.rows = rows;
 	}
 
 	public static BackpackTier byOrdinal(int ordinal) {
@@ -30,15 +32,15 @@ public enum BackpackTier implements StringRepresentable {
 	}
 
 	public int size() {
-		return this.size;
+		return this.rows * COLUMNS;
 	}
 
 	public int columns() {
-		return this.columns;
+		return COLUMNS;
 	}
 
 	public int rows() {
-		return (this.size + this.columns - 1) / this.columns;
+		return this.rows;
 	}
 
 	@Override

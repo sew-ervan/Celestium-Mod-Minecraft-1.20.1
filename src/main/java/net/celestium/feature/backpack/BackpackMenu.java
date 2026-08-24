@@ -21,16 +21,28 @@ import net.minecraftforge.items.SlotItemHandler;
 public class BackpackMenu extends AbstractContainerMenu {
 
 	public static final int SLOT_SIZE = 18;
-	public static final int IMAGE_WIDTH = 176;
 
-	/** Bordure haute de la texture de coffre, au-dessus de la premiere rangee. */
+	/** Le panneau est plus large qu'un coffre : la barre de defilement loge dans la marge. */
+	public static final int IMAGE_WIDTH = 200;
+
+	/** Bordure haute du panneau, au-dessus de la premiere rangee. */
 	public static final int TOP_BORDER = 17;
 
-	/** Hauteur du bloc d'inventaire du joueur dans la texture de coffre. */
+	/** Hauteur du bloc d'inventaire du joueur dans la texture. */
 	public static final int PLAYER_SECTION_HEIGHT = 96;
 
-	private static final int INVENTORY_LEFT = 8;
-	private static final int GRID_TOP = 18;
+	/**
+	 * Rangees montrees d'un coup.
+	 *
+	 * <p>Six est la hauteur d'un grand coffre, et la limite au-dela de laquelle l'interface deborde
+	 * de l'ecran aux echelles courantes. Les sacs plus grands defilent.
+	 */
+	public static final int VISIBLE_ROWS = 6;
+
+	/** Bord gauche des deux grilles, sac et inventaire. */
+	public static final int GRID_LEFT = 19;
+
+	public static final int GRID_TOP = 17;
 
 	private final BackpackTier tier;
 	private final InteractionHand hand;
@@ -56,18 +68,31 @@ public class BackpackMenu extends AbstractContainerMenu {
 
 	/** Hauteur totale de l'ecran, deduite du nombre de rangees. */
 	public static int imageHeight(BackpackTier tier) {
-		return tier.rows() * SLOT_SIZE + TOP_BORDER + PLAYER_SECTION_HEIGHT;
+		return visibleRows(tier) * SLOT_SIZE + TOP_BORDER + PLAYER_SECTION_HEIGHT;
 	}
 
-	private void addBackpackSlots(IItemHandler handler) {
-		// La grille est centree : un sac de trois emplacements ne doit pas se coller a gauche.
-		int left = (IMAGE_WIDTH - this.tier.columns() * SLOT_SIZE) / 2;
+	/** Rangees effectivement montrees pour ce palier. */
+	public static int visibleRows(BackpackTier tier) {
+		return Math.min(tier.rows(), VISIBLE_ROWS);
+	}
 
+	/** Nombre de crans de defilement disponibles. Zero si tout tient a l'ecran. */
+	public static int scrollRange(BackpackTier tier) {
+		return Math.max(0, tier.rows() - VISIBLE_ROWS);
+	}
+
+	/**
+	 * Les emplacements du sac, tous declares meme ceux qu'on ne voit pas.
+	 *
+	 * <p>Un sac enorme en compte cent quatre-vingts pour six rangees visibles. Les autres existent
+	 * bel et bien et gardent leur contenu ; c'est l'ecran qui les deplace au fil du defilement.
+	 */
+	private void addBackpackSlots(IItemHandler handler) {
 		for (int index = 0; index < this.tier.size(); index++) {
 			int column = index % this.tier.columns();
 			int row = index / this.tier.columns();
 			this.addSlot(new SlotItemHandler(handler, index,
-					left + column * SLOT_SIZE, GRID_TOP + row * SLOT_SIZE));
+					GRID_LEFT + column * SLOT_SIZE, GRID_TOP + row * SLOT_SIZE));
 		}
 	}
 
@@ -79,13 +104,13 @@ public class BackpackMenu extends AbstractContainerMenu {
 		for (int row = 0; row < 3; row++) {
 			for (int column = 0; column < 9; column++) {
 				this.addSlot(new Slot(playerInventory, column + row * 9 + 9,
-						INVENTORY_LEFT + column * SLOT_SIZE, top + row * SLOT_SIZE));
+						GRID_LEFT + column * SLOT_SIZE, top + row * SLOT_SIZE));
 			}
 		}
 
 		int hotbarTop = height - 24;
 		for (int column = 0; column < 9; column++) {
-			this.addSlot(new HotbarSlot(playerInventory, column, INVENTORY_LEFT + column * SLOT_SIZE, hotbarTop));
+			this.addSlot(new HotbarSlot(playerInventory, column, GRID_LEFT + column * SLOT_SIZE, hotbarTop));
 		}
 	}
 

@@ -84,8 +84,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	 * ne la traverse.
 	 */
 	private void corruptedPortal() {
-		ResourceLocation frameTexture = modLoc("block/corrupted_portal_frame");
-		ResourceLocation eyeTexture = modLoc("block/corrupted_celestium_block");
+		ResourceLocation frameTexture = modLoc("block/corrupted_celestium_block");
+		ResourceLocation eyeTexture = modLoc("block/celestium_block");
 
 		ModelFile empty = models().withExistingParent("corrupted_portal_frame", mcLoc("block/block"))
 				.texture("particle", frameTexture)
@@ -131,7 +131,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	 * dit qu'on pose quelque chose dessus plutot qu'on ne marche dessus.
 	 */
 	private void enchantingTable() {
-		ResourceLocation texture = modLoc("block/corrupted_enchanting_table");
+		ResourceLocation texture = modLoc("block/corrupted_celestium_block");
 
 		ModelFile table = models().withExistingParent("corrupted_enchanting_table", mcLoc("block/block"))
 				.texture("particle", texture)

@@ -77,6 +77,38 @@ public final class CorruptedPortalTravel implements ITeleporter {
 		return new PortalInfo(Vec3.atBottomCenterOf(arrival), Vec3.ZERO, entity.getYRot(), entity.getXRot());
 	}
 
+	/**
+	 * L'altitude a laquelle deposer le voyageur : la surface, et rien d'autre.
+	 *
+	 * <p>Trois choses peuvent faire arriver ailleurs. Le releve de hauteur s'arrete au premier bloc
+	 * qui bloque le mouvement, ce qui inclut l'eau : sur un ocean, on arrivait donc au fond. Il peut
+	 * aussi pointer le plafond d'une grotte a ciel ouvert. Et rien ne garantit qu'il y ait quoi que
+	 * ce soit — une colonne entierement vide rend le plancher du monde.
+	 *
+	 * <p>On part donc du toit du monde et on descend jusqu'au premier bloc solide, en refusant de
+	 * s'arreter sous le niveau de la mer : la plateforme se pose alors dessus plutot que dessous, et
+	 * l'on emerge sur l'eau au lieu de couler.
+	 */
+	private static int surfaceLevel(ServerLevel level, BlockPos around) {
+		int seaLevel = level.getSeaLevel();
+		int highest = level.getHeight(Heightmap.Types.WORLD_SURFACE, around.getX(), around.getZ());
+		int ceiling = Math.min(highest + 1, level.getMaxBuildHeight() - HEADROOM - 2);
+
+		BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+
+		for (int y = ceiling; y > seaLevel; y--) {
+			cursor.set(around.getX(), y - 1, around.getZ());
+			BlockState below = level.getBlockState(cursor);
+
+			if (!below.isAir() && below.getFluidState().isEmpty()) {
+				return y;
+			}
+		}
+
+		// Ni sol ni rocher au-dessus de la mer : on se pose a sa surface, la plateforme fera radeau.
+		return seaLevel + 1;
+	}
+
 	/** Vrai s'il y a deja de quoi repartir dans le voisinage. */
 	private static boolean hasWayBack(ServerLevel level, BlockPos around) {
 		BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
@@ -139,11 +171,7 @@ public final class CorruptedPortalTravel implements ITeleporter {
 	 * donne un repere pour retrouver son point d'arrivee.
 	 */
 	private static BlockPos platform(ServerLevel level, BlockPos around) {
-		int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, around.getX(), around.getZ());
-		int floor = Math.max(level.getMinBuildHeight() + 2,
-				Math.min(surface + 1, level.getMaxBuildHeight() - HEADROOM - 2));
-
-		BlockPos base = new BlockPos(around.getX(), floor, around.getZ());
+		BlockPos base = new BlockPos(around.getX(), surfaceLevel(level, around), around.getZ());
 		BlockState slab = Blocks.BLACKSTONE.defaultBlockState();
 		BlockState air = Blocks.AIR.defaultBlockState();
 

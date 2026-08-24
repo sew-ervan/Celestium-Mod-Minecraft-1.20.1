@@ -2,6 +2,8 @@ package net.celestium.init;
 
 import net.celestium.CelestiumMod;
 import net.celestium.feature.enchant.ExcavationEnchantment;
+import net.celestium.feature.enchant.HarvestEnchantment;
+import net.celestium.feature.enchant.VeinMinerEnchantment;
 import net.celestium.feature.enchant.TimberEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.DeferredRegister;
@@ -27,6 +29,14 @@ public final class ModEnchantments {
 	/** Excavation : la pioche et la pelle creusent par carres, de trois de cote a neuf. */
 	public static final RegistryObject<Enchantment> EXCAVATION =
 			ENCHANTMENTS.register("excavation", ExcavationEnchantment::new);
+
+	/** Filon : la pioche emporte tout le gisement. */
+	public static final RegistryObject<Enchantment> VEIN_MINER =
+			ENCHANTMENTS.register("vein_miner", VeinMinerEnchantment::new);
+
+	/** Moisson : la houe recolte un carre de cultures mures et les replante. */
+	public static final RegistryObject<Enchantment> HARVEST =
+			ENCHANTMENTS.register("harvest", HarvestEnchantment::new);
 
 	private ModEnchantments() {
 	}

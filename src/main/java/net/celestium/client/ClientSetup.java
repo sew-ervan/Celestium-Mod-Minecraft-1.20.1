@@ -6,6 +6,7 @@ import net.celestium.client.renderer.CorruptedVillagerRenderer;
 import net.celestium.client.renderer.SimpleGeoRenderer;
 import net.celestium.feature.mob.ParasiteEntity;
 import net.celestium.client.screen.BackpackScreen;
+import net.celestium.client.screen.CorruptedEnchantingScreen;
 import net.celestium.init.ModEntities;
 import net.celestium.init.ModMenus;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -33,7 +34,10 @@ public final class ClientSetup {
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		// L'association menu / ecran manquait entierement au mod d'origine : ses quatre interfaces
 		// etaient enregistrees cote serveur mais ne pouvaient pas s'afficher.
-		event.enqueueWork(() -> MenuScreens.register(ModMenus.BACKPACK.get(), BackpackScreen::new));
+		event.enqueueWork(() -> {
+			MenuScreens.register(ModMenus.BACKPACK.get(), BackpackScreen::new);
+			MenuScreens.register(ModMenus.CORRUPTED_ENCHANTING.get(), CorruptedEnchantingScreen::new);
+		});
 	}
 
 	@SubscribeEvent

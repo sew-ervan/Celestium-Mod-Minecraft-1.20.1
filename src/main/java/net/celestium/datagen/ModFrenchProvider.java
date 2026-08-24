@@ -87,11 +87,13 @@ public class ModFrenchProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.TIMBER, "Abattage");
 		addEnchantment(ModEnchantments.EXCAVATION, "Excavation");
 
-		add("message.celestium.enchant.granted", "%1$s %2$s");
-		add("message.celestium.enchant.wrong_tool",
-				"La table ne reconnaît que les haches, les pioches et les pelles.");
+		addEnchantment(ModEnchantments.VEIN_MINER, "Filon");
+		addEnchantment(ModEnchantments.HARVEST, "Moisson");
+
+		add("container.celestium.corrupted_enchanting", "Table d'enchantement corrompue");
+		add("message.celestium.enchant.cost", "%1$s niveaux");
+		add("message.celestium.enchant.empty", "Pose un outil pour voir ce qu'il peut recevoir.");
 		add("message.celestium.enchant.already_maxed", "Cet outil ne peut pas aller plus loin.");
-		add("message.celestium.enchant.too_poor", "Il te manque des niveaux d'expérience.");
 
 		add("message.celestium.corrupted.entered",
 				"Les deux mondes se heurtent ici. Ne t'attarde pas.");
@@ -207,7 +209,8 @@ public class ModFrenchProvider extends LanguageProvider {
 		addItem(ModItems.DEMON_SWORDSMAN_SPAWN_EGG, "Œuf de démon épéiste");
 
 		// --- Sacs celestes ---
-		addItem(ModItems.BACKPACK, "Sac céleste");
+		addItem(ModItems.BACKPACK, "Grand sac céleste");
+		addItem(ModItems.BACKPACK_HUGE, "Sac céleste énorme");
 		addItem(ModItems.BACKPACK_MEDIUM, "Sac céleste moyen");
 		addItem(ModItems.BACKPACK_SMALL, "Petit sac céleste");
 
