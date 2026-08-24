@@ -1,0 +1,43 @@
+{
+  "parent": "celestium:enter_corrupted",
+  "criteria": {
+    "celestial_dragon": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "celestium:celestial_dragon"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.celestial_dragon.descr"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:celestial_dragon_spawn_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.celestial_dragon.title"
+    }
+  },
+  "requirements": [
+    [
+      "celestial_dragon"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

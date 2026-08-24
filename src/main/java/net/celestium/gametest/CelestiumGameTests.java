@@ -9,12 +9,14 @@ import net.celestium.feature.mob.CelestialDragonEntity;
 import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
+import net.celestium.feature.cloak.CloakInvisibility;
 import net.celestium.feature.corruption.DimensionMining;
 import net.celestium.feature.darkmatter.DarkMatterAnchoring;
 import net.celestium.feature.enchant.ExcavationEnchantment;
 import net.celestium.feature.enchant.TamerEnchantment;
 import net.celestium.feature.enchant.ThunderstrikeEnchantment;
 import net.celestium.feature.luckyblock.LuckyOutcome;
+import net.celestium.feature.mount.TandemRiding;
 import net.celestium.feature.luckyblock.LuckyTier;
 import net.celestium.feature.portal.CorruptedPortalFrameBlock;
 import net.celestium.feature.portal.CorruptedPortalShape;
@@ -28,9 +30,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -349,16 +354,24 @@ public class CelestiumGameTests {
 	 */
 	@GameTest(template = ARENA, timeoutTicks = 200)
 	public static void gravityWellDrawsItemsIn(GameTestHelper helper) {
-		BlockPos well = new BlockPos(2, 1, 2);
+		// Un sol, comme pour le demon epeiste : l'arene n'est que de l'air, et un objet lache dedans
+		// tombe hors du monde sans avoir eu le temps de deriver. L'objet etait aussi pose hors de
+		// l'arene, ou ce qu'il rencontrait dependait des tests voisins — donc du nombre de tests.
+		for (int dx = 0; dx <= 5; dx++) {
+			for (int dz = 0; dz <= 5; dz++) {
+				helper.setBlock(new BlockPos(dx, 0, dz), Blocks.STONE);
+			}
+		}
+
+		BlockPos well = new BlockPos(1, 1, 1);
 		helper.setBlock(well, ModBlocks.GRAVITY_WELL.get());
 
-		ItemEntity dropped = helper.spawnItem(Items.DIAMOND, 8.0F, 2.0F, 2.0F);
-		double start = dropped.position().distanceTo(
-				net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(well)));
+		Vec3 centre = Vec3.atCenterOf(helper.absolutePos(well));
+		ItemEntity dropped = helper.spawnItem(Items.DIAMOND, 5.0F, 1.5F, 5.0F);
+		double start = dropped.position().distanceTo(centre);
 
 		helper.succeedWhen(() -> {
-			double now = dropped.position().distanceTo(
-					net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(well)));
+			double now = dropped.position().distanceTo(centre);
 			helper.assertTrue(now < start - 1.0,
 					"Le puits de gravite n'attire pas : distance " + start + " puis " + now);
 		});
@@ -698,6 +711,99 @@ public class CelestiumGameTests {
 				"Une offre se paie dans une autre monnaie que le Demonium ou le coeur");
 		helper.assertTrue(paidInHearts == 1,
 				"Le coeur du demon n'ouvre pas exactement une offre");
+
+		helper.succeed();
+	}
+
+	/**
+	 * La cape se porte sur le torse, et n'est pas une piece d'armure.
+	 *
+	 * <p>Les deux points tiennent ensemble : c'est parce qu'elle n'est pas une piece d'armure que
+	 * la couche de rendu l'ignore et qu'un porteur invisible le reste vraiment, et c'est le retour
+	 * de {@code getEquipmentSlot} qui la fait malgre tout accepter dans l'emplacement du plastron.
+	 * Faire de la cape un {@code ArmorItem} reglerait le second point en cassant le premier.
+	 */
+	@GameTest(template = ARENA)
+	public static void cloakGoesOnTheChestWithoutBeingArmour(GameTestHelper helper) {
+		ItemStack cloak = new ItemStack(ModItems.INVISIBILITY_CLOAK.get());
+
+		helper.assertFalse(cloak.getItem() instanceof ArmorItem,
+				"La cape est une piece d'armure : elle se dessinerait sur un porteur invisible");
+		helper.assertTrue(Mob.getEquipmentSlotForItem(cloak) == EquipmentSlot.CHEST,
+				"La cape ne va pas dans l'emplacement du plastron");
+
+		Player wearer = helper.makeMockPlayer();
+		wearer.setItemSlot(EquipmentSlot.CHEST, cloak);
+
+		helper.assertTrue(CloakInvisibility.worn(wearer), "La cape portee n'est pas reconnue");
+		helper.assertFalse(wearer.hasEffect(MobEffects.INVISIBILITY),
+				"La cape passe par l'effet de potion : elle trainerait ses volutes");
+
+		helper.succeed();
+	}
+
+	/**
+	 * La selle deux places porte un second cavalier, sans lui donner les renes.
+	 *
+	 * <p>Le jeu de base refuse le second passager ; c'est la seule regle que le mod contourne.
+	 * Celle qui decide qui conduit — le premier monte — reste intacte, et ce test le verifie : un
+	 * passager qui prendrait la direction de la monture serait bien pire qu'un passager absent.
+	 */
+	@GameTest(template = ARENA)
+	public static void tandemSaddleCarriesASecondRider(GameTestHelper helper) {
+		Pig mount = helper.spawn(EntityType.PIG, 1, 2, 1);
+
+		helper.assertFalse(TandemRiding.canFit(mount),
+				"Une monture sans selle accepte la selle deux places");
+
+		mount.equipSaddle(null);
+		helper.assertTrue(TandemRiding.canFit(mount),
+				"Une monture sellee refuse la selle deux places");
+
+		TandemRiding.fit(mount);
+		helper.assertFalse(TandemRiding.canFit(mount),
+				"La selle deux places se pose deux fois");
+
+		Player driver = helper.makeMockPlayer();
+		Player pillion = helper.makeMockPlayer();
+		driver.startRiding(mount, true);
+		pillion.startRiding(mount, true);
+
+		helper.assertTrue(mount.getPassengers().size() == 2,
+				"La monture ne porte pas deux cavaliers");
+		// Le cochon ne donne les renes qu'a un cavalier tenant une carotte au bout d'un baton :
+		// les deux en tiennent une, pour que seule la place decide.
+		driver.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.CARROT_ON_A_STICK));
+		pillion.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.CARROT_ON_A_STICK));
+
+		helper.assertTrue(mount.getFirstPassenger() == driver,
+				"Le cavalier de derriere est passe devant");
+		helper.assertTrue(mount.getControllingPassenger() == driver,
+				"Le cavalier de derriere a pris les renes");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Le second siege est derriere le premier, dans l'axe du corps de la monture.
+	 *
+	 * <p>Sans ce decalage, les deux cavaliers occuperaient exactement le meme point : le jeu pose
+	 * tous les passagers d'une monture au meme endroit.
+	 */
+	@GameTest(template = ARENA)
+	public static void pillionSitsBehindTheDriver(GameTestHelper helper) {
+		Pig mount = helper.spawn(EntityType.PIG, 1, 2, 1);
+		mount.yBodyRot = 0.0F;
+
+		Player pillion = helper.makeMockPlayer();
+		Vec3 seat = TandemRiding.pillionSeat(mount, pillion);
+
+		helper.assertTrue(Math.abs(seat.x - mount.getX()) < 0.01,
+				"Le second siege est decale sur le cote");
+		helper.assertTrue(seat.z < mount.getZ() - 0.4,
+				"Le second siege n'est pas assez en arriere : " + (mount.getZ() - seat.z));
+		helper.assertTrue(seat.y > mount.getY(),
+				"Le second siege est au niveau du sol");
 
 		helper.succeed();
 	}

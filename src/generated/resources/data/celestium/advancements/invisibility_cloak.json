@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:dark_matter",
+  "criteria": {
+    "invisibility_cloak": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:invisibility_cloak"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.invisibility_cloak.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:invisibility_cloak"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.invisibility_cloak.title"
+    }
+  },
+  "requirements": [
+    [
+      "invisibility_cloak"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

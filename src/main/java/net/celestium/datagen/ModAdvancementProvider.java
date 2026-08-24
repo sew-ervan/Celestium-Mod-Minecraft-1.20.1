@@ -2,6 +2,7 @@ package net.celestium.datagen;
 
 import net.celestium.CelestiumMod;
 import net.celestium.init.ModBlocks;
+import net.celestium.init.ModEntities;
 import net.celestium.init.ModItems;
 import net.celestium.worldgen.ModDimensions;
 import net.minecraft.advancements.Advancement;
@@ -9,11 +10,14 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.ChangeDimensionTrigger;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -157,6 +161,22 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
 			advancement(saver, fileHelper, darkMatter, "dark_matter_armour",
 					ModItems.DARK_MATTER_CHESTPLATE.get(), FrameType.GOAL, null,
 					hasItems(ModItems.DARK_MATTER_CHESTPLATE.get()));
+
+			// Le dragon veille sur les terres corrompues : son progres se rattache a la dimension
+			// ou on le rencontre, et non a la matiere noire, qu'on peut trouver sans lui.
+			advancement(saver, fileHelper, entered, "celestial_dragon",
+					ModItems.CELESTIAL_DRAGON_SPAWN_EGG.get(), FrameType.CHALLENGE, null,
+					killed(ModEntities.CELESTIAL_DRAGON.get()));
+
+			// --- L'equipement de voyage ---
+
+			advancement(saver, fileHelper, darkMatter, "invisibility_cloak",
+					ModItems.INVISIBILITY_CLOAK.get(), FrameType.GOAL, null,
+					hasItems(ModItems.INVISIBILITY_CLOAK.get()));
+
+			advancement(saver, fileHelper, root, "tandem_saddle",
+					ModItems.TANDEM_SADDLE.get(), FrameType.TASK, null,
+					hasItems(ModItems.TANDEM_SADDLE.get()));
 		}
 
 		/**
@@ -187,6 +207,12 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
 
 		private static InventoryChangeTrigger.TriggerInstance hasItems(ItemLike... items) {
 			return InventoryChangeTrigger.TriggerInstance.hasItems(items);
+		}
+
+		/** Le progres se declenche a la mort de la creature, tuee par le joueur. */
+		private static KilledTrigger.TriggerInstance killed(EntityType<?> type) {
+			return KilledTrigger.TriggerInstance.playerKilledEntity(
+					EntityPredicate.Builder.entity().of(type));
 		}
 
 		private static ChangeDimensionTrigger.TriggerInstance changedTo(ResourceKey<Level> dimension) {

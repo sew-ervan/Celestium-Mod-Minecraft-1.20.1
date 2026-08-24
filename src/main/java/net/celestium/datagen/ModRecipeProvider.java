@@ -43,6 +43,7 @@ public class ModRecipeProvider extends RecipeProvider {
 		woodSet(writer, ModBlocks.BOIS_DU_DEMON);
 		backpacks(writer);
 		darkMatter(writer);
+		travelGear(writer);
 	}
 
 	/**
@@ -422,5 +423,37 @@ public class ModRecipeProvider extends RecipeProvider {
 				.define('E', Items.ENDER_PEARL)
 				.unlockedBy("has_dark_matter", has(matter))
 				.save(writer, CelestiumMod.id("gravity_well"));
+	}
+
+	/**
+	 * L'equipement de voyage : la cape d'invisibilite et la selle deux places.
+	 *
+	 * <p>Deux objets sans rapport de materiau, mais de meme nature : ils ne rendent pas plus fort,
+	 * ils changent la facon de se deplacer.
+	 */
+	private void travelGear(Consumer<FinishedRecipe> writer) {
+		// La cape prend la forme d'un plastron, puisque c'est la place qu'elle occupe : la recette
+		// annonce ce qu'on echange. Huit membranes de phantome pour le tissu — la matiere du jeu
+		// qui traverse deja la nuit sans se faire voir — et une masse de matiere noire au centre,
+		// qui est ce qui avale la lumiere.
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.INVISIBILITY_CLOAK.get())
+				.pattern("P P")
+				.pattern("PDP")
+				.pattern("PPP")
+				.define('P', Items.PHANTOM_MEMBRANE)
+				.define('D', ModItems.DARK_MATTER.get())
+				.unlockedBy("has_dark_matter", has(ModItems.DARK_MATTER.get()))
+				.save(writer, CelestiumMod.id("invisibility_cloak"));
+
+		// Deux selles, parce qu'il y a deux places, et le prix se lit d'un coup d'oeil. Le cuir
+		// tend l'assise entre les deux, l'anneau de fer les tient ensemble.
+		ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ModItems.TANDEM_SADDLE.get())
+				.pattern("LLL")
+				.pattern("SIS")
+				.define('L', Items.LEATHER)
+				.define('S', Items.SADDLE)
+				.define('I', Items.IRON_INGOT)
+				.unlockedBy("has_saddle", has(Items.SADDLE))
+				.save(writer, CelestiumMod.id("tandem_saddle"));
 	}
 }

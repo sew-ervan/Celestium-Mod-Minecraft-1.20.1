@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:root",
+  "criteria": {
+    "tandem_saddle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:tandem_saddle"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.tandem_saddle.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:tandem_saddle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.tandem_saddle.title"
+    }
+  },
+  "requirements": [
+    [
+      "tandem_saddle"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

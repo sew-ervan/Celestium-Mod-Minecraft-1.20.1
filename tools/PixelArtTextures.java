@@ -157,6 +157,78 @@ public final class PixelArtTextures {
 	/** Pupille, presque noire. */
 	private static final int PUPIL = 0xFF14090A;
 
+	/**
+	 * La cape d'invisibilite, vue de face : un col, puis le tissu qui s'evase.
+	 *
+	 * <p>{@code o} contour, {@code C} le col, {@code c} le tissu, {@code s} une etoile.
+	 */
+	private static final String[] CLOAK = {
+			"................",
+			"................",
+			"....oooooooo....",
+			"...oCCCCCCCCo...",
+			"...occcccccco...",
+			"..occcccccccco..",
+			"..occcscccccco..",
+			".occcccccccccco.",
+			".occcccccccccco.",
+			".occccccccsccco.",
+			".occcccccccccco.",
+			".occsccccccccco.",
+			".occcccccccccco.",
+			".oooooooooooooo.",
+			"..o.oo.oo.oo.o..",
+			"................",
+	};
+
+	/** Contour de la cape : un noir bleute, plus froid que celui du coeur. */
+	private static final int CLOAK_OUTLINE = 0xFF080614;
+
+	/** Tissu de la cape, dans le bleu de nuit du dragon celeste. */
+	private static final int CLOTH = 0xFF1E1B3A;
+
+	/** Le col, en or : la seule chose qui accroche la lumiere sur toute la piece. */
+	private static final int CLASP = 0xFFC9A227;
+
+	/** Les etoiles semees dans le tissu. */
+	private static final int STAR = 0xFFE8ECFF;
+
+	/**
+	 * La selle deux places, de profil : deux assises, une sangle, un etrier.
+	 *
+	 * <p>{@code o} contour, {@code L} cuir, {@code b} sangle, {@code m} metal.
+	 */
+	private static final String[] TANDEM_SADDLE = {
+			"................",
+			"....oo....oo....",
+			"...oLLo..oLLo...",
+			"..oLLLLooLLLLo..",
+			".oLLLLLLLLLLLLo.",
+			".oLLLLLLLLLLLLo.",
+			".oLLbLLLLbLLLLo.",
+			".oLLbLLLLbLLLLo.",
+			"..oLLLLLLLLLLo..",
+			"...ooLLLLLLoo...",
+			".....oLLLLo.....",
+			".....o.mm.o.....",
+			".....o.mm.o.....",
+			"......oooo......",
+			"................",
+			"................",
+	};
+
+	/** Cuir de la selle. */
+	private static final int LEATHER = 0xFF8A5A2B;
+
+	/** Contour du cuir, brun presque noir. */
+	private static final int LEATHER_OUTLINE = 0xFF2B1A0C;
+
+	/** Sangles, plus sombres que l'assise. */
+	private static final int STRAP = 0xFF3E2A14;
+
+	/** Ferrures et etrier. */
+	private static final int METAL = 0xFFB9BEC6;
+
 	public static void main(String[] args) throws IOException {
 		Path items = Path.of(args[0]).resolve("item");
 
@@ -164,6 +236,8 @@ public final class PixelArtTextures {
 		draw(EYE, items.resolve("corrupted_eye.png"), PixelArtTextures::eyeColour);
 		draw(BOOK, items.resolve("corrupted_book.png"), PixelArtTextures::bookColour);
 		draw(FLASK, items.resolve("celestial_dust.png"), PixelArtTextures::flaskColour);
+		draw(CLOAK, items.resolve("invisibility_cloak.png"), PixelArtTextures::cloakColour);
+		draw(TANDEM_SADDLE, items.resolve("tandem_saddle.png"), PixelArtTextures::saddleColour);
 	}
 
 	/** Applique un masque et ecrit l'image. */
@@ -199,6 +273,26 @@ public final class PixelArtTextures {
 			case 'o' -> grain(GLASS, x, y);
 			case 'd' -> grain(DUST, x, y);
 			case 'l' -> 0xFFFFFFFF;
+			default -> 0x00000000;
+		};
+	}
+
+	private static int cloakColour(char symbol, int x, int y) {
+		return switch (symbol) {
+			case 'o' -> CLOAK_OUTLINE;
+			case 'C' -> grain(CLASP, x, y);
+			case 'c' -> grain(CLOTH, x, y);
+			case 's' -> STAR;
+			default -> 0x00000000;
+		};
+	}
+
+	private static int saddleColour(char symbol, int x, int y) {
+		return switch (symbol) {
+			case 'o' -> LEATHER_OUTLINE;
+			case 'L' -> grain(LEATHER, x, y);
+			case 'b' -> grain(STRAP, x, y);
+			case 'm' -> grain(METAL, x, y);
 			default -> 0x00000000;
 		};
 	}

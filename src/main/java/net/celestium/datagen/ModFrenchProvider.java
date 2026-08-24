@@ -242,6 +242,10 @@ public class ModFrenchProvider extends LanguageProvider {
 		addItem(ModItems.BACKPACK_MEDIUM, "Sac céleste moyen");
 		addItem(ModItems.BACKPACK_SMALL, "Petit sac céleste");
 
+		// --- Equipement de voyage ---
+		addItem(ModItems.INVISIBILITY_CLOAK, "Cape d'invisibilité");
+		addItem(ModItems.TANDEM_SADDLE, "Selle deux places");
+
 		// --- Sorts ---
 		add("spell.celestium.celestial_strike", "Frappe céleste");
 		add("spell.celestium.celestial_bolt", "Éclair céleste");
@@ -288,6 +292,13 @@ public class ModFrenchProvider extends LanguageProvider {
 		advancement("dark_matter", "Ce dont le ciel est fait", "Extraire de la matière noire.");
 		advancement("gravity_well", "Tout vient à soi", "Dresser un puits de gravité.");
 		advancement("dark_matter_armour", "Ancré", "Porter le plastron en matière noire.");
+
+		advancement("celestial_dragon", "Ce qui dormait sur l'or",
+				"Abattre un dragon céleste et lui prendre son tas.");
+		advancement("invisibility_cloak", "Personne ici",
+				"Fabriquer la cape d'invisibilité.");
+		advancement("tandem_saddle", "Monte derrière",
+				"Fabriquer une selle deux places.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */

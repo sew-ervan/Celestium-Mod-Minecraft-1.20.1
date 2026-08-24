@@ -234,6 +234,10 @@ public class ModEnglishProvider extends LanguageProvider {
 		addItem(ModItems.BACKPACK_MEDIUM, "Medium Celestial Backpack");
 		addItem(ModItems.BACKPACK_SMALL, "Small Celestial Backpack");
 
+		// --- Travel gear ---
+		addItem(ModItems.INVISIBILITY_CLOAK, "Cloak of Invisibility");
+		addItem(ModItems.TANDEM_SADDLE, "Tandem Saddle");
+
 		// --- Spells ---
 		add("spell.celestium.celestial_strike", "Celestial Strike");
 		add("spell.celestium.celestial_bolt", "Celestial Bolt");
@@ -280,6 +284,13 @@ public class ModEnglishProvider extends LanguageProvider {
 		advancement("dark_matter", "What the Sky Is Made Of", "Mine dark matter.");
 		advancement("gravity_well", "All Things Come", "Set up a gravity well.");
 		advancement("dark_matter_armour", "Anchored", "Wear the dark matter chestplate.");
+
+		advancement("celestial_dragon", "What Slept on the Gold",
+				"Slay a celestial dragon and take its hoard.");
+		advancement("invisibility_cloak", "Nobody Here",
+				"Craft the cloak of invisibility.");
+		advancement("tandem_saddle", "Hop On Behind",
+				"Craft a tandem saddle.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */

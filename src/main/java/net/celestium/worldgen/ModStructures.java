@@ -139,9 +139,14 @@ public final class ModStructures {
 
 		// Le tas se pose a ciel ouvert, et le terrain se moule autour : un monticule a moitie enterre
 		// sur un relief accidente ne ressemblerait pas a un tresor.
+		//
+		// Il n'appartient qu'aux terres corrompues. Un tas d'or garde par un dragon pose dans une
+		// plaine de l'Overworld serait une curiosite ; pose dans la dimension ou l'on vient deja
+		// chercher le Celestium corrompu, il devient une raison de plus d'y rester, et le danger
+		// qu'il represente s'ajoute a celui que la dimension fait deja peser.
 		context.register(CELESTIAL_HOARD, new CelestialHoardStructure(
 				new Structure.StructureSettings(
-						biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+						HolderSet.direct(biomes.getOrThrow(ModBiomes.CORRUPTED_LANDS)),
 						Map.of(),
 						GenerationStep.Decoration.SURFACE_STRUCTURES,
 						TerrainAdjustment.BEARD_THIN)));

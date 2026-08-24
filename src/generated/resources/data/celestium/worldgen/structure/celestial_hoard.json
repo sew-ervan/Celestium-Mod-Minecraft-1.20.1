@@ -1,6 +1,6 @@
 {
   "type": "celestium:celestial_hoard",
-  "biomes": "#minecraft:is_overworld",
+  "biomes": "celestium:corrupted_lands",
   "spawn_overrides": {},
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin"

@@ -16,6 +16,10 @@ import java.util.Optional;
  *
  * <p>Il se pose a ciel ouvert. Un tresor enterre serait une chasse ; celui-ci se voit de loin, ce
  * qui est le propre d'un tresor garde — son proprietaire n'a pas besoin de le cacher.
+ *
+ * <p>Il n'existe que dans les terres corrompues, la dimension ou l'on vient deja chercher de quoi
+ * ouvrir la porte des Terres du demon. C'est ce qui lui donne son sens : on ne part pas en
+ * expedition pour le tas, on tombe dessus en cherchant autre chose.
  */
 public class CelestialHoardStructure extends Structure {
 
@@ -25,8 +29,29 @@ public class CelestialHoardStructure extends Structure {
 		super(settings);
 	}
 
+	/**
+	 * Le tas ne se pose pas sur l'eau.
+	 *
+	 * <p>Les terres corrompues ont des mers, la ou les Terres du demon n'en ont pas. Sans ce test,
+	 * la carte des sommets renverrait la surface de l'eau et le monticule flotterait dessus, le
+	 * dragon perche au-dessus des vagues. Un emplacement noye est donc simplement refuse : la
+	 * structure n'apparait pas dans cette region, ce qui la rend un peu plus rare et un peu plus
+	 * terrienne.
+	 *
+	 * <p>La comparaison se fait entre deux cartes de sommets : celle qui compte l'eau et celle qui
+	 * ne la compte pas. Elles ne different que la ou il y a de l'eau.
+	 */
 	@Override
 	public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+		ChunkPos chunk = context.chunkPos();
+		int x = chunk.getMiddleBlockX();
+		int z = chunk.getMiddleBlockZ();
+
+		if (height(context, x, z, Heightmap.Types.WORLD_SURFACE_WG)
+				!= height(context, x, z, Heightmap.Types.OCEAN_FLOOR_WG)) {
+			return Optional.empty();
+		}
+
 		return onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG,
 				builder -> addPieces(builder, context));
 	}
@@ -36,10 +61,14 @@ public class CelestialHoardStructure extends Structure {
 		int x = chunk.getMiddleBlockX();
 		int z = chunk.getMiddleBlockZ();
 
-		int surface = context.chunkGenerator().getFirstOccupiedHeight(
-				x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
+		int surface = height(context, x, z, Heightmap.Types.WORLD_SURFACE_WG);
 
 		builder.addPiece(new CelestialHoardPiece(new BlockPos(x, surface, z), context.random().nextLong()));
+	}
+
+	private static int height(GenerationContext context, int x, int z, Heightmap.Types type) {
+		return context.chunkGenerator().getFirstOccupiedHeight(
+				x, z, type, context.heightAccessor(), context.randomState());
 	}
 
 	@Override

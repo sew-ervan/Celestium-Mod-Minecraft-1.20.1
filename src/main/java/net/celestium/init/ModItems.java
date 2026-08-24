@@ -9,6 +9,8 @@ import net.celestium.feature.celestium.CelestialDustItem;
 import net.celestium.feature.celestium.CelestiumIngotItem;
 import net.celestium.feature.celestium.CelestiumSwordItem;
 import net.celestium.feature.celestium.ModArmorItem;
+import net.celestium.feature.cloak.InvisibilityCloakItem;
+import net.celestium.feature.mount.TandemSaddleItem;
 import net.celestium.feature.portal.CorruptedEyeItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
@@ -270,6 +272,20 @@ public class ModItems {
 	/** Vingt rangees : l'interface n'en montre que six et defile pour le reste. */
 	public static final RegistryObject<Item> BACKPACK_HUGE = ITEMS.register("backpack_huge",
 			() -> new BackpackItem(BackpackTier.HUGE));
+
+	// --- Equipement de voyage ---
+
+	/**
+	 * La cape d'invisibilite : on disparait, mais l'emplacement du plastron est pris.
+	 *
+	 * <p>Volontairement pas un {@code ArmorItem} — voir {@link InvisibilityCloakItem}.
+	 */
+	public static final RegistryObject<Item> INVISIBILITY_CLOAK = ITEMS.register("invisibility_cloak",
+			InvisibilityCloakItem::new);
+
+	/** La selle deux places, a poser sur une monture deja sellee. */
+	public static final RegistryObject<Item> TANDEM_SADDLE = ITEMS.register("tandem_saddle",
+			TandemSaddleItem::new);
 
 	// --- Oeufs d'apparition ---
 

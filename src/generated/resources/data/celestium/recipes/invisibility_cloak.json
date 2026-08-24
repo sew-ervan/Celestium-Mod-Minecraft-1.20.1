@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "celestium:dark_matter"
+    },
+    "P": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "pattern": [
+    "P P",
+    "PDP",
+    "PPP"
+  ],
+  "result": {
+    "item": "celestium:invisibility_cloak"
+  },
+  "show_notification": true
+}
