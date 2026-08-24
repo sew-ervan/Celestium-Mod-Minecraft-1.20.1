@@ -143,6 +143,20 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
 			advancement(saver, fileHelper, demonium, "demon_heart",
 					ModItems.DEMON_HEART.get(), FrameType.CHALLENGE, null,
 					hasItems(ModItems.DEMON_HEART.get()));
+
+			// --- La matiere noire et son gardien ---
+
+			Advancement darkMatter = advancement(saver, fileHelper, tools, "dark_matter",
+					ModItems.DARK_MATTER.get(), FrameType.TASK, null,
+					hasItems(ModItems.DARK_MATTER.get()));
+
+			advancement(saver, fileHelper, darkMatter, "gravity_well",
+					ModBlocks.GRAVITY_WELL.get(), FrameType.TASK, null,
+					hasItems(ModBlocks.GRAVITY_WELL.get()));
+
+			advancement(saver, fileHelper, darkMatter, "dark_matter_armour",
+					ModItems.DARK_MATTER_CHESTPLATE.get(), FrameType.GOAL, null,
+					hasItems(ModItems.DARK_MATTER_CHESTPLATE.get()));
 		}
 
 		/**

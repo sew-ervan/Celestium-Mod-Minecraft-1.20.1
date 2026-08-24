@@ -5,6 +5,7 @@ import net.celestium.core.registry.ModTags;
 import net.celestium.core.material.ModArmorMaterials;
 import net.celestium.feature.celestium.ArmorSetEffects;
 import net.celestium.feature.magie.Faction;
+import net.celestium.feature.mob.CelestialDragonEntity;
 import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
@@ -390,6 +391,30 @@ public class CelestiumGameTests {
 				"Le Celestium passe pour de la matiere noire");
 
 		helper.succeed();
+	}
+
+	/**
+	 * Le dragon celeste tient dans les airs et ne craint pas le jour.
+	 *
+	 * <p>Ce sont ses deux ecarts avec le phantasme dont il herite, et les deux qui le rendent
+	 * jouable : un gardien qui prendrait feu au lever du soleil ne garderait rien.
+	 */
+	@GameTest(template = ARENA, timeoutTicks = 200)
+	public static void celestialDragonIgnoresDaylight(GameTestHelper helper) {
+		CelestialDragonEntity dragon = helper.spawn(ModEntities.CELESTIAL_DRAGON.get(), 8, 6, 8);
+
+		helper.assertFalse(dragon.isSunBurnTick(),
+				"Le dragon celeste brule au soleil comme un phantasme");
+		helper.assertTrue(dragon.getMaxHealth() >= 150.0F,
+				"Le dragon celeste n'a que " + dragon.getMaxHealth() + " points de vie");
+
+		// Il vole : au bout de quelques secondes il ne doit pas s'etre ecrase au sol de l'arene.
+		helper.runAtTickTime(60L, () -> {
+			helper.assertTrue(dragon.isAlive(), "Le dragon celeste est mort dans une arene vide");
+			helper.assertFalse(dragon.onGround(),
+					"Le dragon celeste est tombe au sol au lieu de voler");
+			helper.succeed();
+		});
 	}
 
 	/** Le casque en Celestium accorde la vision nocturne des qu'il est porte. */

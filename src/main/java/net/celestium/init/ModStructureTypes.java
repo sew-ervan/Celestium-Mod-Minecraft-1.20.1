@@ -1,6 +1,7 @@
 package net.celestium.init;
 
 import net.celestium.CelestiumMod;
+import net.celestium.worldgen.hoard.CelestialHoardStructure;
 import net.celestium.worldgen.sanctum.CorruptedSanctumStructure;
 import net.celestium.worldgen.village.DemonVillageStructure;
 import net.minecraft.core.registries.Registries;
@@ -19,6 +20,9 @@ public class ModStructureTypes {
 
 	public static final RegistryObject<StructureType<CorruptedSanctumStructure>> CORRUPTED_SANCTUM =
 			STRUCTURE_TYPES.register("corrupted_sanctum", () -> () -> CorruptedSanctumStructure.CODEC);
+
+	public static final RegistryObject<StructureType<CelestialHoardStructure>> CELESTIAL_HOARD =
+			STRUCTURE_TYPES.register("celestial_hoard", () -> () -> CelestialHoardStructure.CODEC);
 
 	private ModStructureTypes() {
 	}

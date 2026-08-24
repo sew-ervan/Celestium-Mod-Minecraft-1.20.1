@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:dark_matter",
+  "criteria": {
+    "gravity_well": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:gravity_well"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.gravity_well.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:gravity_well"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.gravity_well.title"
+    }
+  },
+  "requirements": [
+    [
+      "gravity_well"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

@@ -34,6 +34,7 @@ public class ModStructureTagsProvider extends TagsProvider<Structure> {
 		this.tag(ModTags.Structures.ALL)
 				.add(ModStructures.CEMETERY)
 				.add(ModStructures.DEMON_VILLAGE)
-			.add(ModStructures.CORRUPTED_SANCTUM);
+			.add(ModStructures.CORRUPTED_SANCTUM)
+			.add(ModStructures.CELESTIAL_HOARD);
 	}
 }

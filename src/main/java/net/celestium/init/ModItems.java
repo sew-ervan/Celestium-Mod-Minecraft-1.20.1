@@ -276,6 +276,11 @@ public class ModItems {
 	public static final RegistryObject<Item> MINI_WARDEN_SPAWN_EGG = ITEMS.register("mini_warden_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.MINI_WARDEN, 0x0F6C68, 0x39D6E0, new Item.Properties()));
 
+	public static final RegistryObject<Item> CELESTIAL_DRAGON_SPAWN_EGG =
+			ITEMS.register("celestial_dragon_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.CELESTIAL_DRAGON, 0x1B2A5E, 0xE6ECFF,
+							new Item.Properties()));
+
 	public static final RegistryObject<Item> DEMON_SWORDSMAN_SPAWN_EGG = ITEMS.register("demon_swordsman_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.DEMON_SWORDSMAN, 0x2B0A0A, 0xB01818, new Item.Properties()));
 

@@ -2,6 +2,7 @@ package net.celestium.init;
 
 import net.celestium.CelestiumMod;
 import net.celestium.feature.magie.entity.CelestialBoltEntity;
+import net.celestium.feature.mob.CelestialDragonEntity;
 import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.mob.ParasiteEntity;
@@ -49,6 +50,21 @@ public class ModEntities {
 					.clientTrackingRange(8)
 					.updateInterval(1)
 					.build("celestial_bolt"));
+
+	/**
+	 * Le dragon celeste : un gardien de tresor, pas un verrou de progression.
+	 *
+	 * <p>Il ne se declare pas dans les regles d'apparition : on ne le rencontre qu'au-dessus du tas
+	 * qu'il garde, pose la par la structure. Un dragon qui surgirait au hasard cesserait d'etre une
+	 * trouvaille.
+	 */
+	public static final RegistryObject<EntityType<CelestialDragonEntity>> CELESTIAL_DRAGON =
+			ENTITIES.register("celestial_dragon", () -> EntityType.Builder
+					.<CelestialDragonEntity>of(CelestialDragonEntity::new, MobCategory.MONSTER)
+					.sized(2.6F, 1.4F)
+					.fireImmune()
+					.clientTrackingRange(16)
+					.build("celestial_dragon"));
 
 	public static final RegistryObject<EntityType<ParasiteEntity>> PARASITE =
 			ENTITIES.register("parasite", () -> EntityType.Builder
@@ -104,5 +120,6 @@ public class ModEntities {
 		event.put(DEMON_SWORDSMAN.get(), DemonSwordsmanEntity.createAttributes().build());
 		event.put(PARASITE.get(), ParasiteEntity.createAttributes().build());
 		event.put(CORRUPTED_VILLAGER.get(), CorruptedVillagerEntity.createAttributes().build());
+		event.put(CELESTIAL_DRAGON.get(), CelestialDragonEntity.createAttributes().build());
 	}
 }

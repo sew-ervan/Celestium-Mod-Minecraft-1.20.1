@@ -1,6 +1,7 @@
 package net.celestium.init;
 
 import net.celestium.CelestiumMod;
+import net.celestium.worldgen.hoard.CelestialHoardPiece;
 import net.celestium.worldgen.sanctum.CorruptedSanctumPiece;
 import net.celestium.worldgen.village.DemonVillagePiece;
 import net.minecraft.core.registries.Registries;
@@ -26,6 +27,10 @@ public class ModStructurePieces {
 	public static final RegistryObject<StructurePieceType> CORRUPTED_SANCTUM =
 			STRUCTURE_PIECES.register("corrupted_sanctum",
 					() -> (StructurePieceType.ContextlessType) CorruptedSanctumPiece::new);
+
+	public static final RegistryObject<StructurePieceType> CELESTIAL_HOARD =
+			STRUCTURE_PIECES.register("celestial_hoard",
+					() -> (StructurePieceType.ContextlessType) CelestialHoardPiece::new);
 
 	private ModStructurePieces() {
 	}

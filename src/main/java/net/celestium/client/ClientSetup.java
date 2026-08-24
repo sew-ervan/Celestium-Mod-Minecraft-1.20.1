@@ -2,6 +2,7 @@ package net.celestium.client;
 
 import net.celestium.CelestiumMod;
 import net.celestium.client.model.SimpleGeoModel;
+import net.celestium.client.renderer.CelestialDragonRenderer;
 import net.celestium.client.renderer.CorruptedVillagerRenderer;
 import net.celestium.client.renderer.SimpleGeoRenderer;
 import net.celestium.feature.mob.ParasiteEntity;
@@ -56,6 +57,7 @@ public final class ClientSetup {
 						new SimpleGeoModel<>("miniwarden", "parasite"), 0.2F, ParasiteEntity.SCALE));
 
 		event.registerEntityRenderer(ModEntities.CORRUPTED_VILLAGER.get(), CorruptedVillagerRenderer::new);
+		event.registerEntityRenderer(ModEntities.CELESTIAL_DRAGON.get(), CelestialDragonRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.CELESTIAL_BOLT.get(),
 				context -> new SimpleGeoRenderer<>(context,

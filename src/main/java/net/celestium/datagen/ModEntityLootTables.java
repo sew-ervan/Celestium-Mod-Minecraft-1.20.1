@@ -44,6 +44,19 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 						.add(LootItem.lootTableItem(ModItems.DEMON_HEART.get())
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))));
 
+		// Le dragon rend ce qu'il gardait, en plus petite monnaie : le tas est sous lui, il n'a pas
+		// a le rendre deux fois. Ce qu'il donne en propre, c'est la matiere noire, qu'on ne trouve
+		// autrement qu'au fond du monde.
+		this.add(ModEntities.CELESTIAL_DRAGON.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.DARK_MATTER.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 6.0F)))))
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.CELESTIUM_INGOT.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 9.0F))))));
+
 		this.add(ModEntities.MINI_WARDEN.get(), LootTable.lootTable());
 
 		// Le parasite ne rend presque rien : c'est le nombre qui paie, pas la piece.
@@ -61,12 +74,13 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 	}
 
 	/**
-	 * Seules ces deux creatures ont un butin a declarer. L'eclair celeste appartient a la
-	 * categorie {@code MISC} et n'en attend pas.
+	 * Toutes les creatures du mod qui laissent quelque chose. L'eclair celeste appartient a la
+	 * categorie {@code MISC} et n'attend aucune table.
 	 */
 	@Override
 	protected Stream<EntityType<?>> getKnownEntityTypes() {
 		return Stream.of(
+				ModEntities.CELESTIAL_DRAGON.get(),
 				ModEntities.DEMON_SWORDSMAN.get(),
 				ModEntities.MINI_WARDEN.get(),
 				ModEntities.PARASITE.get(),

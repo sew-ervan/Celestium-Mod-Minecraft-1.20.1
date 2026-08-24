@@ -175,6 +175,8 @@ public class ModFrenchProvider extends LanguageProvider {
 		add("message.celestium.lucky.pitfall", "Le sol s'ouvre !");
 
 		// --- Creatures des Terres du demon ---
+		add("entity.celestium.celestial_dragon", "Dragon céleste");
+		addItem(ModItems.CELESTIAL_DRAGON_SPAWN_EGG, "Œuf de dragon céleste");
 		add("entity.celestium.parasite", "Parasite");
 		add("entity.celestium.corrupted_villager", "Villageois corrompu");
 		addItem(ModItems.PARASITE_SPAWN_EGG, "Œuf de parasite");
@@ -282,6 +284,10 @@ public class ModFrenchProvider extends LanguageProvider {
 		advancement("demon_wood", "Bois qui ne brûle pas seul", "Abattre un arbre des Terres du démon.");
 		advancement("summoning_altar", "Rappeler le démon", "Dresser un autel d'invocation.");
 		advancement("demon_heart", "Cœur arraché", "Abattre le démon épéiste et prendre son cœur.");
+
+		advancement("dark_matter", "Ce dont le ciel est fait", "Extraire de la matière noire.");
+		advancement("gravity_well", "Tout vient à soi", "Dresser un puits de gravité.");
+		advancement("dark_matter_armour", "Ancré", "Porter le plastron en matière noire.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */

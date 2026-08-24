@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 771204558,
+    "separation": 12,
+    "spacing": 32
+  },
+  "structures": [
+    {
+      "structure": "celestium:celestial_hoard",
+      "weight": 1
+    }
+  ]
+}

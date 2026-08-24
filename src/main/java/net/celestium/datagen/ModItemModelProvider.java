@@ -96,6 +96,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		spawnEgg(ModItems.DEMON_SWORDSMAN_SPAWN_EGG);
 		spawnEgg(ModItems.PARASITE_SPAWN_EGG);
 		spawnEgg(ModItems.CORRUPTED_VILLAGER_SPAWN_EGG);
+		spawnEgg(ModItems.CELESTIAL_DRAGON_SPAWN_EGG);
 	}
 
 	/** Objet plat, tenu comme une ressource : lingots, fragments, pieces d'armure. */

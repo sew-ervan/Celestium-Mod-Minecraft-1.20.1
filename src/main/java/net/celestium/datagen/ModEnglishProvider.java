@@ -167,6 +167,8 @@ public class ModEnglishProvider extends LanguageProvider {
 		add("message.celestium.lucky.pitfall", "The ground opens!");
 
 		// --- Demon Wastes creatures ---
+		add("entity.celestium.celestial_dragon", "Celestial Dragon");
+		addItem(ModItems.CELESTIAL_DRAGON_SPAWN_EGG, "Celestial Dragon Spawn Egg");
 		add("entity.celestium.parasite", "Parasite");
 		add("entity.celestium.corrupted_villager", "Corrupted Villager");
 		addItem(ModItems.PARASITE_SPAWN_EGG, "Parasite Spawn Egg");
@@ -274,6 +276,10 @@ public class ModEnglishProvider extends LanguageProvider {
 		advancement("demon_wood", "Wood That Won't Burn Alone", "Fell a tree of the Demon Wastes.");
 		advancement("summoning_altar", "Call Him Back", "Set up a summoning altar.");
 		advancement("demon_heart", "Heart Torn Out", "Slay the demon swordsman and take his heart.");
+
+		advancement("dark_matter", "What the Sky Is Made Of", "Mine dark matter.");
+		advancement("gravity_well", "All Things Come", "Set up a gravity well.");
+		advancement("dark_matter_armour", "Anchored", "Wear the dark matter chestplate.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */

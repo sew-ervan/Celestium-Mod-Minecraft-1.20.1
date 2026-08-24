@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:celestium_tools",
+  "criteria": {
+    "dark_matter": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:dark_matter"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.dark_matter.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:dark_matter"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.dark_matter.title"
+    }
+  },
+  "requirements": [
+    [
+      "dark_matter"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

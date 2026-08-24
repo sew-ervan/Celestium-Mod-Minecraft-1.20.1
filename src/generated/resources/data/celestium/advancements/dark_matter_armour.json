@@ -1,0 +1,42 @@
+{
+  "parent": "celestium:dark_matter",
+  "criteria": {
+    "dark_matter_armour": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:dark_matter_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.dark_matter_armour.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:dark_matter_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.dark_matter_armour.title"
+    }
+  },
+  "requirements": [
+    [
+      "dark_matter_armour"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

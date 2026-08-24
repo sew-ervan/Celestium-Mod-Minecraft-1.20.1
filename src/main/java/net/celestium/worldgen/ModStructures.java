@@ -2,6 +2,7 @@ package net.celestium.worldgen;
 
 import com.mojang.datafixers.util.Pair;
 import net.celestium.CelestiumMod;
+import net.celestium.worldgen.hoard.CelestialHoardStructure;
 import net.celestium.worldgen.sanctum.CorruptedSanctumStructure;
 import net.celestium.worldgen.village.DemonVillageStructure;
 import net.minecraft.core.Holder;
@@ -58,6 +59,10 @@ public final class ModStructures {
 	public static final ResourceKey<Structure> CORRUPTED_SANCTUM = structureKey("corrupted_sanctum");
 	public static final ResourceKey<StructureSet> CORRUPTED_SANCTUM_SET = setKey("corrupted_sanctum");
 
+	/** Le tas du dragon celeste. */
+	public static final ResourceKey<Structure> CELESTIAL_HOARD = structureKey("celestial_hoard");
+	public static final ResourceKey<StructureSet> CELESTIAL_HOARD_SET = setKey("celestial_hoard");
+
 	/** Un cimetiere en moyenne tous les 24 chunks, avec au moins 8 chunks entre deux. */
 	private static final int SPACING = 24;
 	private static final int SEPARATION = 8;
@@ -75,6 +80,12 @@ public final class ModStructures {
 	private static final int SANCTUM_SPACING = 40;
 	private static final int SANCTUM_SEPARATION = 14;
 	private static final int SANCTUM_SALT = 402_118_663;
+
+	// Le tas est rare, mais moins que le sanctuaire : on peut vouloir en piller plusieurs, la ou un
+	// seul sanctuaire suffit pour toute une partie.
+	private static final int HOARD_SPACING = 32;
+	private static final int HOARD_SEPARATION = 12;
+	private static final int HOARD_SALT = 771_204_558;
 
 	private ModStructures() {
 	}
@@ -125,6 +136,15 @@ public final class ModStructures {
 						Map.of(),
 						GenerationStep.Decoration.UNDERGROUND_STRUCTURES,
 						TerrainAdjustment.NONE)));
+
+		// Le tas se pose a ciel ouvert, et le terrain se moule autour : un monticule a moitie enterre
+		// sur un relief accidente ne ressemblerait pas a un tresor.
+		context.register(CELESTIAL_HOARD, new CelestialHoardStructure(
+				new Structure.StructureSettings(
+						biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+						Map.of(),
+						GenerationStep.Decoration.SURFACE_STRUCTURES,
+						TerrainAdjustment.BEARD_THIN)));
 	}
 
 	public static void bootstrapSet(BootstapContext<StructureSet> context) {
@@ -143,6 +163,11 @@ public final class ModStructures {
 				structures.getOrThrow(CORRUPTED_SANCTUM),
 				new RandomSpreadStructurePlacement(SANCTUM_SPACING, SANCTUM_SEPARATION,
 						RandomSpreadType.LINEAR, SANCTUM_SALT)));
+
+		context.register(CELESTIAL_HOARD_SET, new StructureSet(
+				structures.getOrThrow(CELESTIAL_HOARD),
+				new RandomSpreadStructurePlacement(HOARD_SPACING, HOARD_SEPARATION,
+						RandomSpreadType.LINEAR, HOARD_SALT)));
 	}
 
 	private static ResourceKey<StructureTemplatePool> poolKey(String name) {
