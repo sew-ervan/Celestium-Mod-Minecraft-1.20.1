@@ -1,0 +1,42 @@
+{
+  "parent": "celestium:demonium",
+  "criteria": {
+    "demonium_armour": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:demonium_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.demonium_armour.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:demonium_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.demonium_armour.title"
+    }
+  },
+  "requirements": [
+    [
+      "demonium_armour"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

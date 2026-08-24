@@ -2,6 +2,7 @@ package net.celestium.worldgen;
 
 import com.mojang.datafixers.util.Pair;
 import net.celestium.CelestiumMod;
+import net.celestium.worldgen.sanctum.CorruptedSanctumStructure;
 import net.celestium.worldgen.village.DemonVillageStructure;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -53,6 +54,10 @@ public final class ModStructures {
 	public static final ResourceKey<Structure> DEMON_VILLAGE = structureKey("demon_village");
 	public static final ResourceKey<StructureSet> DEMON_VILLAGE_SET = setKey("demon_village");
 
+	/** Le sanctuaire qui abrite le cadre du portail corrompu. */
+	public static final ResourceKey<Structure> CORRUPTED_SANCTUM = structureKey("corrupted_sanctum");
+	public static final ResourceKey<StructureSet> CORRUPTED_SANCTUM_SET = setKey("corrupted_sanctum");
+
 	/** Un cimetiere en moyenne tous les 24 chunks, avec au moins 8 chunks entre deux. */
 	private static final int SPACING = 24;
 	private static final int SEPARATION = 8;
@@ -64,6 +69,12 @@ public final class ModStructures {
 	private static final int VILLAGE_SPACING = 20;
 	private static final int VILLAGE_SEPARATION = 7;
 	private static final int VILLAGE_SALT = 615_003_477;
+
+	// Le sanctuaire est la structure la plus rare du mod : il n'en faut qu'un pour ouvrir la voie,
+	// et en trouver un second n'apporte rien qu'on n'ait deja.
+	private static final int SANCTUM_SPACING = 40;
+	private static final int SANCTUM_SEPARATION = 14;
+	private static final int SANCTUM_SALT = 402_118_663;
 
 	private ModStructures() {
 	}
@@ -106,6 +117,14 @@ public final class ModStructures {
 						Map.of(),
 						GenerationStep.Decoration.SURFACE_STRUCTURES,
 						TerrainAdjustment.BEARD_THIN)));
+
+		// Le sanctuaire est enterre : aucun ajustement du terrain, il se creuse sa place.
+		context.register(CORRUPTED_SANCTUM, new CorruptedSanctumStructure(
+				new Structure.StructureSettings(
+						biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+						Map.of(),
+						GenerationStep.Decoration.UNDERGROUND_STRUCTURES,
+						TerrainAdjustment.NONE)));
 	}
 
 	public static void bootstrapSet(BootstapContext<StructureSet> context) {
@@ -119,6 +138,11 @@ public final class ModStructures {
 				structures.getOrThrow(DEMON_VILLAGE),
 				new RandomSpreadStructurePlacement(VILLAGE_SPACING, VILLAGE_SEPARATION,
 						RandomSpreadType.LINEAR, VILLAGE_SALT)));
+
+		context.register(CORRUPTED_SANCTUM_SET, new StructureSet(
+				structures.getOrThrow(CORRUPTED_SANCTUM),
+				new RandomSpreadStructurePlacement(SANCTUM_SPACING, SANCTUM_SEPARATION,
+						RandomSpreadType.LINEAR, SANCTUM_SALT)));
 	}
 
 	private static ResourceKey<StructureTemplatePool> poolKey(String name) {

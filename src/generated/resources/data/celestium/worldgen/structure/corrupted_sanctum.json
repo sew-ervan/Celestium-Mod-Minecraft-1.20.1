@@ -1,0 +1,6 @@
+{
+  "type": "celestium:corrupted_sanctum",
+  "biomes": "#minecraft:is_overworld",
+  "spawn_overrides": {},
+  "step": "underground_structures"
+}

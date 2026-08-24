@@ -67,13 +67,19 @@ public class ModRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_celestium_ingot", has(ModItems.CELESTIUM_INGOT.get()))
 				.save(writer, CelestiumMod.id("corrupted_portal_frame"));
 
-		// L'oeil : celui de l'Ender, qu'un fragment celeste detourne de sa destination. Il faut du
-		// Nether pour la poudre de blaze et de l'End pour les perles — les deux mondes qui se sont
-		// heurtes ici sont ceux qu'il faut avoir visites pour y entrer.
+		// L'oeil corrompu. Ses trois ingredients viennent des deux mondes qui se sont heurtes de
+		// l'autre cote : la perle d'Ender et le fragment celeste pour l'Overworld, la poudre de
+		// blaze pour le Nether. Rien de l'End, et surtout rien des terres corrompues — ce serait
+		// exiger d'avoir deja franchi la porte qu'il sert a ouvrir.
+		//
+		// Les ingredients sont enumeres plutot que passes par un oeil de l'Ender tout fait. Le prix
+		// est le meme, mais la recette se lit comme une chose a part entiere et non comme un oeil
+		// vanilla auquel on aurait ajoute une garniture.
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CORRUPTED_EYE.get())
-				.requires(Items.ENDER_EYE)
+				.requires(Items.ENDER_PEARL)
+				.requires(Items.BLAZE_POWDER)
 				.requires(ModItems.CELESTIUM_FRAGMENT.get())
-				.unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
+				.unlockedBy("has_celestium_fragment", has(ModItems.CELESTIUM_FRAGMENT.get()))
 				.save(writer, CelestiumMod.id("corrupted_eye"));
 
 		// Le livre corrompu : un livre ordinaire trempe dans la matiere des terres corrompues.

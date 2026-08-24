@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:celestium_ingot",
+  "criteria": {
+    "corrupted_eye": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:corrupted_eye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.corrupted_eye.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_eye"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.corrupted_eye.title"
+    }
+  },
+  "requirements": [
+    [
+      "corrupted_eye"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

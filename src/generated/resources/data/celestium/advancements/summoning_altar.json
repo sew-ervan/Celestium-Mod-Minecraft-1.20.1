@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:demonium",
+  "criteria": {
+    "summoning_altar": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:summoning_altar"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.summoning_altar.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:summoning_altar"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.summoning_altar.title"
+    }
+  },
+  "requirements": [
+    [
+      "summoning_altar"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

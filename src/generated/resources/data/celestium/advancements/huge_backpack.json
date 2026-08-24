@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:backpack",
+  "criteria": {
+    "huge_backpack": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:backpack_huge"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.huge_backpack.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:backpack_huge"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.huge_backpack.title"
+    }
+  },
+  "requirements": [
+    [
+      "huge_backpack"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:demonium",
+  "criteria": {
+    "demon_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:demon_heart"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.demon_heart.descr"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:demon_heart"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.demon_heart.title"
+    }
+  },
+  "requirements": [
+    [
+      "demon_heart"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:corrupted_eye",
+  "criteria": {
+    "corrupted_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:corrupted_portal_frame"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.corrupted_frame.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_portal_frame"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.corrupted_frame.title"
+    }
+  },
+  "requirements": [
+    [
+      "corrupted_frame"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

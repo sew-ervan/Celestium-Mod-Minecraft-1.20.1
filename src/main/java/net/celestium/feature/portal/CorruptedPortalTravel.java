@@ -90,23 +90,50 @@ public final class CorruptedPortalTravel implements ITeleporter {
 	 * l'on emerge sur l'eau au lieu de couler.
 	 */
 	private static int surfaceLevel(ServerLevel level, BlockPos around) {
+		// Le chunk d'arrivee n'existe pas forcement encore : le forcer maintenant garantit que le
+		// balayage ci-dessous lise du vrai terrain et non du vide.
+		level.getChunk(around);
+
 		int seaLevel = level.getSeaLevel();
-		int highest = level.getHeight(Heightmap.Types.WORLD_SURFACE, around.getX(), around.getZ());
-		int ceiling = Math.min(highest + 1, level.getMaxBuildHeight() - HEADROOM - 2);
+		int ceiling = level.getMaxBuildHeight() - HEADROOM - 2;
+		int floorLimit = Math.max(seaLevel, level.getMinBuildHeight() + 2);
 
 		BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
 
-		for (int y = ceiling; y > seaLevel; y--) {
+		// Balayage franc depuis le toit du monde. On ne se fie pas au releve de hauteur : il
+		// s'arrete au premier bloc qui bloque le mouvement, ce qui inclut l'eau et les feuilles, et
+		// il peut designer le plafond d'une grotte a ciel ouvert. Descendre soi-meme jusqu'au
+		// premier bloc plein est le seul moyen de tomber a coup sur sur le dessus du relief.
+		for (int y = ceiling; y > floorLimit; y--) {
 			cursor.set(around.getX(), y - 1, around.getZ());
 			BlockState below = level.getBlockState(cursor);
 
-			if (!below.isAir() && below.getFluidState().isEmpty()) {
+			if (below.isAir() || !below.getFluidState().isEmpty()) {
+				continue;
+			}
+
+			// Un bloc plein, mais encore faut-il de la place au-dessus pour tenir debout : sous une
+			// corniche ou dans une caverne, la premiere occasion venue serait un plafond.
+			if (clearAbove(level, cursor, around, y)) {
 				return y;
 			}
 		}
 
 		// Ni sol ni rocher au-dessus de la mer : on se pose a sa surface, la plateforme fera radeau.
 		return seaLevel + 1;
+	}
+
+	/** Vrai s'il y a de quoi tenir debout au-dessus de ce bloc. */
+	private static boolean clearAbove(ServerLevel level, BlockPos.MutableBlockPos cursor,
+			BlockPos around, int y) {
+
+		for (int dy = 0; dy < HEADROOM; dy++) {
+			cursor.set(around.getX(), y + dy, around.getZ());
+			if (!level.getBlockState(cursor).isAir()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/** Vrai s'il y a deja de quoi repartir dans le voisinage. */

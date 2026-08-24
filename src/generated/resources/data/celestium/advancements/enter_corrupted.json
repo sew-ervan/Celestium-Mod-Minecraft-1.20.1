@@ -1,0 +1,35 @@
+{
+  "parent": "celestium:corrupted_frame",
+  "criteria": {
+    "enter_corrupted": {
+      "conditions": {
+        "to": "celestium:corrupted"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.enter_corrupted.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_portal_frame"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.enter_corrupted.title"
+    }
+  },
+  "requirements": [
+    [
+      "enter_corrupted"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

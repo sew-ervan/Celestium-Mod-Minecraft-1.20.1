@@ -43,6 +43,9 @@ public class DataGenerators {
 
 		// Donnees serveur : recettes, tags, tables de butin.
 		generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
+		generator.addProvider(event.includeServer(), new ModLootModifierProvider(output));
+		generator.addProvider(event.includeServer(),
+				new ModAdvancementProvider(output, lookup, fileHelper));
 		// Les structures, biomes et dimensions sont definis ici. Les fournisseurs qui les designent
 		// ensuite -- les tags de structures -- doivent lire les registres enrichis par ce
 		// fournisseur, et non ceux du jeu de base, ou les cles resteraient introuvables.

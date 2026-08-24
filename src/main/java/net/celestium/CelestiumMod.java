@@ -44,6 +44,7 @@ public class CelestiumMod {
 		ModSounds.SOUNDS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
 		ModEnchantments.ENCHANTMENTS.register(modBus);
+		ModEnchantments.LOOT_MODIFIERS.register(modBus);
 		ModMenus.MENUS.register(modBus);
 		ModStructureTypes.STRUCTURE_TYPES.register(modBus);
 		ModStructurePieces.STRUCTURE_PIECES.register(modBus);

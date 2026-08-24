@@ -35,16 +35,16 @@ import java.util.Map;
 public class CorruptedEnchantingMenu extends AbstractContainerMenu {
 
 	public static final int IMAGE_WIDTH = 176;
-	public static final int IMAGE_HEIGHT = 184;
+	public static final int IMAGE_HEIGHT = 202;
 
 	/** Cout en niveaux du premier palier ; chaque palier suivant coute ce prix multiplie. */
 	public static final int LEVEL_COST = 8;
 
 	/** Nombre de propositions que l'ecran sait afficher. */
-	public static final int MAX_OFFERS = 3;
+	public static final int MAX_OFFERS = 4;
 
 	private static final int TOOL_SLOT_X = 16;
-	private static final int TOOL_SLOT_Y = 40;
+	private static final int TOOL_SLOT_Y = 49;
 
 	private final Container tool = new SimpleContainer(1) {
 		@Override
@@ -118,16 +118,18 @@ public class CorruptedEnchantingMenu extends AbstractContainerMenu {
 	/** Les enchantements que ce type d'outil accepte, au maximum ou non. */
 	private static List<Enchantment> candidatesFor(ItemStack stack) {
 		if (stack.getItem() instanceof AxeItem) {
-			return List.of(ModEnchantments.TIMBER.get());
+			return List.of(ModEnchantments.TIMBER.get(), ModEnchantments.MAGNETISM.get());
 		}
 		if (stack.getItem() instanceof PickaxeItem) {
-			return List.of(ModEnchantments.EXCAVATION.get(), ModEnchantments.VEIN_MINER.get());
+			return List.of(ModEnchantments.EXCAVATION.get(), ModEnchantments.VEIN_MINER.get(),
+					ModEnchantments.SMELTING.get(), ModEnchantments.MAGNETISM.get());
 		}
 		if (stack.getItem() instanceof ShovelItem) {
-			return List.of(ModEnchantments.EXCAVATION.get());
+			return List.of(ModEnchantments.EXCAVATION.get(), ModEnchantments.SMELTING.get(),
+					ModEnchantments.MAGNETISM.get());
 		}
 		if (stack.getItem() instanceof HoeItem) {
-			return List.of(ModEnchantments.HARVEST.get());
+			return List.of(ModEnchantments.HARVEST.get(), ModEnchantments.MAGNETISM.get());
 		}
 		return List.of();
 	}

@@ -33,6 +33,7 @@ public class ModStructureTagsProvider extends TagsProvider<Structure> {
 	protected void addTags(HolderLookup.Provider provider) {
 		this.tag(ModTags.Structures.ALL)
 				.add(ModStructures.CEMETERY)
-				.add(ModStructures.DEMON_VILLAGE);
+				.add(ModStructures.DEMON_VILLAGE)
+			.add(ModStructures.CORRUPTED_SANCTUM);
 	}
 }

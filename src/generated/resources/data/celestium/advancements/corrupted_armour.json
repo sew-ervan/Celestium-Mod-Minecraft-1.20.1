@@ -1,0 +1,42 @@
+{
+  "parent": "celestium:corrupted_ore",
+  "criteria": {
+    "corrupted_armour": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:corrupted_celestium_chestplate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.corrupted_armour.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_celestium_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.corrupted_armour.title"
+    }
+  },
+  "requirements": [
+    [
+      "corrupted_armour"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

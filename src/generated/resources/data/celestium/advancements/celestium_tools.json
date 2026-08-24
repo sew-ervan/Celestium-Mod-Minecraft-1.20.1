@@ -1,0 +1,42 @@
+{
+  "parent": "celestium:celestium_ingot",
+  "criteria": {
+    "celestium_tools": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:celestium_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.celestium_tools.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:celestium_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.celestium_tools.title"
+    }
+  },
+  "requirements": [
+    [
+      "celestium_tools"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

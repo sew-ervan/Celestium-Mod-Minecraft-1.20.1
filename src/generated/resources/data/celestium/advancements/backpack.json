@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:celestium_ingot",
+  "criteria": {
+    "backpack": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:backpack_small"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.backpack.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:backpack_small"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.backpack.title"
+    }
+  },
+  "requirements": [
+    [
+      "backpack"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

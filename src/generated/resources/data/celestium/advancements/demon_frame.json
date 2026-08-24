@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:corrupted_ore",
+  "criteria": {
+    "demon_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:corrupted_celestium_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.demon_frame.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_celestium_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.demon_frame.title"
+    }
+  },
+  "requirements": [
+    [
+      "demon_frame"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

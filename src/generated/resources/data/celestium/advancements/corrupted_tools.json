@@ -1,0 +1,42 @@
+{
+  "parent": "celestium:corrupted_ore",
+  "criteria": {
+    "corrupted_tools": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:corrupted_celestium_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.corrupted_tools.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_celestium_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.corrupted_tools.title"
+    }
+  },
+  "requirements": [
+    [
+      "corrupted_tools"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:enter_demon",
+  "criteria": {
+    "demon_wood": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:bois_du_demon_log"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.demon_wood.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:bois_du_demon_log"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.demon_wood.title"
+    }
+  },
+  "requirements": [
+    [
+      "demon_wood"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

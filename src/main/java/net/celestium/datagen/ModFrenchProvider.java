@@ -29,9 +29,7 @@ public class ModFrenchProvider extends LanguageProvider {
 		add("message.celestium.portal.entered", "Tu franchis le voile. Les terres du démon te happent.");
 		add("message.celestium.portal.returned", "Tu regagnes le monde des vivants.");
 
-		// --- Progrès ---
-		add("advancements.premier_celestium.title", "Premier Celestium");
-		add("advancements.premier_celestium.descr", "Tu as obtenu ton premier fragment de Celestium.");
+		advancements();
 
 		addItem(ModItems.CELESTIUM_FRAGMENT, "Fragment céleste");
 		addItem(ModItems.CELESTIUM_INGOT, "Lingot de Celestium");
@@ -89,6 +87,8 @@ public class ModFrenchProvider extends LanguageProvider {
 
 		addEnchantment(ModEnchantments.VEIN_MINER, "Filon");
 		addEnchantment(ModEnchantments.HARVEST, "Moisson");
+		addEnchantment(ModEnchantments.SMELTING, "Fonte");
+		addEnchantment(ModEnchantments.MAGNETISM, "Aimant");
 
 		add("container.celestium.corrupted_enchanting", "Table d'enchantement corrompue");
 		add("message.celestium.enchant.cost", "%1$s niveaux");
@@ -221,5 +221,46 @@ public class ModFrenchProvider extends LanguageProvider {
 		add("message.celestium.spell.no_mana", "Ton énergie céleste est épuisée.");
 		add("message.celestium.spell.cooling_down", "Ce sort se recharge encore %s secondes.");
 		add("message.celestium.spell.wrong_faction", "Ce sort est réservé au camp %s.");
+	}
+
+	/**
+	 * Les vingt-deux progres du mod.
+	 *
+	 * <p>Regroupes ici plutot que dispersés dans la liste des items : ils forment un texte
+	 * suivi, et les relire d'affilée est le seul moyen de vérifier que l'arbre raconte bien
+	 * une progression.
+	 */
+	private void advancements() {
+
+		advancement("root", "Univers Céleste", "Extraire un premier fragment de Celestium.");
+		advancement("celestium_ingot", "Matière première", "Fondre des fragments en un lingot.");
+		advancement("celestium_tools", "Outillé", "Forger un outil en Celestium.");
+		advancement("celestium_armour", "Vêtu d'étoiles", "Porter le plastron en Celestium.");
+		advancement("backpack", "Les poches pleines", "Fabriquer un sac céleste.");
+		advancement("huge_backpack", "Déménageur", "Fabriquer le sac céleste énorme, et ses vingt rangées.");
+		advancement("lucky_block", "Tenter sa chance", "Mettre la main sur un bloc chance.");
+
+		advancement("corrupted_eye", "Un œil qui s'ouvre", "Fabriquer un œil corrompu. Il en faudra douze.");
+		advancement("corrupted_frame", "Pierre de seuil", "Obtenir un cadre corrompu.");
+		advancement("enter_corrupted", "Là où deux mondes se heurtent", "Franchir le portail des terres corrompues.");
+		advancement("corrupted_ore", "Matière souillée", "Extraire du Celestium corrompu.");
+		advancement("corrupted_tools", "De quoi creuser là-bas", "Forger un outil en Celestium corrompu.");
+		advancement("corrupted_armour", "Tenue de voyage", "Porter le plastron en Celestium corrompu.");
+		advancement("corrupted_book", "Grimoire", "Tremper un livre dans la corruption.");
+		advancement("enchanting_table", "L'autre table", "Dresser la table d'enchantement corrompue.");
+
+		advancement("demon_frame", "Le cadre du démon", "Obtenir un bloc de Celestium corrompu.");
+		advancement("enter_demon", "Les Terres du démon", "Franchir le portail du démon.");
+		advancement("demonium", "Le métal d'en bas", "Extraire du Demonium.");
+		advancement("demonium_armour", "Armure du démon", "Porter le plastron en Demonium.");
+		advancement("demon_wood", "Bois qui ne brûle pas seul", "Abattre un arbre des Terres du démon.");
+		advancement("summoning_altar", "Rappeler le démon", "Dresser un autel d'invocation.");
+		advancement("demon_heart", "Cœur arraché", "Abattre le démon épéiste et prendre son cœur.");
+	}
+
+	/** Un progrès : son titre et sa description, sous les deux clés attendues. */
+	private void advancement(String name, String title, String description) {
+		add("advancements.celestium." + name + ".title", title);
+		add("advancements.celestium." + name + ".descr", description);
 	}
 }

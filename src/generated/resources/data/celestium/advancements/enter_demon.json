@@ -1,0 +1,35 @@
+{
+  "parent": "celestium:demon_frame",
+  "criteria": {
+    "enter_demon": {
+      "conditions": {
+        "to": "celestium:demon"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.enter_demon.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:demon_lucky_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.enter_demon.title"
+    }
+  },
+  "requirements": [
+    [
+      "enter_demon"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

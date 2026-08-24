@@ -1,6 +1,7 @@
 package net.celestium.init;
 
 import net.celestium.CelestiumMod;
+import net.celestium.worldgen.sanctum.CorruptedSanctumStructure;
 import net.celestium.worldgen.village.DemonVillageStructure;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -15,6 +16,9 @@ public class ModStructureTypes {
 
 	public static final RegistryObject<StructureType<DemonVillageStructure>> DEMON_VILLAGE =
 			STRUCTURE_TYPES.register("demon_village", () -> () -> DemonVillageStructure.CODEC);
+
+	public static final RegistryObject<StructureType<CorruptedSanctumStructure>> CORRUPTED_SANCTUM =
+			STRUCTURE_TYPES.register("corrupted_sanctum", () -> () -> CorruptedSanctumStructure.CODEC);
 
 	private ModStructureTypes() {
 	}
