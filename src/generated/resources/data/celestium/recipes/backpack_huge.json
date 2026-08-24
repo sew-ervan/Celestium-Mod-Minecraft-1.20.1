@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "celestium:demonium_block"
+    },
+    "H": {
+      "item": "celestium:demon_heart"
+    },
+    "K": {
+      "item": "celestium:corrupted_celestium_block"
+    },
+    "L": {
+      "item": "celestium:backpack"
+    }
+  },
+  "pattern": [
+    "KHK",
+    "DLD",
+    "KDK"
+  ],
+  "result": {
+    "item": "celestium:backpack_huge"
+  },
+  "show_notification": true
+}

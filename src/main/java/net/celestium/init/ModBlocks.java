@@ -150,7 +150,7 @@ public class ModBlocks {
 					.requiresCorrectToolForDrops()));
 
 	/**
-	 * La table d'enchantement corrompue : le seul endroit ou s'obtiennent les deux enchantements
+	 * La table d'enchantement corrompue : le seul endroit ou s'obtiennent les six enchantements
 	 * du mod.
 	 */
 	public static final RegistryObject<Block> CORRUPTED_ENCHANTING_TABLE =
@@ -166,9 +166,12 @@ public class ModBlocks {
 	/**
 	 * Le cadre menant aux terres corrompues, sur le modele de celui de l'End.
 	 *
-	 * <p>Il se pose et se fabrique, contrairement a son modele qu'on ne trouve qu'en forteresse :
-	 * ce mod n'a pas de structure ou le cacher, et une chasse au donjon n'ajouterait qu'une corvee
-	 * a un acces deja verrouille par douze yeux.
+	 * <p>Il ne se fabrique pas, pas plus que son modele. On ne le trouve que dans un sanctuaire, ou
+	 * douze d'entre eux forment deja un anneau : exactement de quoi en faire un. Trouver le lieu est
+	 * l'epreuve, et pouvoir en fondre a volonte la supprimerait.
+	 *
+	 * <p>Il reste recuperable a la pioche, a la difference de celui de l'End, pour qui prefere
+	 * remonter son anneau ailleurs plutot que d'habiter le sanctuaire.
 	 */
 	public static final RegistryObject<Block> CORRUPTED_PORTAL_FRAME = register("corrupted_portal_frame",
 			() -> new CorruptedPortalFrameBlock(BlockBehaviour.Properties.of()

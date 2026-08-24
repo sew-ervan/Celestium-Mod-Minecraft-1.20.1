@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "celestium:celestium_block"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "E": {
+      "item": "minecraft:ender_chest"
+    },
+    "I": {
+      "item": "celestium:celestium_ingot"
+    },
+    "S": {
+      "item": "celestium:backpack_small"
+    }
+  },
+  "pattern": [
+    "IEI",
+    "CSC",
+    "IBI"
+  ],
+  "result": {
+    "item": "celestium:backpack_medium"
+  },
+  "show_notification": true
+}

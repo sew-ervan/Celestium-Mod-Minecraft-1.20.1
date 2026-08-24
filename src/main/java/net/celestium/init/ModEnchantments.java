@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 /**
  * Enchantements du mod.
  *
- * <p>Aucun des deux n'apparait sur une table d'enchantement ordinaire, ni dans un coffre, ni chez
+ * <p>Aucun d'eux n'apparait sur une table d'enchantement ordinaire, ni dans un coffre, ni chez
  * un villageois : ils se declarent indecouvrables et non echangeables. La seule facon de les
  * obtenir est la table corrompue, ce qui etait la demande — et ce qui leur donne leur prix.
  */

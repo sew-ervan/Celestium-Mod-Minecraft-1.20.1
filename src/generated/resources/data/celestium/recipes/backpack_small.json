@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "I": {
+      "item": "celestium:celestium_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "LIL",
+    "LCL",
+    "LLL"
+  ],
+  "result": {
+    "item": "celestium:backpack_small"
+  },
+  "show_notification": true
+}

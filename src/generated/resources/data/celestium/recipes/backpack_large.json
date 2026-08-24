@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "celestium:celestium_block"
+    },
+    "D": {
+      "item": "celestium:demonium_ingot"
+    },
+    "M": {
+      "item": "celestium:backpack_medium"
+    }
+  },
+  "pattern": [
+    "DBD",
+    "BMB",
+    "DBD"
+  ],
+  "result": {
+    "item": "celestium:backpack"
+  },
+  "show_notification": true
+}

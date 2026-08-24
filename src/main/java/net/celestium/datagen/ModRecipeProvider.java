@@ -41,6 +41,7 @@ public class ModRecipeProvider extends RecipeProvider {
 		demonium(writer);
 		corruption(writer);
 		woodSet(writer, ModBlocks.BOIS_DU_DEMON);
+		backpacks(writer);
 	}
 
 	/**
@@ -55,17 +56,10 @@ public class ModRecipeProvider extends RecipeProvider {
 	 * materiau une fois rapporte.
 	 */
 	private void corruption(Consumer<FinishedRecipe> writer) {
-		// Le cadre : de l'obsidienne, que le Celestium tient ensemble. Trois par tour de recette,
-		// douze pour un anneau, soit quatre tours et trente-deux blocs d'obsidienne.
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,
-						ModBlocks.CORRUPTED_PORTAL_FRAME.get(), 3)
-				.pattern("OOO")
-				.pattern("OCO")
-				.pattern("OOO")
-				.define('O', Items.OBSIDIAN)
-				.define('C', ModItems.CELESTIUM_INGOT.get())
-				.unlockedBy("has_celestium_ingot", has(ModItems.CELESTIUM_INGOT.get()))
-				.save(writer, CelestiumMod.id("corrupted_portal_frame"));
+		// Le cadre ne se fabrique pas. Il n'existe que dans les sanctuaires, ou l'anneau est deja
+		// dresse : douze cadres, exactement de quoi en faire un. Le trouver est l'epreuve, et
+		// pouvoir en fondre a volonte la supprimerait. Ceux du sanctuaire restent recuperables a la
+		// pioche pour qui veut deplacer son anneau ailleurs.
 
 		// L'oeil corrompu. Ses trois ingredients viennent des deux mondes qui se sont heurtes de
 		// l'autre cote : la perle d'Ender et le fragment celeste pour l'Overworld, la poudre de
@@ -312,5 +306,69 @@ public class ModRecipeProvider extends RecipeProvider {
 				.group("sticks")
 				.unlockedBy("has_planks", has(planks))
 				.save(writer, CelestiumMod.id("stick_from_" + prefix + "_planks"));
+	}
+
+	/**
+	 * Les quatre sacs, en echelle.
+	 *
+	 * <p>Chacun consomme le precedent. C'est ce qui les rend couteux sans les rendre fastidieux :
+	 * le prix d'un sac enorme est la somme de tous ceux d'avant, mais aucune etape prise isolement
+	 * ne demande de miner pendant des heures.
+	 *
+	 * <p>Chaque palier ajoute une matiere qui n'existe pas au precedent, et l'echelle suit donc la
+	 * progression du mod. Le petit sac tient de l'Overworld ; le moyen exige un coffre de l'Ender,
+	 * donc le Nether et des perles ; le grand du Demonium, donc les Terres du demon ; l'enorme un
+	 * coeur, donc le demon lui-meme. On ne peut pas fabriquer le dernier avant d'avoir tout vu.
+	 */
+	private void backpacks(Consumer<FinishedRecipe> writer) {
+		// Du cuir autour d'un coffre, tenu par du Celestium. La seule etape accessible d'emblee.
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.BACKPACK_SMALL.get())
+				.pattern("LIL")
+				.pattern("LCL")
+				.pattern("LLL")
+				.define('L', Items.LEATHER)
+				.define('I', ModItems.CELESTIUM_INGOT.get())
+				.define('C', Items.CHEST)
+				.unlockedBy("has_celestium_ingot", has(ModItems.CELESTIUM_INGOT.get()))
+				.save(writer, CelestiumMod.id("backpack_small"));
+
+		// Le coffre de l'Ender impose le detour : huit obsidiennes et un oeil, donc le Nether pour
+		// la poudre de blaze et des endermen pour la perle.
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.BACKPACK_MEDIUM.get())
+				.pattern("IEI")
+				.pattern("CSC")
+				.pattern("IBI")
+				.define('I', ModItems.CELESTIUM_INGOT.get())
+				.define('E', Items.ENDER_CHEST)
+				.define('C', Items.CHEST)
+				.define('S', ModItems.BACKPACK_SMALL.get())
+				.define('B', ModBlocks.CELESTIUM_BLOCK.get())
+				.unlockedBy("has_backpack_small", has(ModItems.BACKPACK_SMALL.get()))
+				.save(writer, CelestiumMod.id("backpack_medium"));
+
+		// Le Demonium ne se trouve que dans les Terres du demon : ce palier est donc hors de portee
+		// tant que les deux portails n'ont pas ete franchis.
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.BACKPACK.get())
+				.pattern("DBD")
+				.pattern("BMB")
+				.pattern("DBD")
+				.define('D', ModItems.DEMONIUM_INGOT.get())
+				.define('B', ModBlocks.CELESTIUM_BLOCK.get())
+				.define('M', ModItems.BACKPACK_MEDIUM.get())
+				.unlockedBy("has_backpack_medium", has(ModItems.BACKPACK_MEDIUM.get()))
+				.save(writer, CelestiumMod.id("backpack_large"));
+
+		// Le coeur du demon ne tombe que de lui, une fois par rencontre. Le sac enorme est donc le
+		// seul objet du mod qui exige d'avoir abattu le boss.
+		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.BACKPACK_HUGE.get())
+				.pattern("KHK")
+				.pattern("DLD")
+				.pattern("KDK")
+				.define('K', ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get())
+				.define('H', ModItems.DEMON_HEART.get())
+				.define('D', ModBlocks.DEMONIUM_BLOCK.get())
+				.define('L', ModItems.BACKPACK.get())
+				.unlockedBy("has_demon_heart", has(ModItems.DEMON_HEART.get()))
+				.save(writer, CelestiumMod.id("backpack_huge"));
 	}
 }

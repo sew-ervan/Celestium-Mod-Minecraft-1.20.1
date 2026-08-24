@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
  * chaque proposition affiche en clair son enchantement, son palier et son prix. L'alphabet illisible
  * de la table du jeu de base n'a de sens que pour cacher un tirage ; il n'y en a pas ici.
  *
- * <p>C'est le seul endroit du jeu ou les quatre enchantements du mod existent.
+ * <p>C'est le seul endroit du jeu ou les six enchantements du mod existent.
  */
 public class CorruptedEnchantingTableBlock extends Block {
 
