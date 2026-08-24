@@ -81,6 +81,12 @@ public final class DemoniumTextures {
 		partialCorruption(root, "models/armor/celestium_layer_1.png", "models/armor/corrupted_celestium_layer_1.png");
 		partialCorruption(root, "models/armor/celestium_layer_2.png", "models/armor/corrupted_celestium_layer_2.png");
 
+		// Les terres corrompues : le minerai garde la silhouette de celui du Celestium, le cadre et
+		// la surface du portail se derivent de blocs de pierre et de Celestium pur.
+		partialCorruption(root, "block/celestium_ore.png", "block/corrupted_celestium_ore.png");
+		derive(root, "block/summoning_altar.png", "block/corrupted_portal_frame.png", "corrupted_portal_frame");
+		derive(root, "block/celestium_block.png", "block/corrupted_portal.png", "corrupted_portal");
+
 		// Les trois blocs chance partagent une silhouette : seule leur teinte dit lequel on casse.
 		partialCorruption(root, "block/lucky_block.png", "block/corrupted_lucky_block.png");
 		derive(root, "block/lucky_block.png", "block/demon_lucky_block.png", "demon_lucky_block");

@@ -71,6 +71,18 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Corrupted Celestium");
 
 		// --- Corrupted Celestium ---
+		addBlock(ModBlocks.CORRUPTED_CELESTIUM_ORE, "Corrupted Celestium Ore");
+		addBlock(ModBlocks.CORRUPTED_PORTAL_FRAME, "Corrupted Frame");
+		addBlock(ModBlocks.CORRUPTED_PORTAL, "Corrupted Portal");
+		addItem(ModItems.CORRUPTED_EYE, "Corrupted Eye");
+
+		add("message.celestium.corrupted.entered", "Two worlds collide here. Don't linger.");
+		add("message.celestium.corrupted.returned", "The world settles back into shape.");
+		add("message.celestium.corrupted.boon", "The rift grants you something.");
+		add("message.celestium.corrupted.bane", "The rift takes something from you.");
+		add("message.celestium.corrupted.wanderers", "Something crossed over.");
+		add("message.celestium.corrupted.spreading", "The stone is changing around you...");
+
 		addItem(ModItems.CORRUPTED_CELESTIUM_FRAGMENT, "Corrupted Celestium Fragment");
 		addItem(ModItems.CORRUPTED_CELESTIUM_INGOT, "Corrupted Celestium Ingot");
 

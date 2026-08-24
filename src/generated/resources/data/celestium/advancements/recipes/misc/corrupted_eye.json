@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_celestium_block": {
+    "has_ender_eye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "celestium:celestium_block"
+              "minecraft:ender_eye"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "celestium:corrupted_celestium_block"
+        "recipe": "celestium:corrupted_eye"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_celestium_block",
+      "has_ender_eye",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "celestium:corrupted_celestium_block"
+      "celestium:corrupted_eye"
     ]
   },
   "sends_telemetry_event": false

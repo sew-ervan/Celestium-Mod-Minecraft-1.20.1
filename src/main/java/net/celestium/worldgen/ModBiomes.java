@@ -30,6 +30,17 @@ public final class ModBiomes {
 
 	public static final ResourceKey<Biome> DEMON_WASTES = key("demon_wastes");
 
+	/** L'unique biome des terres corrompues. */
+	public static final ResourceKey<Biome> CORRUPTED_LANDS = key("corrupted_lands");
+
+	// Teintes des terres corrompues : un ciel malade, entre le vert de l'un et le rouge de l'autre.
+	private static final int CORRUPTED_SKY_COLOR = 0x3A2E1F;
+	private static final int CORRUPTED_FOG_COLOR = 0x574328;
+	private static final int CORRUPTED_WATER_COLOR = 0x4C5B2E;
+	private static final int CORRUPTED_WATER_FOG_COLOR = 0x2B3318;
+	private static final int CORRUPTED_GRASS_COLOR = 0x6E7A2C;
+	private static final int CORRUPTED_FOLIAGE_COLOR = 0x7C6A22;
+
 	/** Teintes de la dimension : ciel de braise, brume sanglante, feuillage carbonise. */
 	private static final int SKY_COLOR = 0x2B0708;
 	private static final int FOG_COLOR = 0x4A0F12;
@@ -46,6 +57,69 @@ public final class ModBiomes {
 		HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(Registries.CONFIGURED_CARVER);
 
 		context.register(DEMON_WASTES, demonWastes(features, carvers));
+		context.register(CORRUPTED_LANDS, corruptedLands(features, carvers));
+	}
+
+	/**
+	 * Les terres corrompues : l'Overworld et le Nether l'un dans l'autre.
+	 *
+	 * <p>La faune dit la meme chose que le sol. On y croise ce qui peuple l'Overworld et ce qui
+	 * peuple le Nether, aux memes endroits — zombies et blazes, squelettes ordinaires et squelettes
+	 * du Wither. Rien de la dimension du demon : celle-ci se merite, elle ne deborde pas.
+	 */
+	private static Biome corruptedLands(HolderGetter<PlacedFeature> features,
+			HolderGetter<ConfiguredWorldCarver<?>> carvers) {
+
+		MobSpawnSettings spawns = new MobSpawnSettings.Builder()
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.ZOMBIE, 40, 2, 4))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.SKELETON, 30, 2, 4))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.CREEPER, 20, 1, 3))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.ENDERMAN, 15, 1, 2))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.ZOMBIFIED_PIGLIN, 25, 2, 4))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.MAGMA_CUBE, 15, 1, 3))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.WITHER_SKELETON, 10, 1, 2))
+				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
+						net.minecraft.world.entity.EntityType.BLAZE, 8, 1, 2))
+				.build();
+
+		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder(features, carvers);
+
+		BiomeDefaultFeatures.addDefaultCarversAndLakes(generation);
+		BiomeDefaultFeatures.addDefaultMonsterRoom(generation);
+		BiomeDefaultFeatures.addDefaultUndergroundVariety(generation);
+		BiomeDefaultFeatures.addDefaultSprings(generation);
+		BiomeDefaultFeatures.addDefaultOres(generation);
+
+		// Ce qui justifie le voyage : le Celestium corrompu ne s'extrait que la, et c'est lui qui
+		// ouvre les Terres du demon.
+		generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
+				features.getOrThrow(ModPlacedFeatures.CORRUPTED_CELESTIUM_ORE));
+
+		return new Biome.BiomeBuilder()
+				.hasPrecipitation(false)
+				.temperature(0.9F)
+				.downfall(0.2F)
+				.specialEffects(new BiomeSpecialEffects.Builder()
+						.skyColor(CORRUPTED_SKY_COLOR)
+						.fogColor(CORRUPTED_FOG_COLOR)
+						.waterColor(CORRUPTED_WATER_COLOR)
+						.waterFogColor(CORRUPTED_WATER_FOG_COLOR)
+						.grassColorOverride(CORRUPTED_GRASS_COLOR)
+						.foliageColorOverride(CORRUPTED_FOLIAGE_COLOR)
+						.ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+						.ambientLoopSound(SoundEvents.AMBIENT_SOUL_SAND_VALLEY_LOOP)
+						.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SOUL_SAND_VALLEY))
+						.build())
+				.mobSpawnSettings(spawns)
+				.generationSettings(generation.build())
+				.build();
 	}
 
 	private static Biome demonWastes(HolderGetter<PlacedFeature> features,

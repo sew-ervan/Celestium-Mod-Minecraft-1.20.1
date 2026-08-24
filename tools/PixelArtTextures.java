@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.Random;
 
 /**
- * Dessine la texture du coeur du demon.
+ * Dessine les textures que rien ne permet de deriver.
  *
  * <p>Les autres textures du mod se derivent de celles du Celestium par corruption. Celle-ci n'a
  * aucun modele dont partir : elle est donc dessinee, pixel par pixel, a partir d'un masque en
@@ -13,17 +13,17 @@ import java.util.Random;
  * d'oeil dans le code.
  *
  * <p>Hors compilation du mod. Se lance a la main :
- * {@code java DemonHeartTexture.java <racine des textures>}
+ * {@code java PixelArtTextures.java <racine des textures>}
  */
-public final class DemonHeartTexture {
+public final class PixelArtTextures {
 
 	/**
-	 * Le dessin. Un caractere par pixel, seize sur seize.
+	 * Le coeur du demon. Un caractere par pixel, seize sur seize.
 	 *
 	 * <p>{@code .} vide, {@code o} contour, {@code h} chair, {@code d} veine sombre,
 	 * {@code l} reflet.
 	 */
-	private static final String[] MASK = {
+	private static final String[] HEART = {
 			"................",
 			"...oo......oo...",
 			"..ohhoo..oohho..",
@@ -57,27 +57,86 @@ public final class DemonHeartTexture {
 	/** Amplitude du grain applique a la chair, en pas de couleur. */
 	private static final int GRAIN = 14;
 
-	private DemonHeartTexture() {
+	private PixelArtTextures() {
 	}
 
-	public static void main(String[] args) throws IOException {
-		Path root = Path.of(args[0]);
-		Path target = root.resolve("item").resolve("demon_heart.png");
+	/**
+	 * L'oeil corrompu, celui qui garnit un cadre.
+	 *
+	 * <p>Meme alphabet que le coeur : {@code o} contour, {@code h} sclerotique, {@code d} iris,
+	 * {@code l} pupille et reflet.
+	 */
+	private static final String[] EYE = {
+			"................",
+			"................",
+			"....oooooooo....",
+			"..oohhhhhhhhoo..",
+			".ohhhhhhhhhhhho.",
+			".ohhhhddddhhhho.",
+			"ohhhhddddddhhhho",
+			"ohhhdddllddddhho",
+			"ohhhdddlldddhhho",
+			"ohhhhddddddhhhho",
+			".ohhhhddddhhhho.",
+			".ohhhhhhhhhhhho.",
+			"..oohhhhhhhhoo..",
+			"....oooooooo....",
+			"................",
+			"................",
+	};
 
+	/** Blanc verdatre de l'oeil, du cote de l'Overworld. */
+	private static final int SCLERA = 0xFFB9BE8E;
+
+	/** Iris, du cote du Nether. */
+	private static final int IRIS = 0xFF7A3018;
+
+	/** Pupille, presque noire. */
+	private static final int PUPIL = 0xFF14090A;
+
+	public static void main(String[] args) throws IOException {
+		Path items = Path.of(args[0]).resolve("item");
+
+		draw(HEART, items.resolve("demon_heart.png"), PixelArtTextures::heartColour);
+		draw(EYE, items.resolve("corrupted_eye.png"), PixelArtTextures::eyeColour);
+	}
+
+	/** Applique un masque et ecrit l'image. */
+	private static void draw(String[] mask, Path target, Palette palette) throws IOException {
 		BufferedImage image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
 		for (int y = 0; y < 16; y++) {
-			String row = MASK[y];
+			String row = mask[y];
 			if (row.length() != 16) {
 				throw new IllegalStateException("Ligne " + y + " du masque : " + row.length() + " pixels");
 			}
 			for (int x = 0; x < 16; x++) {
-				image.setRGB(x, y, colourOf(row.charAt(x), x, y));
+				image.setRGB(x, y, palette.colourOf(row.charAt(x), x, y));
 			}
 		}
 
 		ImageIO.write(image, "PNG", target.toFile());
 		System.out.println("OK\t" + target);
+	}
+
+	/** Traduit un caractere du masque en couleur. */
+	@FunctionalInterface
+	private interface Palette {
+		int colourOf(char symbol, int x, int y);
+	}
+
+	private static int heartColour(char symbol, int x, int y) {
+		return colourOf(symbol, x, y);
+	}
+
+	private static int eyeColour(char symbol, int x, int y) {
+		return switch (symbol) {
+			case 'o' -> OUTLINE;
+			case 'h' -> grain(SCLERA, x, y);
+			case 'd' -> grain(IRIS, x, y);
+			case 'l' -> PUPIL;
+			default -> 0x00000000;
+		};
 	}
 
 	private static int colourOf(char symbol, int x, int y) {

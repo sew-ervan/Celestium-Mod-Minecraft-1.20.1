@@ -5,6 +5,8 @@
     "celestium:demonium_ore",
     "celestium:demonium_block",
     "celestium:corrupted_celestium_block",
-    "celestium:summoning_altar"
+    "celestium:summoning_altar",
+    "celestium:corrupted_celestium_ore",
+    "celestium:corrupted_portal_frame"
   ]
 }

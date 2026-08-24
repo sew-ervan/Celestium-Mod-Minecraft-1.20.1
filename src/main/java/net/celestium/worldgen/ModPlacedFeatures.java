@@ -31,6 +31,9 @@ public final class ModPlacedFeatures {
 	/** Placement propre a la dimension celeste, sans commune mesure avec celui de la surface. */
 	public static final ResourceKey<PlacedFeature> DEMONIUM_ORE_WASTES = key("demonium_ore_wastes");
 
+	/** Le minerai des terres corrompues. */
+	public static final ResourceKey<PlacedFeature> CORRUPTED_CELESTIUM_ORE = key("corrupted_celestium_ore");
+
 	/** Arbres des terres du demon. */
 	public static final ResourceKey<PlacedFeature> DEMON_TREE = key("demon_tree");
 
@@ -57,6 +60,9 @@ public final class ModPlacedFeatures {
 	// Le Demonium se cherche exactement la ou se cherche le diamant : meme bande, meme repartition
 	// en triangle qui concentre les filons vers le bas. C'est le seul minerai de la dimension.
 	private static final int WASTES_VEINS_PER_CHUNK = 7;
+
+	/** Le Celestium corrompu est abondant : c est une etape, pas une fin. */
+	private static final int CORRUPTED_VEINS_PER_CHUNK = 9;
 	private static final int WASTES_MIN_HEIGHT = -64;
 	private static final int WASTES_MAX_HEIGHT = 16;
 
@@ -114,6 +120,18 @@ public final class ModPlacedFeatures {
 						HeightRangePlacement.uniform(
 								VerticalAnchor.absolute(-48),
 								VerticalAnchor.absolute(90)),
+						BiomeFilter.biome())));
+
+		// Le Celestium corrompu se cherche a mi-profondeur : assez bas pour qu'il faille creuser,
+		// assez haut pour ne pas obliger a descendre au fond d'un monde qui vous ronge.
+		context.register(CORRUPTED_CELESTIUM_ORE, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.CORRUPTED_CELESTIUM_ORE),
+				List.of(
+						CountPlacement.of(CORRUPTED_VEINS_PER_CHUNK),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.triangle(
+								VerticalAnchor.absolute(-40),
+								VerticalAnchor.absolute(48)),
 						BiomeFilter.biome())));
 
 		context.register(DEMONIUM_ORE_WASTES, new PlacedFeature(

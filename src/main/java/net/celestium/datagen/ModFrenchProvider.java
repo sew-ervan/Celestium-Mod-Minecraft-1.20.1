@@ -76,6 +76,19 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.CORRUPTED_CELESTIUM_BLOCK, "Celestium corrompu");
 
 		// --- Celestium corrompu ---
+		addBlock(ModBlocks.CORRUPTED_CELESTIUM_ORE, "Minerai de Celestium corrompu");
+		addBlock(ModBlocks.CORRUPTED_PORTAL_FRAME, "Cadre corrompu");
+		addBlock(ModBlocks.CORRUPTED_PORTAL, "Portail corrompu");
+		addItem(ModItems.CORRUPTED_EYE, "Œil corrompu");
+
+		add("message.celestium.corrupted.entered",
+				"Les deux mondes se heurtent ici. Ne t'attarde pas.");
+		add("message.celestium.corrupted.returned", "Le monde reprend sa forme.");
+		add("message.celestium.corrupted.boon", "La faille t'accorde quelque chose.");
+		add("message.celestium.corrupted.bane", "La faille te prend quelque chose.");
+		add("message.celestium.corrupted.wanderers", "Quelque chose a traversé.");
+		add("message.celestium.corrupted.spreading", "La roche change autour de toi...");
+
 		addItem(ModItems.CORRUPTED_CELESTIUM_FRAGMENT, "Fragment de Celestium corrompu");
 		addItem(ModItems.CORRUPTED_CELESTIUM_INGOT, "Lingot de Celestium corrompu");
 

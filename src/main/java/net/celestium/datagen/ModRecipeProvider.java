@@ -44,28 +44,37 @@ public class ModRecipeProvider extends RecipeProvider {
 	}
 
 	/**
-	 * La corruption du Celestium, seule facon d'ouvrir le portail.
+	 * Le Celestium corrompu, et ce qui mene a lui.
 	 *
-	 * <p>Elle ne peut dependre d'aucun materiau des Terres du demon : le demon epeiste n'y est
-	 * accessible qu'une fois le portail franchi, et faire du Demonium l'ingredient de son propre
-	 * acces rendait la progression impossible. La souillure vient donc du Nether, seul endroit du
-	 * jeu de base ou l'on trouve de quoi corrompre : un crane de wither squelette et de
-	 * l'obsidienne pleureuse.
+	 * <p>Il ne se fabrique plus. On l'extrayait autrefois d'un bloc de Celestium souille au Nether,
+	 * ce qui en faisait un detour d'artisanat ; il s'arrache maintenant a la roche des terres
+	 * corrompues, et de nulle part ailleurs. C'est ce qui donne son role a cette dimension : on n'y
+	 * va pas pour la visiter, on y va parce que le chemin vers les Terres du demon passe par elle.
 	 *
-	 * <p>Huit blocs par tour de recette, pour un cadre minimal qui en reclame dix : deux voyages
-	 * dans une forteresse suffisent, sans que l'acces devienne une formalite.
+	 * <p>Restent donc ici les deux clefs de son acces — le cadre et l'oeil — plus le compactage du
+	 * materiau une fois rapporte.
 	 */
 	private void corruption(Consumer<FinishedRecipe> writer) {
+		// Le cadre : de l'obsidienne, que le Celestium tient ensemble. Trois par tour de recette,
+		// douze pour un anneau, soit quatre tours et trente-deux blocs d'obsidienne.
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,
-						ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get(), 8)
+						ModBlocks.CORRUPTED_PORTAL_FRAME.get(), 3)
+				.pattern("OOO")
 				.pattern("OCO")
-				.pattern("CWC")
-				.pattern("OCO")
-				.define('O', Items.CRYING_OBSIDIAN)
-				.define('C', ModBlocks.CELESTIUM_BLOCK.get())
-				.define('W', Items.WITHER_SKELETON_SKULL)
-				.unlockedBy("has_celestium_block", has(ModBlocks.CELESTIUM_BLOCK.get()))
-				.save(writer, CelestiumMod.id("corrupted_celestium_block"));
+				.pattern("OOO")
+				.define('O', Items.OBSIDIAN)
+				.define('C', ModItems.CELESTIUM_INGOT.get())
+				.unlockedBy("has_celestium_ingot", has(ModItems.CELESTIUM_INGOT.get()))
+				.save(writer, CelestiumMod.id("corrupted_portal_frame"));
+
+		// L'oeil : celui de l'Ender, qu'un fragment celeste detourne de sa destination. Il faut du
+		// Nether pour la poudre de blaze et de l'End pour les perles — les deux mondes qui se sont
+		// heurtes ici sont ceux qu'il faut avoir visites pour y entrer.
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CORRUPTED_EYE.get())
+				.requires(Items.ENDER_EYE)
+				.requires(ModItems.CELESTIUM_FRAGMENT.get())
+				.unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
+				.save(writer, CelestiumMod.id("corrupted_eye"));
 
 		// Le bloc corrompu se detaille en lingots puis en fragments, et inversement, comme tout
 		// materiau du mod. C'est par cette chaine qu'on obtient le fragment qui allume le cadre.

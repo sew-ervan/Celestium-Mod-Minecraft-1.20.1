@@ -8,6 +8,7 @@ import net.celestium.feature.backpack.BackpackTier;
 import net.celestium.feature.celestium.CelestiumIngotItem;
 import net.celestium.feature.celestium.CelestiumSwordItem;
 import net.celestium.feature.celestium.ModArmorItem;
+import net.celestium.feature.portal.CorruptedEyeItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
@@ -138,6 +139,15 @@ public class ModItems {
 	public static final RegistryObject<Item> CORRUPTED_CELESTIUM_BOOTS =
 			ITEMS.register("corrupted_celestium_boots",
 					() -> new ModArmorItem(ModArmorMaterials.CORRUPTED_CELESTIUM, ArmorItem.Type.BOOTS));
+
+	/**
+	 * L'oeil qui garnit un cadre corrompu.
+	 *
+	 * <p>Douze sont necessaires. C'est le prix d'entree des terres corrompues, et par ricochet
+	 * celui des Terres du demon, puisqu'on ne trouve qu'ici de quoi en batir le cadre.
+	 */
+	public static final RegistryObject<Item> CORRUPTED_EYE = ITEMS.register("corrupted_eye",
+			() -> new CorruptedEyeItem(new Item.Properties().fireResistant().rarity(Rarity.RARE)));
 
 	// --- Le trophee du demon ---
 

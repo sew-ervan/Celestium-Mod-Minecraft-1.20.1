@@ -11,6 +11,8 @@ import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.corruption.DimensionMining;
 import net.celestium.feature.luckyblock.LuckyOutcome;
 import net.celestium.feature.luckyblock.LuckyTier;
+import net.celestium.feature.portal.CorruptedPortalFrameBlock;
+import net.celestium.feature.portal.CorruptedPortalShape;
 import net.celestium.feature.portal.DemonPortalShape;
 import net.celestium.feature.portal.DemonPortalTravel;
 import net.celestium.init.ModBlocks;
@@ -165,6 +167,48 @@ public class CelestiumGameTests {
 				outcome.event().fire(helper.getLevel(), pos, player, random);
 			}
 		}
+
+		helper.succeed();
+	}
+
+	/**
+	 * L'anneau corrompu ne s'allume qu'au douzieme oeil.
+	 *
+	 * <p>La reconnaissance part du bloc qu'on vient de garnir et essaie tous les centres possibles.
+	 * Le risque est qu'elle en accepte un incomplet — onze cadres et un trou passent tres bien
+	 * inapercus a l'oeil nu quand on tourne autour.
+	 */
+	@GameTest(template = ARENA)
+	public static void corruptedRingLightsOnlyWhenComplete(GameTestHelper helper) {
+		BlockPos centre = new BlockPos(8, 1, 8);
+		int[][] ring = CorruptedPortalShape.ringOffsets();
+
+		BlockState filled = ModBlocks.CORRUPTED_PORTAL_FRAME.get().defaultBlockState()
+				.setValue(CorruptedPortalFrameBlock.HAS_EYE, true);
+		BlockState empty = ModBlocks.CORRUPTED_PORTAL_FRAME.get().defaultBlockState()
+				.setValue(CorruptedPortalFrameBlock.HAS_EYE, false);
+
+		// Onze yeux sur douze : rien ne doit s'ouvrir.
+		for (int i = 0; i < ring.length; i++) {
+			BlockPos where = centre.offset(ring[i][0], 0, ring[i][1]);
+			helper.setBlock(where, i == 0 ? empty : filled);
+		}
+
+		BlockPos absoluteCentre = helper.absolutePos(centre);
+		helper.assertFalse(
+				CorruptedPortalShape.isComplete(helper.getLevel(), absoluteCentre),
+				"Un anneau a onze yeux passe pour complet");
+
+		// Le douzieme.
+		helper.setBlock(centre.offset(ring[0][0], 0, ring[0][1]), filled);
+		helper.assertTrue(
+				CorruptedPortalShape.isComplete(helper.getLevel(), absoluteCentre),
+				"Un anneau a douze yeux n'est pas reconnu");
+
+		BlockPos found = CorruptedPortalShape.findCompleteRing(helper.getLevel(),
+				helper.absolutePos(centre.offset(ring[0][0], 0, ring[0][1])));
+		helper.assertTrue(absoluteCentre.equals(found),
+				"L'anneau trouve n'est pas centre au bon endroit : " + found);
 
 		helper.succeed();
 	}

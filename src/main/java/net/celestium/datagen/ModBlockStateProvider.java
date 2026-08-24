@@ -2,6 +2,7 @@ package net.celestium.datagen;
 
 import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
+import net.celestium.feature.portal.CorruptedPortalFrameBlock;
 import net.celestium.feature.portal.DemonPortalBlock;
 import net.celestium.init.ModBlocks;
 import net.minecraft.core.Direction;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,11 +44,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleCube(ModBlocks.DEMON_LUCKY_BLOCK.get());
 
 		simpleCube(ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
+		simpleCube(ModBlocks.CORRUPTED_CELESTIUM_ORE.get());
 		simpleCube(ModBlocks.SUMMONING_ALTAR.get());
 		simpleCube(ModBlocks.DEMONIUM_ORE.get());
 		simpleCube(ModBlocks.DEMONIUM_BLOCK.get());
 
 		portal();
+		corruptedPortal();
 
 		woodSet(ModBlocks.BOIS_DU_DEMON);
 	}
@@ -66,6 +70,57 @@ public class ModBlockStateProvider extends BlockStateProvider {
 				.modelForState().modelFile(plane).addModel()
 				.partialState().with(DemonPortalBlock.AXIS, Direction.Axis.Z)
 				.modelForState().modelFile(plane).rotationY(90).addModel();
+	}
+
+	/**
+	 * Le cadre corrompu et la surface qu'il ouvre.
+	 *
+	 * <p>Le cadre est un socle de treize seiziemes, surmonte d'un oeil quand il est garni. Les deux
+	 * volumes sont declares separement plutot que dessines dans une texture : c'est ce relief qui
+	 * rend un anneau incomplet lisible d'un coup d'oeil, de loin et de dessus.
+	 *
+	 * <p>La surface est plate et posee au sol, comme celle de l'End : on tombe dedans plutot qu'on
+	 * ne la traverse.
+	 */
+	private void corruptedPortal() {
+		ResourceLocation frameTexture = modLoc("block/corrupted_portal_frame");
+		ResourceLocation eyeTexture = modLoc("block/corrupted_celestium_block");
+
+		ModelFile empty = models().withExistingParent("corrupted_portal_frame", mcLoc("block/block"))
+				.texture("particle", frameTexture)
+				.texture("frame", frameTexture)
+				.element().from(0, 0, 0).to(16, 13, 16)
+				.allFaces((direction, face) -> face.texture("#frame")).end();
+
+		ModelFile filled = models().withExistingParent("corrupted_portal_frame_filled", mcLoc("block/block"))
+				.texture("particle", frameTexture)
+				.texture("frame", frameTexture)
+				.texture("eye", eyeTexture)
+				.element().from(0, 0, 0).to(16, 13, 16)
+				.allFaces((direction, face) -> face.texture("#frame")).end()
+				.element().from(4, 13, 4).to(12, 16, 12)
+				.allFaces((direction, face) -> face.texture("#eye")).end();
+
+		getVariantBuilder(ModBlocks.CORRUPTED_PORTAL_FRAME.get()).forAllStates(state -> {
+			ModelFile model = state.getValue(CorruptedPortalFrameBlock.HAS_EYE) ? filled : empty;
+			int rotation = (int) state.getValue(CorruptedPortalFrameBlock.FACING).toYRot();
+
+			return ConfiguredModel.builder()
+					.modelFile(model)
+					.rotationY((rotation + 180) % 360)
+					.build();
+		});
+
+		simpleBlockItem(ModBlocks.CORRUPTED_PORTAL_FRAME.get(), empty);
+
+		ModelFile surface = models().withExistingParent("corrupted_portal", mcLoc("block/block"))
+				.texture("particle", modLoc("block/corrupted_portal"))
+				.texture("all", modLoc("block/corrupted_portal"))
+				.renderType("translucent")
+				.element().from(0, 0, 0).to(16, 12, 16)
+				.allFaces((direction, face) -> face.texture("#all")).end();
+
+		simpleBlock(ModBlocks.CORRUPTED_PORTAL.get(), surface);
 	}
 
 	/** Bloc plein a texture unique, plus son modele d'item. */

@@ -45,6 +45,16 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.dropSelf(ModBlocks.CORRUPTED_CELESTIUM_BLOCK.get());
 		this.dropSelf(ModBlocks.SUMMONING_ALTAR.get());
 
+		// Le minerai des terres corrompues. Genereux : c'est une etape de passage, et la dimension
+		// se charge deja de faire payer le sejour.
+		this.add(ModBlocks.CORRUPTED_CELESTIUM_ORE.get(), block -> createSilkTouchDispatchTable(block,
+				this.applyExplosionDecay(block,
+						LootItem.lootTableItem(ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F)))
+								.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
+
+		this.dropSelf(ModBlocks.CORRUPTED_PORTAL_FRAME.get());
+
 		this.add(ModBlocks.DEMONIUM_ORE.get(), block -> createSilkTouchDispatchTable(block,
 				this.applyExplosionDecay(block,
 						LootItem.lootTableItem(ModItems.DEMONIUM_FRAGMENT.get())

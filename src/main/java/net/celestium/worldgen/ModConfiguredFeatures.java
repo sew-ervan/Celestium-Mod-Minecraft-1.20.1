@@ -30,6 +30,10 @@ public final class ModConfiguredFeatures {
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CELESTIUM_ORE = key("celestium_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMONIUM_ORE = key("demonium_ore");
+
+	/** Le minerai des terres corrompues, seul chemin vers les Terres du demon. */
+	public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_CELESTIUM_ORE =
+			key("corrupted_celestium_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMON_TREE = key("demon_tree");
 
 	/** Les trois blocs chance, semes un par un plutot qu'en filons. */
@@ -44,6 +48,9 @@ public final class ModConfiguredFeatures {
 	/** Le Demonium se presente en filons plus gros, mais dans un monde bien moins accueillant. */
 	private static final int DEMONIUM_VEIN_SIZE = 6;
 
+	/** Filons du Celestium corrompu : larges, parce que la dimension fait deja payer le sejour. */
+	private static final int CORRUPTED_VEIN_SIZE = 7;
+
 	private ModConfiguredFeatures() {
 	}
 
@@ -57,6 +64,12 @@ public final class ModConfiguredFeatures {
 		// purement et simplement d'apparaitre.
 		context.register(DEMONIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
 				new OreConfiguration(targets(ModBlocks.DEMONIUM_ORE.get()), DEMONIUM_VEIN_SIZE)));
+
+		// Le Celestium corrompu affleure dans les terres corrompues. Ses filons sont genereux : c'est
+		// une etape de passage, pas une fin en soi, et la dimension se charge deja de rendre le sejour
+		// couteux.
+		context.register(CORRUPTED_CELESTIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
+				new OreConfiguration(targets(ModBlocks.CORRUPTED_CELESTIUM_ORE.get()), CORRUPTED_VEIN_SIZE)));
 
 		// Les blocs chance se sement isolement — un filon de blocs chance en donnerait quatre d'un
 		// coup, ce qui ruinerait le pari. Le mecanisme des filons convient neanmoins : c'est le

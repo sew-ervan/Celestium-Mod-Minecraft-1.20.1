@@ -6,6 +6,8 @@ import net.celestium.feature.celestium.CelestiumStorageBlock;
 import net.celestium.feature.altar.SummoningAltarBlock;
 import net.celestium.feature.luckyblock.LuckyBlock;
 import net.celestium.feature.luckyblock.LuckyTier;
+import net.celestium.feature.portal.CorruptedPortalBlock;
+import net.celestium.feature.portal.CorruptedPortalFrameBlock;
 import net.celestium.feature.portal.DemonPortalBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -106,9 +108,6 @@ public class ModBlocks {
 					.requiresCorrectToolForDrops()
 					.lightLevel(state -> 3)));
 
-	/**
-	 * Minerai de Demonium, present uniquement dans les terres du demon. Le pendant demoniaque du Celestium :
-	 */
 	/** Autel d'invocation : offrir un lingot de Demonium y rappelle le demon epeiste. */
 	public static final RegistryObject<Block> SUMMONING_ALTAR = register("summoning_altar",
 			() -> new SummoningAltarBlock(BlockBehaviour.Properties.of()
@@ -117,6 +116,21 @@ public class ModBlocks {
 					.strength(6.0F, 1200.0F)
 					.requiresCorrectToolForDrops()
 					.lightLevel(state -> 7)));
+
+	/**
+	 * Minerai de Celestium corrompu, present uniquement dans les terres corrompues.
+	 *
+	 * <p>C'est le verrou de toute la progression : sans lui pas de cadre pour les Terres du demon,
+	 * et il ne s'extrait nulle part ailleurs.
+	 */
+	public static final RegistryObject<Block> CORRUPTED_CELESTIUM_ORE = register("corrupted_celestium_ore",
+			() -> new DropExperienceBlock(
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.COLOR_BROWN)
+							.sound(SoundType.DEEPSLATE)
+							.strength(4.5F, 9.0F)
+							.requiresCorrectToolForDrops(),
+					UniformInt.of(3, 6)));
 
 	public static final RegistryObject<Block> DEMONIUM_ORE = register("demonium_ore",
 			() -> new DropExperienceBlock(
@@ -133,6 +147,35 @@ public class ModBlocks {
 					.sound(SoundType.NETHERITE_BLOCK)
 					.strength(50.0F, 1200.0F)
 					.requiresCorrectToolForDrops()));
+
+	/**
+	 * Le cadre menant aux terres corrompues, sur le modele de celui de l'End.
+	 *
+	 * <p>Il se pose et se fabrique, contrairement a son modele qu'on ne trouve qu'en forteresse :
+	 * ce mod n'a pas de structure ou le cacher, et une chasse au donjon n'ajouterait qu'une corvee
+	 * a un acces deja verrouille par douze yeux.
+	 */
+	public static final RegistryObject<Block> CORRUPTED_PORTAL_FRAME = register("corrupted_portal_frame",
+			() -> new CorruptedPortalFrameBlock(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_BROWN)
+					.sound(SoundType.DEEPSLATE)
+					// Dur mais recuperable, a la difference de son modele : il se fabrique, donc un
+					// anneau mal place doit pouvoir se defaire sans perdre douze blocs.
+					.strength(30.0F, 1200.0F)
+					.requiresCorrectToolForDrops()
+					.lightLevel(state -> 1)
+					.pushReaction(PushReaction.BLOCK)));
+
+	/** La surface d'un portail corrompu. Sans item : elle apparait quand l'anneau est garni. */
+	public static final RegistryObject<Block> CORRUPTED_PORTAL = BLOCKS.register("corrupted_portal",
+			() -> new CorruptedPortalBlock(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_BROWN)
+					.sound(SoundType.GLASS)
+					.noCollission()
+					.lightLevel(state -> 13)
+					.strength(-1.0F, 3600000.0F)
+					.noLootTable()
+					.pushReaction(PushReaction.BLOCK)));
 
 	/**
 	 * La surface d'un portail celeste. Elle n'a pas d'item : on ne la pose pas, on allume un cadre.

@@ -42,6 +42,21 @@ public final class ModDimensions {
 	public static final ResourceKey<DimensionType> DEMON_TYPE =
 			ResourceKey.create(Registries.DIMENSION_TYPE, CelestiumMod.id("demon"));
 
+	/**
+	 * Les terres corrompues : le heurt de l'Overworld et du Nether.
+	 *
+	 * <p>Elle s'ouvre comme l'End, par un cadre a douze yeux, et c'est la seule ou l'on trouve le
+	 * Celestium corrompu — donc le seul chemin vers les Terres du demon.
+	 */
+	public static final ResourceKey<Level> CORRUPTED_LEVEL =
+			ResourceKey.create(Registries.DIMENSION, CelestiumMod.id("corrupted"));
+
+	public static final ResourceKey<LevelStem> CORRUPTED_STEM =
+			ResourceKey.create(Registries.LEVEL_STEM, CelestiumMod.id("corrupted"));
+
+	public static final ResourceKey<DimensionType> CORRUPTED_TYPE =
+			ResourceKey.create(Registries.DIMENSION_TYPE, CelestiumMod.id("corrupted"));
+
 	/** Minuit fixe : le ciel reste etoile en permanence. */
 	private static final long FIXED_TIME = 18_000L;
 
@@ -83,7 +98,42 @@ public final class ModDimensions {
 				AMBIENT_LIGHT,
 				// Le seuil de lumiere est nul : rien n'apparait spontanement dans le noir.
 				new DimensionType.MonsterSettings(false, false, UniformInt.of(0, 0), 0)));
+
+		// Les terres corrompues. Le feu y brule sans fin comme dans le Nether — les deux mondes s'y
+		// sont heurtes — mais on peut y dormir et y poser un lit sans qu'il explose : c'est encore
+		// a moitie l'Overworld.
+		context.register(CORRUPTED_TYPE, new DimensionType(
+				OptionalLong.of(CORRUPTED_TIME),
+				true,
+				false,
+				false,
+				true,
+				CORRUPTED_SCALE,
+				true,
+				false,
+				MIN_Y,
+				HEIGHT,
+				HEIGHT,
+				BlockTags.INFINIBURN_NETHER,
+				BuiltinDimensionTypes.OVERWORLD_EFFECTS,
+				CORRUPTED_AMBIENT_LIGHT,
+				// Les creatures y apparaissent normalement : la dimension en ajoute d'autres par
+				// dessus, au fil de la corruption.
+				new DimensionType.MonsterSettings(false, true, UniformInt.of(0, 7), 0)));
 	}
+
+	/**
+	 * Les terres corrompues gardent l'echelle de l'Overworld.
+	 *
+	 * <p>C'est volontaire : elles en sont une version alternative, pas un raccourci. Mille blocs
+	 * la-bas valent mille blocs ici, et une position s'y retrouve a l'identique.
+	 */
+	private static final double CORRUPTED_SCALE = 1.0;
+
+	/** Crepuscule fixe : ni jour franc ni nuit, l'heure ou les deux mondes se sont heurtes. */
+	private static final long CORRUPTED_TIME = 13_000L;
+
+	private static final float CORRUPTED_AMBIENT_LIGHT = 0.2F;
 
 	public static void bootstrapStem(BootstapContext<LevelStem> context) {
 		HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
@@ -95,5 +145,11 @@ public final class ModDimensions {
 				noises.getOrThrow(ModNoiseSettings.DEMON_WASTES));
 
 		context.register(DEMON_STEM, new LevelStem(types.getOrThrow(DEMON_TYPE), generator));
+
+		NoiseBasedChunkGenerator corrupted = new NoiseBasedChunkGenerator(
+				new FixedBiomeSource(biomes.getOrThrow(ModBiomes.CORRUPTED_LANDS)),
+				noises.getOrThrow(ModNoiseSettings.CORRUPTED_LANDS));
+
+		context.register(CORRUPTED_STEM, new LevelStem(types.getOrThrow(CORRUPTED_TYPE), corrupted));
 	}
 }

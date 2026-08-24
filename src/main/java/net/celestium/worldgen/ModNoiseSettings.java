@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.NoiseSettings;
+import net.minecraft.world.level.levelgen.Noises;
+import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 import java.util.List;
@@ -33,6 +35,15 @@ public final class ModNoiseSettings {
 
 	public static final ResourceKey<NoiseGeneratorSettings> DEMON_WASTES =
 			ResourceKey.create(Registries.NOISE_SETTINGS, CelestiumMod.id("demon_wastes"));
+
+	/**
+	 * Les terres corrompues gardent le relief et la mer de l'Overworld, mais pas son sol.
+	 *
+	 * <p>C'est la collision des deux mondes : la surface alterne par plaques entre ce qui vient de
+	 * l'un et ce qui vient de l'autre, sans transition. Voir {@link #corruptedSurface()}.
+	 */
+	public static final ResourceKey<NoiseGeneratorSettings> CORRUPTED_LANDS =
+			ResourceKey.create(Registries.NOISE_SETTINGS, CelestiumMod.id("corrupted_lands"));
 
 	/**
 	 * Niveau de la mer, place sous le plancher du monde.
@@ -74,5 +85,68 @@ public final class ModNoiseSettings {
 				false,
 				false,
 				false));
+
+		// Les terres corrompues gardent l'eau, les nappes et le niveau de la mer de l'Overworld :
+		// c'en est une version alternative, pas un monde etranger. Seul le sol change.
+		context.register(CORRUPTED_LANDS, new NoiseGeneratorSettings(
+				SHAPE,
+				Blocks.STONE.defaultBlockState(),
+				Blocks.WATER.defaultBlockState(),
+				NoiseRouterData.overworld(densityFunctions, noiseParameters, false, false),
+				corruptedSurface(),
+				List.of(),
+				63,
+				false,
+				true,
+				false,
+				false));
+	}
+
+	/**
+	 * Le sol des terres corrompues.
+	 *
+	 * <p>Deux mondes se sont heurtes, et la surface en garde la trace : elle bascule d'une plaque a
+	 * l'autre entre ce qui vient de l'Overworld — herbe, terre — et ce qui vient du Nether —
+	 * netherrack, pierre noire, sable des ames, nylium ecarlate. Le decoupage suit un bruit de
+	 * surface, si bien que les plaques sont irregulieres et de taille variable, sans jamais se
+	 * fondre l'une dans l'autre. C'est la brutalite de la transition qui raconte la collision.
+	 *
+	 * <p>Les regles sont ecrites du cas le plus rare au plus courant : la sequence retient la
+	 * premiere qui repond, et la derniere ne pose aucune condition pour qu'aucun bloc ne reste sans
+	 * reponse.
+	 */
+	private static SurfaceRules.RuleSource corruptedSurface() {
+		SurfaceRules.RuleSource grass = SurfaceRules.state(Blocks.GRASS_BLOCK.defaultBlockState());
+		SurfaceRules.RuleSource dirt = SurfaceRules.state(Blocks.DIRT.defaultBlockState());
+		SurfaceRules.RuleSource netherrack = SurfaceRules.state(Blocks.NETHERRACK.defaultBlockState());
+		SurfaceRules.RuleSource blackstone = SurfaceRules.state(Blocks.BLACKSTONE.defaultBlockState());
+		SurfaceRules.RuleSource soulSand = SurfaceRules.state(Blocks.SOUL_SAND.defaultBlockState());
+		SurfaceRules.RuleSource nylium = SurfaceRules.state(Blocks.CRIMSON_NYLIUM.defaultBlockState());
+		SurfaceRules.RuleSource magma = SurfaceRules.state(Blocks.MAGMA_BLOCK.defaultBlockState());
+
+		// La couche visible.
+		SurfaceRules.RuleSource top = SurfaceRules.sequence(
+				SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, 0.45), nylium),
+				SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, 0.20, 0.45), netherrack),
+				SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, -0.05, 0.20), blackstone),
+				SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, -0.30, -0.05), grass),
+				SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, -0.55, -0.30), soulSand),
+				magma);
+
+		// Ce qu'on trouve juste en dessous, une fois la surface percee.
+		SurfaceRules.RuleSource beneath = SurfaceRules.sequence(
+				SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, 0.0), netherrack),
+				dirt);
+
+		// Sous l'eau, la roche nue : ni herbe ni nylium ne tiennent immerges.
+		SurfaceRules.RuleSource underwater = SurfaceRules.sequence(
+				SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, 0.0), netherrack),
+				SurfaceRules.state(Blocks.GRAVEL.defaultBlockState()));
+
+		return SurfaceRules.sequence(
+				SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.sequence(
+						SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), top),
+						underwater)),
+				SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, beneath));
 	}
 }
