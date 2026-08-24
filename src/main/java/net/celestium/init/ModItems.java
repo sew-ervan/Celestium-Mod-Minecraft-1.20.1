@@ -141,6 +141,15 @@ public class ModItems {
 					() -> new ModArmorItem(ModArmorMaterials.CORRUPTED_CELESTIUM, ArmorItem.Type.BOOTS));
 
 	/**
+	 * Le livre corrompu, cle de la table d'enchantement corrompue.
+	 *
+	 * <p>Un livre ordinaire trempe dans du Celestium corrompu — donc rapporte des terres corrompues,
+	 * comme tout ce qui touche a cette matiere.
+	 */
+	public static final RegistryObject<Item> CORRUPTED_BOOK = ITEMS.register("corrupted_book",
+			() -> new Item(new Item.Properties().fireResistant().stacksTo(16).rarity(Rarity.RARE)));
+
+	/**
 	 * L'oeil qui garnit un cadre corrompu.
 	 *
 	 * <p>Douze sont necessaires. C'est le prix d'entree des terres corrompues, et par ricochet

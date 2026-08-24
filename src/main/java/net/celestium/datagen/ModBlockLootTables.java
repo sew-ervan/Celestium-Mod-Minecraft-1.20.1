@@ -54,6 +54,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
 
 		this.dropSelf(ModBlocks.CORRUPTED_PORTAL_FRAME.get());
+		this.dropSelf(ModBlocks.CORRUPTED_ENCHANTING_TABLE.get());
 
 		this.add(ModBlocks.DEMONIUM_ORE.get(), block -> createSilkTouchDispatchTable(block,
 				this.applyExplosionDecay(block,

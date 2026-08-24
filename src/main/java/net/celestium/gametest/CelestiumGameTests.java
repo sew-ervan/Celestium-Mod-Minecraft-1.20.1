@@ -9,6 +9,7 @@ import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.corruption.DimensionMining;
+import net.celestium.feature.enchant.ExcavationEnchantment;
 import net.celestium.feature.luckyblock.LuckyOutcome;
 import net.celestium.feature.luckyblock.LuckyTier;
 import net.celestium.feature.portal.CorruptedPortalFrameBlock;
@@ -16,6 +17,7 @@ import net.celestium.feature.portal.CorruptedPortalShape;
 import net.celestium.feature.portal.DemonPortalShape;
 import net.celestium.feature.portal.DemonPortalTravel;
 import net.celestium.init.ModBlocks;
+import net.celestium.init.ModEnchantments;
 import net.celestium.init.ModEntities;
 import net.celestium.init.ModItems;
 import net.minecraft.core.BlockPos;
@@ -32,6 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -209,6 +212,78 @@ public class CelestiumGameTests {
 				helper.absolutePos(centre.offset(ring[0][0], 0, ring[0][1])));
 		helper.assertTrue(absoluteCentre.equals(found),
 				"L'anneau trouve n'est pas centre au bon endroit : " + found);
+
+		helper.succeed();
+	}
+
+	/**
+	 * Les deux enchantements du mod restent introuvables ailleurs qu'a la table corrompue.
+	 *
+	 * <p>C'etait la condition posee. Trois portes derobees existent en 1.20.1 — la table ordinaire,
+	 * le troc avec un villageois, et les livres de coffre — et chacune se ferme par une methode
+	 * distincte. En oublier une suffirait a rendre la table corrompue inutile.
+	 */
+	@GameTest(template = ARENA)
+	public static void modEnchantmentsComeOnlyFromTheCorruptedTable(GameTestHelper helper) {
+		for (Enchantment enchantment : List.of(ModEnchantments.TIMBER.get(), ModEnchantments.EXCAVATION.get())) {
+			helper.assertFalse(enchantment.isDiscoverable(),
+					enchantment.getDescriptionId() + " apparait sur une table d'enchantement ordinaire");
+			helper.assertFalse(enchantment.isTradeable(),
+					enchantment.getDescriptionId() + " s'achete a un villageois");
+			helper.assertFalse(enchantment.isAllowedOnBooks(),
+					enchantment.getDescriptionId() + " se trouve sur un livre");
+		}
+
+		helper.succeed();
+	}
+
+	/**
+	 * Chaque enchantement ne s'applique qu'a l'outil qui le concerne.
+	 *
+	 * <p>La categorie du jeu de base reunit pioche, pelle, hache et houe sous « outil de creusement ».
+	 * Sans filtre supplementaire, l'abattage se poserait sur une pelle et l'excavation sur une hache.
+	 */
+	@GameTest(template = ARENA)
+	public static void enchantmentsAcceptOnlyTheirOwnTools(GameTestHelper helper) {
+		Enchantment timber = ModEnchantments.TIMBER.get();
+		Enchantment excavation = ModEnchantments.EXCAVATION.get();
+
+		helper.assertTrue(timber.canEnchant(new ItemStack(Items.DIAMOND_AXE)),
+				"L'abattage refuse une hache");
+		helper.assertFalse(timber.canEnchant(new ItemStack(Items.DIAMOND_PICKAXE)),
+				"L'abattage accepte une pioche");
+
+		helper.assertTrue(excavation.canEnchant(new ItemStack(Items.DIAMOND_PICKAXE)),
+				"L'excavation refuse une pioche");
+		helper.assertTrue(excavation.canEnchant(new ItemStack(Items.DIAMOND_SHOVEL)),
+				"L'excavation refuse une pelle");
+		helper.assertFalse(excavation.canEnchant(new ItemStack(Items.DIAMOND_AXE)),
+				"L'excavation accepte une hache");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Les quatre paliers d'excavation donnent bien trois, cinq, sept et neuf blocs de cote.
+	 *
+	 * <p>Le carre se centre sur le bloc vise, donc son cote est toujours impair : neuf est le dernier
+	 * palier sous la dizaine, et un cinquieme donnerait onze.
+	 */
+	@GameTest(template = ARENA)
+	public static void excavationSquaresGrowByTwo(GameTestHelper helper) {
+		int[] expected = {3, 5, 7, 9};
+
+		for (int level = 1; level <= expected.length; level++) {
+			int side = ExcavationEnchantment.sideFor(level);
+			helper.assertTrue(side == expected[level - 1],
+					"Le niveau " + level + " donne un carre de " + side + " au lieu de "
+							+ expected[level - 1]);
+			helper.assertTrue(ExcavationEnchantment.radiusFor(level) * 2 + 1 == side,
+					"Le rayon du niveau " + level + " ne correspond pas a son cote");
+		}
+
+		helper.assertTrue(ModEnchantments.EXCAVATION.get().getMaxLevel() == expected.length,
+				"L'excavation n'a pas quatre niveaux");
 
 		helper.succeed();
 	}

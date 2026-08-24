@@ -86,6 +86,7 @@ public final class DemoniumTextures {
 		partialCorruption(root, "block/celestium_ore.png", "block/corrupted_celestium_ore.png");
 		derive(root, "block/summoning_altar.png", "block/corrupted_portal_frame.png", "corrupted_portal_frame");
 		derive(root, "block/celestium_block.png", "block/corrupted_portal.png", "corrupted_portal");
+		derive(root, "block/summoning_altar.png", "block/corrupted_enchanting_table.png", "corrupted_table");
 
 		// Les trois blocs chance partagent une silhouette : seule leur teinte dit lequel on casse.
 		partialCorruption(root, "block/lucky_block.png", "block/corrupted_lucky_block.png");

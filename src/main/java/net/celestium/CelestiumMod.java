@@ -5,6 +5,7 @@ import net.celestium.core.material.ModTiers;
 import net.celestium.core.network.ModNetwork;
 import net.celestium.init.ModBlocks;
 import net.celestium.init.ModCreativeTabs;
+import net.celestium.init.ModEnchantments;
 import net.celestium.init.ModEntities;
 import net.celestium.init.ModSpells;
 import net.celestium.init.ModItems;
@@ -42,6 +43,7 @@ public class CelestiumMod {
 		ModCreativeTabs.TABS.register(modBus);
 		ModSounds.SOUNDS.register(modBus);
 		ModEntities.ENTITIES.register(modBus);
+		ModEnchantments.ENCHANTMENTS.register(modBus);
 		ModMenus.MENUS.register(modBus);
 		ModStructureTypes.STRUCTURE_TYPES.register(modBus);
 		ModStructurePieces.STRUCTURE_PIECES.register(modBus);

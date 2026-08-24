@@ -85,6 +85,39 @@ public final class PixelArtTextures {
 			"................",
 	};
 
+	/**
+	 * Le livre corrompu : une tranche a gauche, des pages a droite, et une marque au milieu.
+	 *
+	 * <p>{@code o} contour, {@code S} tranche, {@code p} pages, {@code c} la marque.
+	 */
+	private static final String[] BOOK = {
+			"................",
+			"................",
+			"..oooooooooooo..",
+			"..oSSoppppppppo.",
+			"..oSSoppppppppo.",
+			"..oSSoppppppppo.",
+			"..oSSoppppppppo.",
+			"..oSSopppccpppo.",
+			"..oSSopppccpppo.",
+			"..oSSoppppppppo.",
+			"..oSSoppppppppo.",
+			"..oSSoppppppppo.",
+			"..oSSoppppppppo.",
+			"..oooooooooooo..",
+			"................",
+			"................",
+	};
+
+	/** Tranche du livre, dans le rouge du Celestium corrompu. */
+	private static final int SPINE = 0xFF8E1116;
+
+	/** Pages, d'un blanc use. */
+	private static final int PAGES = 0xFFCFC6A8;
+
+	/** La marque qui court sur les pages. */
+	private static final int MARK = 0xFFB4331F;
+
 	/** Blanc verdatre de l'oeil, du cote de l'Overworld. */
 	private static final int SCLERA = 0xFFB9BE8E;
 
@@ -99,6 +132,7 @@ public final class PixelArtTextures {
 
 		draw(HEART, items.resolve("demon_heart.png"), PixelArtTextures::heartColour);
 		draw(EYE, items.resolve("corrupted_eye.png"), PixelArtTextures::eyeColour);
+		draw(BOOK, items.resolve("corrupted_book.png"), PixelArtTextures::bookColour);
 	}
 
 	/** Applique un masque et ecrit l'image. */
@@ -127,6 +161,16 @@ public final class PixelArtTextures {
 
 	private static int heartColour(char symbol, int x, int y) {
 		return colourOf(symbol, x, y);
+	}
+
+	private static int bookColour(char symbol, int x, int y) {
+		return switch (symbol) {
+			case 'o' -> OUTLINE;
+			case 'S' -> grain(SPINE, x, y);
+			case 'p' -> grain(PAGES, x, y);
+			case 'c' -> grain(MARK, x, y);
+			default -> 0x00000000;
+		};
 	}
 
 	private static int eyeColour(char symbol, int x, int y) {

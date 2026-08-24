@@ -76,6 +76,31 @@ public class ModRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
 				.save(writer, CelestiumMod.id("corrupted_eye"));
 
+		// Le livre corrompu : un livre ordinaire trempe dans la matiere des terres corrompues.
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CORRUPTED_BOOK.get())
+				.requires(Items.BOOK)
+				.requires(ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get())
+				.unlockedBy("has_corrupted_celestium_fragment",
+						has(ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get()))
+				.save(writer, CelestiumMod.id("corrupted_book"));
+
+		// La table d'enchantement corrompue. Elle reunit les trois matieres du mod : le Celestium
+		// pur au-dessus, le Demonium en socle, et entre les deux la rangee qui les met cote a cote —
+		// un lingot de chaque, le corrompu au milieu, la ou les deux se rejoignent.
+		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,
+						ModBlocks.CORRUPTED_ENCHANTING_TABLE.get())
+				.pattern("CLC")
+				.pattern("cka")
+				.pattern("DDD")
+				.define('C', ModBlocks.CELESTIUM_BLOCK.get())
+				.define('L', ModItems.CORRUPTED_BOOK.get())
+				.define('c', ModItems.CELESTIUM_INGOT.get())
+				.define('k', ModItems.CORRUPTED_CELESTIUM_INGOT.get())
+				.define('a', ModItems.DEMONIUM_INGOT.get())
+				.define('D', ModBlocks.DEMONIUM_BLOCK.get())
+				.unlockedBy("has_corrupted_book", has(ModItems.CORRUPTED_BOOK.get()))
+				.save(writer, CelestiumMod.id("corrupted_enchanting_table"));
+
 		// Le bloc corrompu se detaille en lingots puis en fragments, et inversement, comme tout
 		// materiau du mod. C'est par cette chaine qu'on obtient le fragment qui allume le cadre.
 		unpack(writer, RecipeCategory.MISC, ModItems.CORRUPTED_CELESTIUM_INGOT.get(),

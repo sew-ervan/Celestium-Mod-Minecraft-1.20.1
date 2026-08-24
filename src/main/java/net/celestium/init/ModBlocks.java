@@ -4,6 +4,7 @@ import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.feature.celestium.CelestiumStorageBlock;
 import net.celestium.feature.altar.SummoningAltarBlock;
+import net.celestium.feature.enchant.CorruptedEnchantingTableBlock;
 import net.celestium.feature.luckyblock.LuckyBlock;
 import net.celestium.feature.luckyblock.LuckyTier;
 import net.celestium.feature.portal.CorruptedPortalBlock;
@@ -94,11 +95,11 @@ public class ModBlocks {
 					.lightLevel(state -> 4)));
 
 	/**
-	 * Celestium corrompu : le cadre du portail vers les terres du demon.
+	 * Celestium corrompu : le cadre du portail vers les Terres du demon.
 	 *
-	 * <p>Il ne se mine pas, il se fabrique — un bloc de Celestium que les fragments arraches au
-	 * demon epeiste viennent souiller. C'est ce qui verrouille l'acces a la dimension derriere le
-	 * boss.
+	 * <p>Il ne se fabrique plus a partir de Celestium pur. Sa matiere s'extrait du minerai des
+	 * terres corrompues, et de nulle part ailleurs : c'est ce qui oblige a traverser la dimension
+	 * intermediaire avant d'esperer atteindre celle du demon.
 	 */
 	public static final RegistryObject<Block> CORRUPTED_CELESTIUM_BLOCK = register("corrupted_celestium_block",
 			() -> new Block(BlockBehaviour.Properties.of()
@@ -147,6 +148,20 @@ public class ModBlocks {
 					.sound(SoundType.NETHERITE_BLOCK)
 					.strength(50.0F, 1200.0F)
 					.requiresCorrectToolForDrops()));
+
+	/**
+	 * La table d'enchantement corrompue : le seul endroit ou s'obtiennent les deux enchantements
+	 * du mod.
+	 */
+	public static final RegistryObject<Block> CORRUPTED_ENCHANTING_TABLE =
+			register("corrupted_enchanting_table",
+					() -> new CorruptedEnchantingTableBlock(BlockBehaviour.Properties.of()
+							.mapColor(MapColor.COLOR_BROWN)
+							.sound(SoundType.DEEPSLATE)
+							.strength(6.0F, 1200.0F)
+							.requiresCorrectToolForDrops()
+							.lightLevel(state -> 8)
+							.noOcclusion()));
 
 	/**
 	 * Le cadre menant aux terres corrompues, sur le modele de celui de l'End.

@@ -51,6 +51,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 		portal();
 		corruptedPortal();
+		enchantingTable();
 
 		woodSet(ModBlocks.BOIS_DU_DEMON);
 	}
@@ -121,6 +122,25 @@ public class ModBlockStateProvider extends BlockStateProvider {
 				.allFaces((direction, face) -> face.texture("#all")).end();
 
 		simpleBlock(ModBlocks.CORRUPTED_PORTAL.get(), surface);
+	}
+
+	/**
+	 * La table corrompue : un pupitre bas, de la hauteur d'une table d'enchantement.
+	 *
+	 * <p>Douze seiziemes, comme son modele vanilla. La hauteur n'est pas decorative : c'est elle qui
+	 * dit qu'on pose quelque chose dessus plutot qu'on ne marche dessus.
+	 */
+	private void enchantingTable() {
+		ResourceLocation texture = modLoc("block/corrupted_enchanting_table");
+
+		ModelFile table = models().withExistingParent("corrupted_enchanting_table", mcLoc("block/block"))
+				.texture("particle", texture)
+				.texture("all", texture)
+				.renderType("cutout")
+				.element().from(0, 0, 0).to(16, 12, 16)
+				.allFaces((direction, face) -> face.texture("#all")).end();
+
+		simpleBlockWithItem(ModBlocks.CORRUPTED_ENCHANTING_TABLE.get(), table);
 	}
 
 	/** Bloc plein a texture unique, plus son modele d'item. */

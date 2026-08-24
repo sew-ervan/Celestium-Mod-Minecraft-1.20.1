@@ -7,6 +7,7 @@
     "celestium:corrupted_celestium_block",
     "celestium:summoning_altar",
     "celestium:corrupted_celestium_ore",
-    "celestium:corrupted_portal_frame"
+    "celestium:corrupted_portal_frame",
+    "celestium:corrupted_enchanting_table"
   ]
 }

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "celestium:celestium_block"
+    },
+    "D": {
+      "item": "celestium:demonium_block"
+    },
+    "L": {
+      "item": "celestium:corrupted_book"
+    },
+    "a": {
+      "item": "celestium:demonium_ingot"
+    },
+    "c": {
+      "item": "celestium:celestium_ingot"
+    },
+    "k": {
+      "item": "celestium:corrupted_celestium_ingot"
+    }
+  },
+  "pattern": [
+    "CLC",
+    "cka",
+    "DDD"
+  ],
+  "result": {
+    "item": "celestium:corrupted_enchanting_table"
+  },
+  "show_notification": true
+}

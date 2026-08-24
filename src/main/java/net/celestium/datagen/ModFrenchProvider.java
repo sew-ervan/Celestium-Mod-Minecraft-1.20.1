@@ -3,6 +3,7 @@ package net.celestium.datagen;
 import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.init.ModBlocks;
+import net.celestium.init.ModEnchantments;
 import net.celestium.init.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -80,6 +81,17 @@ public class ModFrenchProvider extends LanguageProvider {
 		addBlock(ModBlocks.CORRUPTED_PORTAL_FRAME, "Cadre corrompu");
 		addBlock(ModBlocks.CORRUPTED_PORTAL, "Portail corrompu");
 		addItem(ModItems.CORRUPTED_EYE, "Œil corrompu");
+		addItem(ModItems.CORRUPTED_BOOK, "Livre corrompu");
+		addBlock(ModBlocks.CORRUPTED_ENCHANTING_TABLE, "Table d'enchantement corrompue");
+
+		addEnchantment(ModEnchantments.TIMBER, "Abattage");
+		addEnchantment(ModEnchantments.EXCAVATION, "Excavation");
+
+		add("message.celestium.enchant.granted", "%1$s %2$s");
+		add("message.celestium.enchant.wrong_tool",
+				"La table ne reconnaît que les haches, les pioches et les pelles.");
+		add("message.celestium.enchant.already_maxed", "Cet outil ne peut pas aller plus loin.");
+		add("message.celestium.enchant.too_poor", "Il te manque des niveaux d'expérience.");
 
 		add("message.celestium.corrupted.entered",
 				"Les deux mondes se heurtent ici. Ne t'attarde pas.");

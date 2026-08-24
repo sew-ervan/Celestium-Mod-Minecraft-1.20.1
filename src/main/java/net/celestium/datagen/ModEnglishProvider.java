@@ -3,6 +3,7 @@ package net.celestium.datagen;
 import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.init.ModBlocks;
+import net.celestium.init.ModEnchantments;
 import net.celestium.init.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -75,6 +76,17 @@ public class ModEnglishProvider extends LanguageProvider {
 		addBlock(ModBlocks.CORRUPTED_PORTAL_FRAME, "Corrupted Frame");
 		addBlock(ModBlocks.CORRUPTED_PORTAL, "Corrupted Portal");
 		addItem(ModItems.CORRUPTED_EYE, "Corrupted Eye");
+		addItem(ModItems.CORRUPTED_BOOK, "Corrupted Book");
+		addBlock(ModBlocks.CORRUPTED_ENCHANTING_TABLE, "Corrupted Enchanting Table");
+
+		addEnchantment(ModEnchantments.TIMBER, "Timber");
+		addEnchantment(ModEnchantments.EXCAVATION, "Excavation");
+
+		add("message.celestium.enchant.granted", "%1$s %2$s");
+		add("message.celestium.enchant.wrong_tool",
+				"The table only recognises axes, pickaxes and shovels.");
+		add("message.celestium.enchant.already_maxed", "This tool can go no further.");
+		add("message.celestium.enchant.too_poor", "You lack the experience levels.");
 
 		add("message.celestium.corrupted.entered", "Two worlds collide here. Don't linger.");
 		add("message.celestium.corrupted.returned", "The world settles back into shape.");
