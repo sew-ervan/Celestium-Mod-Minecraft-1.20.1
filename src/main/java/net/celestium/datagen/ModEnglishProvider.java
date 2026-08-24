@@ -88,6 +88,21 @@ public class ModEnglishProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.MIDAS_CURSE, "Curse of Midas");
 		addEnchantment(ModEnchantments.TAMER, "Tamer");
 
+		// --- Dark matter ---
+		addItem(ModItems.DARK_MATTER, "Dark Matter");
+		addItem(ModItems.DARK_MATTER_SWORD, "Dark Matter Sword");
+		addItem(ModItems.DARK_MATTER_PICKAXE, "Dark Matter Pickaxe");
+		addItem(ModItems.DARK_MATTER_AXE, "Dark Matter Axe");
+		addItem(ModItems.DARK_MATTER_SHOVEL, "Dark Matter Shovel");
+		addItem(ModItems.DARK_MATTER_HOE, "Dark Matter Hoe");
+		addItem(ModItems.DARK_MATTER_HELMET, "Dark Matter Helmet");
+		addItem(ModItems.DARK_MATTER_CHESTPLATE, "Dark Matter Chestplate");
+		addItem(ModItems.DARK_MATTER_LEGGINGS, "Dark Matter Leggings");
+		addItem(ModItems.DARK_MATTER_BOOTS, "Dark Matter Boots");
+		addBlock(ModBlocks.DARK_MATTER_ORE, "Dark Matter Ore");
+		addBlock(ModBlocks.DARK_MATTER_BLOCK, "Block of Dark Matter");
+		addBlock(ModBlocks.GRAVITY_WELL, "Gravity Well");
+
 		addItem(ModItems.CELESTIAL_DUST, "Celestial Dust");
 		add("tooltip.celestium.celestial_dust", "A random effect, for a random duration.");
 		add("message.celestium.dust.boon", "%1$s, for %2$s seconds.");

@@ -42,6 +42,7 @@ public class ModRecipeProvider extends RecipeProvider {
 		corruption(writer);
 		woodSet(writer, ModBlocks.BOIS_DU_DEMON);
 		backpacks(writer);
+		darkMatter(writer);
 	}
 
 	/**
@@ -384,5 +385,42 @@ public class ModRecipeProvider extends RecipeProvider {
 				.define('L', ModItems.BACKPACK.get())
 				.unlockedBy("has_demon_heart", has(ModItems.DEMON_HEART.get()))
 				.save(writer, CelestiumMod.id("backpack_huge"));
+	}
+
+	/**
+	 * La matiere noire : outils, armure, compactage, et le puits de gravite.
+	 *
+	 * <p>Elle se travaille sur un baton ordinaire. Lui donner un manche a elle n'aurait rien
+	 * apporte : ce qui la distingue tient a la tete de l'outil, pas au bois qu'on tient.
+	 */
+	private void darkMatter(Consumer<FinishedRecipe> writer) {
+		Item matter = ModItems.DARK_MATTER.get();
+
+		pack(writer, RecipeCategory.BUILDING_BLOCKS, ModBlocks.DARK_MATTER_BLOCK.get(), matter,
+				"dark_matter_block_from_matter");
+		unpack(writer, RecipeCategory.MISC, matter, ModBlocks.DARK_MATTER_BLOCK.get(),
+				"dark_matter_from_block");
+
+		tool(writer, ModItems.DARK_MATTER_PICKAXE.get(), matter, Items.STICK, "III", " S ", " S ");
+		tool(writer, ModItems.DARK_MATTER_SWORD.get(), matter, Items.STICK, "I", "I", "S");
+		tool(writer, ModItems.DARK_MATTER_AXE.get(), matter, Items.STICK, "II", "IS", " S");
+		tool(writer, ModItems.DARK_MATTER_SHOVEL.get(), matter, Items.STICK, "I", "S", "S");
+		tool(writer, ModItems.DARK_MATTER_HOE.get(), matter, Items.STICK, "II", " S", " S");
+
+		armour(writer, ModItems.DARK_MATTER_HELMET.get(), matter, "III", "I I");
+		armour(writer, ModItems.DARK_MATTER_CHESTPLATE.get(), matter, "I I", "III", "III");
+		armour(writer, ModItems.DARK_MATTER_LEGGINGS.get(), matter, "III", "I I", "I I");
+		armour(writer, ModItems.DARK_MATTER_BOOTS.get(), matter, "I I", "I I");
+
+		// Le puits de gravite : quatre masses autour d'une perle d'Ender, qui donne la direction.
+		// Sans elle, ce ne serait qu'un tas de matiere ; c'est la perle qui lui indique un centre.
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.GRAVITY_WELL.get())
+				.pattern(" D ")
+				.pattern("DED")
+				.pattern(" D ")
+				.define('D', matter)
+				.define('E', Items.ENDER_PEARL)
+				.unlockedBy("has_dark_matter", has(matter))
+				.save(writer, CelestiumMod.id("gravity_well"));
 	}
 }

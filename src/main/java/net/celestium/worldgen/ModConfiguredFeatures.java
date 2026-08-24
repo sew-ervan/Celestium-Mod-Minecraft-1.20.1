@@ -34,6 +34,9 @@ public final class ModConfiguredFeatures {
 	/** Le minerai des terres corrompues, seul chemin vers les Terres du demon. */
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_CELESTIUM_ORE =
 			key("corrupted_celestium_ore");
+
+	/** La matiere noire, tout au fond de l'Overworld. */
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DARK_MATTER_ORE = key("dark_matter_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEMON_TREE = key("demon_tree");
 
 	/** Les trois blocs chance, semes un par un plutot qu'en filons. */
@@ -70,6 +73,11 @@ public final class ModConfiguredFeatures {
 		// couteux.
 		context.register(CORRUPTED_CELESTIUM_ORE, new ConfiguredFeature<>(Feature.ORE,
 				new OreConfiguration(targets(ModBlocks.CORRUPTED_CELESTIUM_ORE.get()), CORRUPTED_VEIN_SIZE)));
+
+		// La matiere noire se loge en tout petits amas : elle compose l'essentiel de l'univers, mais
+		// on n'en a jamais tenu un gramme.
+		context.register(DARK_MATTER_ORE, new ConfiguredFeature<>(Feature.ORE,
+				new OreConfiguration(targets(ModBlocks.DARK_MATTER_ORE.get()), 3)));
 
 		// Les blocs chance se sement isolement — un filon de blocs chance en donnerait quatre d'un
 		// coup, ce qui ruinerait le pari. Le mecanisme des filons convient neanmoins : c'est le

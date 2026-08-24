@@ -220,6 +220,42 @@ public class ModItems {
 	public static final RegistryObject<Item> DEMONIUM_BOOTS = ITEMS.register("demonium_boots",
 			() -> new ModArmorItem(ModArmorMaterials.DEMONIUM, ArmorItem.Type.BOOTS));
 
+	// --- Matiere noire ---
+	//
+	// Elle ne brille pas, ne se voit qu'a ce qu'elle attire, et compose l'essentiel de l'univers
+	// sans qu'on l'ait jamais tenue. C'est de la masse pure : ses outils durent, son armure ancre,
+	// et son bloc le plus utile ne fait rien d'autre que tirer a lui ce qui tombe.
+
+	public static final RegistryObject<Item> DARK_MATTER = ITEMS.register("dark_matter",
+			() -> new Item(new Item.Properties().fireResistant().rarity(Rarity.RARE)));
+
+	public static final RegistryObject<Item> DARK_MATTER_PICKAXE = ITEMS.register("dark_matter_pickaxe",
+			() -> new PickaxeItem(ModTiers.DARK_MATTER, 1, -2.8F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DARK_MATTER_SWORD = ITEMS.register("dark_matter_sword",
+			() -> new SwordItem(ModTiers.DARK_MATTER, 3, -2.4F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DARK_MATTER_AXE = ITEMS.register("dark_matter_axe",
+			() -> new AxeItem(ModTiers.DARK_MATTER, 5.5F, -3.1F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DARK_MATTER_SHOVEL = ITEMS.register("dark_matter_shovel",
+			() -> new ShovelItem(ModTiers.DARK_MATTER, 1.5F, -3.0F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DARK_MATTER_HOE = ITEMS.register("dark_matter_hoe",
+			() -> new HoeItem(ModTiers.DARK_MATTER, -3, 0.0F, new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> DARK_MATTER_HELMET = ITEMS.register("dark_matter_helmet",
+			() -> new ModArmorItem(ModArmorMaterials.DARK_MATTER, ArmorItem.Type.HELMET));
+
+	public static final RegistryObject<Item> DARK_MATTER_CHESTPLATE = ITEMS.register("dark_matter_chestplate",
+			() -> new ModArmorItem(ModArmorMaterials.DARK_MATTER, ArmorItem.Type.CHESTPLATE));
+
+	public static final RegistryObject<Item> DARK_MATTER_LEGGINGS = ITEMS.register("dark_matter_leggings",
+			() -> new ModArmorItem(ModArmorMaterials.DARK_MATTER, ArmorItem.Type.LEGGINGS));
+
+	public static final RegistryObject<Item> DARK_MATTER_BOOTS = ITEMS.register("dark_matter_boots",
+			() -> new ModArmorItem(ModArmorMaterials.DARK_MATTER, ArmorItem.Type.BOOTS));
+
 	// --- Sacs celestes ---
 
 	public static final RegistryObject<Item> BACKPACK_SMALL = ITEMS.register("backpack_small",

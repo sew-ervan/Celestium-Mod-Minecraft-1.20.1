@@ -4,6 +4,7 @@ import net.celestium.CelestiumMod;
 import net.celestium.core.registry.WoodSet;
 import net.celestium.feature.celestium.CelestiumStorageBlock;
 import net.celestium.feature.altar.SummoningAltarBlock;
+import net.celestium.feature.darkmatter.GravityWellBlock;
 import net.celestium.feature.enchant.CorruptedEnchantingTableBlock;
 import net.celestium.feature.luckyblock.LuckyBlock;
 import net.celestium.feature.luckyblock.LuckyTier;
@@ -147,6 +148,43 @@ public class ModBlocks {
 					.mapColor(MapColor.COLOR_RED)
 					.sound(SoundType.NETHERITE_BLOCK)
 					.strength(50.0F, 1200.0F)
+					.requiresCorrectToolForDrops()));
+
+	/**
+	 * Minerai de matiere noire, tout au fond de l'Overworld.
+	 *
+	 * <p>Il n'emet aucune lumiere et n'en reflechit presque aucune : au fond d'une galerie, on le
+	 * distingue a peine de la roche. C'est voulu — de la matiere noire qui se reperait de loin ne
+	 * meriterait pas son nom.
+	 */
+	public static final RegistryObject<Block> DARK_MATTER_ORE = register("dark_matter_ore",
+			() -> new DropExperienceBlock(
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.COLOR_BLACK)
+							.sound(SoundType.DEEPSLATE)
+							.strength(6.0F, 12.0F)
+							.requiresCorrectToolForDrops(),
+					UniformInt.of(5, 9)));
+
+	/** Bloc compact de matiere noire. Il avale la lumiere : rien ne s'y reflete. */
+	public static final RegistryObject<Block> DARK_MATTER_BLOCK = register("dark_matter_block",
+			() -> new Block(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_BLACK)
+					.sound(SoundType.NETHERITE_BLOCK)
+					.strength(60.0F, 1800.0F)
+					.requiresCorrectToolForDrops()));
+
+	/**
+	 * Le puits de gravite : l'usage propre de la matiere noire.
+	 *
+	 * <p>Il attire a lui tout ce qui tombe alentour. C'est la seule chose que la matiere noire fait
+	 * dans l'univers reel — se signaler par sa gravite, et rien d'autre.
+	 */
+	public static final RegistryObject<Block> GRAVITY_WELL = register("gravity_well",
+			() -> new GravityWellBlock(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.COLOR_BLACK)
+					.sound(SoundType.NETHERITE_BLOCK)
+					.strength(25.0F, 1200.0F)
 					.requiresCorrectToolForDrops()));
 
 	/**

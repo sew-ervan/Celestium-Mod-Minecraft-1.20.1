@@ -34,6 +34,9 @@ public final class ModPlacedFeatures {
 	/** Le minerai des terres corrompues. */
 	public static final ResourceKey<PlacedFeature> CORRUPTED_CELESTIUM_ORE = key("corrupted_celestium_ore");
 
+	/** La matiere noire de l'Overworld. */
+	public static final ResourceKey<PlacedFeature> DARK_MATTER_ORE = key("dark_matter_ore");
+
 	/** Arbres des terres du demon. */
 	public static final ResourceKey<PlacedFeature> DEMON_TREE = key("demon_tree");
 
@@ -120,6 +123,18 @@ public final class ModPlacedFeatures {
 						HeightRangePlacement.uniform(
 								VerticalAnchor.absolute(-48),
 								VerticalAnchor.absolute(90)),
+						BiomeFilter.biome())));
+
+		// Plus bas que le Celestium, et bien plus rare : deux tentatives par chunk sous l'altitude
+		// -48, dans la tranche que personne ne creuse par hasard.
+		context.register(DARK_MATTER_ORE, new PlacedFeature(
+				configured.getOrThrow(ModConfiguredFeatures.DARK_MATTER_ORE),
+				List.of(
+						CountPlacement.of(2),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.triangle(
+								VerticalAnchor.absolute(-64),
+								VerticalAnchor.absolute(-48)),
 						BiomeFilter.biome())));
 
 		// Le Celestium corrompu se cherche a mi-profondeur : assez bas pour qu'il faille creuser,

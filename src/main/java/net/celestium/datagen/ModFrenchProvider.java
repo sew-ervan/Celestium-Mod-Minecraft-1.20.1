@@ -93,6 +93,21 @@ public class ModFrenchProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.MIDAS_CURSE, "Malédiction de Midas");
 		addEnchantment(ModEnchantments.TAMER, "Dompteur");
 
+		// --- Matiere noire ---
+		addItem(ModItems.DARK_MATTER, "Matière noire");
+		addItem(ModItems.DARK_MATTER_SWORD, "Épée en matière noire");
+		addItem(ModItems.DARK_MATTER_PICKAXE, "Pioche en matière noire");
+		addItem(ModItems.DARK_MATTER_AXE, "Hache en matière noire");
+		addItem(ModItems.DARK_MATTER_SHOVEL, "Pelle en matière noire");
+		addItem(ModItems.DARK_MATTER_HOE, "Houe en matière noire");
+		addItem(ModItems.DARK_MATTER_HELMET, "Casque en matière noire");
+		addItem(ModItems.DARK_MATTER_CHESTPLATE, "Plastron en matière noire");
+		addItem(ModItems.DARK_MATTER_LEGGINGS, "Jambières en matière noire");
+		addItem(ModItems.DARK_MATTER_BOOTS, "Bottes en matière noire");
+		addBlock(ModBlocks.DARK_MATTER_ORE, "Minerai de matière noire");
+		addBlock(ModBlocks.DARK_MATTER_BLOCK, "Bloc de matière noire");
+		addBlock(ModBlocks.GRAVITY_WELL, "Puits de gravité");
+
 		addItem(ModItems.CELESTIAL_DUST, "Poussière céleste");
 		add("tooltip.celestium.celestial_dust", "Un effet au hasard, pour une durée au hasard.");
 		add("message.celestium.dust.boon", "%1$s, pendant %2$s secondes.");

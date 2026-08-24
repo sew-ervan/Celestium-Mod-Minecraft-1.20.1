@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "celestium:block/dark_matter_block"
+    }
+  }
+}

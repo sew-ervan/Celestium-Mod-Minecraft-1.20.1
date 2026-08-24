@@ -39,6 +39,18 @@ public enum ModArmorMaterials implements ArmorMaterial {
 			"celestium:textures/models/armor/corrupted_celestium_layer_1.png",
 			"celestium:textures/models/armor/corrupted_celestium_layer_2.png"),
 
+	/**
+	 * Parure de matiere noire : elle ne protege pas mieux, elle ancre.
+	 *
+	 * <p>Sa resistance a la poussee est la plus forte du mod — rien ne la deplace. Ce n'est pas une
+	 * armure de combat mais une armure de position : on la porte pour tenir un endroit, pas pour en
+	 * sortir vivant.
+	 */
+	DARK_MATTER("dark_matter", 30, new int[]{3, 6, 7, 3}, 6, 2.0F, 0.8F,
+			SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ModItems.DARK_MATTER.get()),
+			"celestium:textures/models/armor/dark_matter_layer_1.png",
+			"celestium:textures/models/armor/dark_matter_layer_2.png"),
+
 	DEMONIUM("demonium", 20, new int[]{4, 6, 8, 4}, 12, 3.0F, 0.6F,
 			SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ModItems.DEMONIUM_INGOT.get()),
 			"celestium:textures/models/armor/demonium_layer_1.png",

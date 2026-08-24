@@ -9,6 +9,7 @@ import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.corruption.DimensionMining;
+import net.celestium.feature.darkmatter.DarkMatterAnchoring;
 import net.celestium.feature.enchant.ExcavationEnchantment;
 import net.celestium.feature.enchant.TamerEnchantment;
 import net.celestium.feature.enchant.ThunderstrikeEnchantment;
@@ -30,6 +31,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.player.Player;
@@ -334,6 +336,58 @@ public class CelestiumGameTests {
 				"Le Dompteur agit encore au-dela du seuil de resistance");
 		helper.assertTrue(TamerEnchantment.chanceFor(1, 20.0F) < TamerEnchantment.chanceFor(3, 20.0F),
 				"Les niveaux du Dompteur ne se distinguent pas");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Le puits de gravite attire, et la parure complete de matiere noire annule les chutes.
+	 *
+	 * <p>Les deux promesses de la matiere noire, verifiees la ou elles se decident. Le puits est
+	 * eprouve sur un objet lache a portee : s'il ne bouge pas, le bloc n'a aucune raison d'exister.
+	 */
+	@GameTest(template = ARENA, timeoutTicks = 200)
+	public static void gravityWellDrawsItemsIn(GameTestHelper helper) {
+		BlockPos well = new BlockPos(2, 1, 2);
+		helper.setBlock(well, ModBlocks.GRAVITY_WELL.get());
+
+		ItemEntity dropped = helper.spawnItem(Items.DIAMOND, 8.0F, 2.0F, 2.0F);
+		double start = dropped.position().distanceTo(
+				net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(well)));
+
+		helper.succeedWhen(() -> {
+			double now = dropped.position().distanceTo(
+					net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(well)));
+			helper.assertTrue(now < start - 1.0,
+					"Le puits de gravite n'attire pas : distance " + start + " puis " + now);
+		});
+	}
+
+	/** La parure complete annule les chutes, une piece seule non. */
+	@GameTest(template = ARENA)
+	public static void darkMatterSetCountsAllFourPieces(GameTestHelper helper) {
+		Player bare = helper.makeMockPlayer();
+		helper.assertTrue(DarkMatterAnchoring.worn(bare) == 0,
+				"Un joueur nu porte de la matiere noire");
+
+		Player partial = helper.makeMockPlayer();
+		partial.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.DARK_MATTER_BOOTS.get()));
+		helper.assertTrue(DarkMatterAnchoring.worn(partial) == 1,
+				"Une piece seule n'est pas comptee pour une");
+
+		Player full = helper.makeMockPlayer();
+		full.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.DARK_MATTER_HELMET.get()));
+		full.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.DARK_MATTER_CHESTPLATE.get()));
+		full.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.DARK_MATTER_LEGGINGS.get()));
+		full.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.DARK_MATTER_BOOTS.get()));
+		helper.assertTrue(DarkMatterAnchoring.worn(full) == 4,
+				"La parure complete n'est pas reconnue");
+
+		// Une parure d'un autre materiau ne doit pas passer pour de la matiere noire.
+		Player other = helper.makeMockPlayer();
+		other.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.CELESTIUM_CHESTPLATE.get()));
+		helper.assertTrue(DarkMatterAnchoring.worn(other) == 0,
+				"Le Celestium passe pour de la matiere noire");
 
 		helper.succeed();
 	}

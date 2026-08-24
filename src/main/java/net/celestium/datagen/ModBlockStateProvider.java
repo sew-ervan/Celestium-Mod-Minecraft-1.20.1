@@ -48,6 +48,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleCube(ModBlocks.SUMMONING_ALTAR.get());
 		simpleCube(ModBlocks.DEMONIUM_ORE.get());
 		simpleCube(ModBlocks.DEMONIUM_BLOCK.get());
+		simpleCube(ModBlocks.DARK_MATTER_ORE.get());
+		simpleCube(ModBlocks.DARK_MATTER_BLOCK.get());
+		simpleCube(ModBlocks.GRAVITY_WELL.get());
 
 		portal();
 		corruptedPortal();

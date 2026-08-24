@@ -53,6 +53,17 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5.0F)))
 								.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
 
+		// Le minerai de matiere noire rend sa matiere directement : il n'y a rien a fondre, la
+		// matiere noire ne reagit a rien.
+		this.add(ModBlocks.DARK_MATTER_ORE.get(), block -> createSilkTouchDispatchTable(block,
+				this.applyExplosionDecay(block,
+						LootItem.lootTableItem(ModItems.DARK_MATTER.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+								.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))));
+
+		this.dropSelf(ModBlocks.DARK_MATTER_BLOCK.get());
+		this.dropSelf(ModBlocks.GRAVITY_WELL.get());
+
 		this.dropSelf(ModBlocks.CORRUPTED_PORTAL_FRAME.get());
 		this.dropSelf(ModBlocks.CORRUPTED_ENCHANTING_TABLE.get());
 

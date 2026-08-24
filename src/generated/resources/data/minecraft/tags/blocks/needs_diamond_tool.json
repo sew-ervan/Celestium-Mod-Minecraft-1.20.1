@@ -7,6 +7,9 @@
     "celestium:corrupted_celestium_block",
     "celestium:summoning_altar",
     "celestium:corrupted_celestium_ore",
-    "celestium:corrupted_portal_frame"
+    "celestium:corrupted_portal_frame",
+    "celestium:dark_matter_ore",
+    "celestium:dark_matter_block",
+    "celestium:gravity_well"
   ]
 }

@@ -20,6 +20,13 @@ import java.util.Random;
 public final class DemoniumTextures {
 
 	/** Largeur de la bande rouge conservee, pour garder le relief du dessin d'origine. */
+	// Reglages de la matiere noire : un bleu tres sombre, pique de quelques etoiles.
+	private static final float VOID_HUE = 0.68F;
+	private static final float VOID_SATURATION = 0.55F;
+	private static final float VOID_FLOOR = 0.03F;
+	private static final float VOID_RANGE = 0.10F;
+	private static final double STAR_RATE = 0.035;
+
 	private static final float HUE_BASE = 0.98F;
 	private static final float HUE_SPREAD = 0.06F;
 
@@ -83,6 +90,23 @@ public final class DemoniumTextures {
 
 		// Les terres corrompues : le minerai garde la silhouette de celui du Celestium, le cadre et
 		// la surface du portail se derivent de blocs de pierre et de Celestium pur.
+		// La matiere noire : meme dessin, couleur eteinte, quelques etoiles.
+		voidify(root, "item/celestium_ingot.png", "item/dark_matter.png");
+		voidify(root, "item/celestium_sword.png", "item/dark_matter_sword.png");
+		voidify(root, "item/celestium_pickaxe.png", "item/dark_matter_pickaxe.png");
+		voidify(root, "item/celestium_axe.png", "item/dark_matter_axe.png");
+		voidify(root, "item/celestium_shovel.png", "item/dark_matter_shovel.png");
+		voidify(root, "item/celestium_hoe.png", "item/dark_matter_hoe.png");
+		voidify(root, "item/celestium_helmet.png", "item/dark_matter_helmet.png");
+		voidify(root, "item/celestium_chestplate.png", "item/dark_matter_chestplate.png");
+		voidify(root, "item/celestium_leggings.png", "item/dark_matter_leggings.png");
+		voidify(root, "item/celestium_boots.png", "item/dark_matter_boots.png");
+		voidify(root, "block/celestium_ore.png", "block/dark_matter_ore.png");
+		voidify(root, "block/celestium_block.png", "block/dark_matter_block.png");
+		voidify(root, "block/summoning_altar.png", "block/gravity_well.png");
+		voidify(root, "models/armor/celestium_layer_1.png", "models/armor/dark_matter_layer_1.png");
+		voidify(root, "models/armor/celestium_layer_2.png", "models/armor/dark_matter_layer_2.png");
+
 		partialCorruption(root, "block/celestium_ore.png", "block/corrupted_celestium_ore.png");
 		derive(root, "block/celestium_block.png", "block/corrupted_portal.png", "corrupted_portal");
 
@@ -135,6 +159,54 @@ public final class DemoniumTextures {
 		Path target = root.resolve(to);
 		ImageIO.write(blend, "PNG", target.toFile());
 		System.out.printf("OK      %-46s melange%n", target);
+	}
+
+	/**
+	 * Fait d'une texture sa version en matiere noire : presque noire, piquee d'etoiles.
+	 *
+	 * <p>La matiere noire n'emet ni ne reflechit de lumiere. Sa texture garde donc le dessin de
+	 * l'originale — pour qu'un minerai reste lisible comme un minerai — mais eteint sa couleur
+	 * jusqu'au bord du noir, et y seme quelques points clairs. Ce sont ces points qui la sauvent :
+	 * un aplat noir se lirait comme un trou, la ou un ciel etoile se lit comme de la matiere.
+	 */
+	private static void voidify(Path root, String from, String to) throws IOException {
+		Path source = root.resolve(from);
+		if (!source.toFile().isFile()) {
+			System.out.println("ABSENT  " + source);
+			return;
+		}
+
+		BufferedImage original = ImageIO.read(source.toFile());
+		BufferedImage result = new BufferedImage(original.getWidth(), original.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+
+		for (int y = 0; y < original.getHeight(); y++) {
+			for (int x = 0; x < original.getWidth(); x++) {
+				int argb = original.getRGB(x, y);
+				if (((argb >> 24) & 0xFF) == 0) {
+					result.setRGB(x, y, 0);
+					continue;
+				}
+
+				float[] hsb = Color.RGBtoHSB((argb >> 16) & 0xFF, (argb >> 8) & 0xFF, argb & 0xFF, null);
+				Random noise = new Random(to.hashCode() * 31L + x * 6151L + y * 45989L);
+
+				// Une etoile de loin en loin, sinon le noir.
+				if (noise.nextDouble() < STAR_RATE) {
+					result.setRGB(x, y, 0xFFE8ECFF);
+					continue;
+				}
+
+				// La luminosite d'origine est conservee mais ecrasee : le relief du dessin subsiste,
+				// a peine.
+				float brightness = VOID_FLOOR + hsb[2] * VOID_RANGE;
+				result.setRGB(x, y, Color.HSBtoRGB(VOID_HUE, VOID_SATURATION, brightness));
+			}
+		}
+
+		Path target = root.resolve(to);
+		ImageIO.write(result, "PNG", target.toFile());
+		System.out.printf("OK      %-46s etoile%n", target);
 	}
 
 	private static BufferedImage corrupt(BufferedImage source, String seedName) {

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "D": {
+      "item": "celestium:dark_matter"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "pattern": [
+    " D ",
+    "DED",
+    " D "
+  ],
+  "result": {
+    "item": "celestium:gravity_well"
+  },
+  "show_notification": true
+}

@@ -35,7 +35,17 @@ public enum ModTiers implements Tier {
 			List.of(Tiers.NETHERITE), List.of()),
 	CORRUPTED_CELESTIUM(3, 900, 7.0F, 2.5F, 12,
 			() -> Ingredient.of(ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get()),
-			List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
+			List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE)),
+
+	/**
+	 * La matiere noire ne s'use presque pas, et ne coupe presque rien.
+	 *
+	 * <p>Elle n'a pas de tranchant : ce n'est pas du metal, c'est de la masse. Ses outils durent
+	 * plus longtemps que tous les autres et minent plus lentement que le fer — on ne les prend pas
+	 * pour aller vite, on les prend pour ne jamais avoir a les remplacer.
+	 */
+	DARK_MATTER(4, 9000, 5.0F, 3.0F, 8, () -> Ingredient.of(ModItems.DARK_MATTER.get()),
+			List.of(Tiers.NETHERITE), List.of());
 
 	private final int level;
 	private final int uses;

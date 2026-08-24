@@ -40,6 +40,9 @@ public final class ModBiomeModifiers {
 	public static final ResourceKey<BiomeModifier> ADD_CORRUPTED_LUCKY_BLOCK =
 			key("add_corrupted_lucky_block");
 
+	/** La matiere noire, dans tout l'Overworld. */
+	public static final ResourceKey<BiomeModifier> ADD_DARK_MATTER_ORE = key("add_dark_matter_ore");
+
 	private ModBiomeModifiers() {
 	}
 
@@ -61,6 +64,11 @@ public final class ModBiomeModifiers {
 				biomes.getOrThrow(BiomeTags.IS_NETHER),
 				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.CORRUPTED_LUCKY_BLOCK)),
 				GenerationStep.Decoration.UNDERGROUND_DECORATION));
+
+		context.register(ADD_DARK_MATTER_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+				HolderSet.direct(features.getOrThrow(ModPlacedFeatures.DARK_MATTER_ORE)),
+				GenerationStep.Decoration.UNDERGROUND_ORES));
 	}
 
 	private static ResourceKey<BiomeModifier> key(String name) {

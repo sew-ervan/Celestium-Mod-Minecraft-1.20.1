@@ -63,6 +63,18 @@ public class ModItemModelProvider extends ItemModelProvider {
 		handheld(ModItems.CORRUPTED_CELESTIUM_SHOVEL);
 		handheld(ModItems.CORRUPTED_CELESTIUM_HOE);
 
+		flat(ModItems.DARK_MATTER);
+		flat(ModItems.DARK_MATTER_HELMET);
+		flat(ModItems.DARK_MATTER_CHESTPLATE);
+		flat(ModItems.DARK_MATTER_LEGGINGS);
+		flat(ModItems.DARK_MATTER_BOOTS);
+
+		handheld(ModItems.DARK_MATTER_SWORD);
+		handheld(ModItems.DARK_MATTER_PICKAXE);
+		handheld(ModItems.DARK_MATTER_AXE);
+		handheld(ModItems.DARK_MATTER_SHOVEL);
+		handheld(ModItems.DARK_MATTER_HOE);
+
 		flat(ModItems.DEMON_HEART);
 
 		flat(ModItems.DEMONIUM_FRAGMENT);
