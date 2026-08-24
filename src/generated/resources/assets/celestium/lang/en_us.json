@@ -84,6 +84,8 @@
   "faction.celestium.celeste": "Celestial",
   "faction.celestium.demon": "Demon",
   "faction.celestium.neutre": "Neutral",
+  "gui.celestium.compendium": "Celestium Compendium",
+  "gui.celestium.compendium.no_recipe": "Not craftable. Found in the world, or taken from what lives there.",
   "item.celestium.backpack": "Large Celestial Backpack",
   "item.celestium.backpack_huge": "Huge Celestial Backpack",
   "item.celestium.backpack_medium": "Medium Celestial Backpack",

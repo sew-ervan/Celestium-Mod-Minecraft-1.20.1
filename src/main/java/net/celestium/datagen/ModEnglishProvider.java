@@ -86,6 +86,9 @@ public class ModEnglishProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.MAGNETISM, "Magnetism");
 
 		add("container.celestium.corrupted_enchanting", "Corrupted Enchanting Table");
+		add("gui.celestium.compendium", "Celestium Compendium");
+		add("gui.celestium.compendium.no_recipe",
+			"Not craftable. Found in the world, or taken from what lives there.");
 		add("message.celestium.enchant.cost", "%1$s levels");
 		add("message.celestium.enchant.empty", "Place a tool to see what it can receive.");
 		add("message.celestium.enchant.already_maxed", "This tool can go no further.");

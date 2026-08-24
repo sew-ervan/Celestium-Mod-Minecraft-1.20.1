@@ -84,6 +84,8 @@
   "faction.celestium.celeste": "Céleste",
   "faction.celestium.demon": "Démon",
   "faction.celestium.neutre": "Neutre",
+  "gui.celestium.compendium": "Compendium du Celestium",
+  "gui.celestium.compendium.no_recipe": "Ne se fabrique pas. Se trouve dans le monde ou se gagne sur ce qu'on y rencontre.",
   "item.celestium.backpack": "Grand sac céleste",
   "item.celestium.backpack_huge": "Sac céleste énorme",
   "item.celestium.backpack_medium": "Sac céleste moyen",

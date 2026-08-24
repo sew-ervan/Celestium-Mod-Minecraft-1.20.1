@@ -91,6 +91,9 @@ public class ModFrenchProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.MAGNETISM, "Aimant");
 
 		add("container.celestium.corrupted_enchanting", "Table d'enchantement corrompue");
+		add("gui.celestium.compendium", "Compendium du Celestium");
+		add("gui.celestium.compendium.no_recipe",
+			"Ne se fabrique pas. Se trouve dans le monde ou se gagne sur ce qu'on y rencontre.");
 		add("message.celestium.enchant.cost", "%1$s niveaux");
 		add("message.celestium.enchant.empty", "Pose un outil pour voir ce qu'il peut recevoir.");
 		add("message.celestium.enchant.already_maxed", "Cet outil ne peut pas aller plus loin.");
