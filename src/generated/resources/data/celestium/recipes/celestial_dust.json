@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "F": {
+      "item": "celestium:celestium_fragment"
+    },
+    "M": {
+      "item": "minecraft:brown_mushroom"
+    },
+    "W": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "pattern": [
+    " F ",
+    "WMW",
+    " B "
+  ],
+  "result": {
+    "count": 4,
+    "item": "celestium:celestial_dust"
+  },
+  "show_notification": true
+}

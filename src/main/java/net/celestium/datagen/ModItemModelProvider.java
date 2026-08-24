@@ -27,6 +27,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		flat(ModItems.CELESTIUM_FRAGMENT);
 		flat(ModItems.CELESTIUM_INGOT);
 		flat(ModItems.CELESTIUM_STICK);
+		flat(ModItems.CELESTIAL_DUST);
 
 		flat(ModItems.CELESTIUM_HELMET);
 		flat(ModItems.CELESTIUM_CHESTPLATE);

@@ -5,6 +5,7 @@ import net.celestium.core.material.ModArmorMaterials;
 import net.celestium.core.material.ModTiers;
 import net.celestium.feature.backpack.BackpackItem;
 import net.celestium.feature.backpack.BackpackTier;
+import net.celestium.feature.celestium.CelestialDustItem;
 import net.celestium.feature.celestium.CelestiumIngotItem;
 import net.celestium.feature.celestium.CelestiumSwordItem;
 import net.celestium.feature.celestium.ModArmorItem;
@@ -48,6 +49,14 @@ public class ModItems {
 
 	public static final RegistryObject<Item> CELESTIUM_STICK = ITEMS.register("celestium_stick",
 			() -> new Item(new Item.Properties()));
+
+	/**
+	 * La poussiere celeste : un effet au hasard, pour une duree au hasard.
+	 *
+	 * <p>Rien d'instantane dans ses deux listes — voir {@link CelestialDustItem}.
+	 */
+	public static final RegistryObject<Item> CELESTIAL_DUST = ITEMS.register("celestial_dust",
+			CelestialDustItem::new);
 
 	// --- Celestium : outils ---
 	// Les valeurs d'attaque et de vitesse suivent les ecarts vanilla entre types d'outils ;

@@ -118,6 +118,36 @@ public final class PixelArtTextures {
 	/** La marque qui court sur les pages. */
 	private static final int MARK = 0xFFB4331F;
 
+	/**
+	 * La fiole de poussiere celeste.
+	 *
+	 * <p>{@code o} verre, {@code d} contenu, {@code l} reflet sur le verre.
+	 */
+	private static final String[] FLASK = {
+			"................",
+			"................",
+			"......oooo......",
+			"......o..o......",
+			"......o..o......",
+			".....oo..oo.....",
+			"....oo....oo....",
+			"...oo......oo...",
+			"...ol.dddd.oo...",
+			"...ol.dddd..o...",
+			"...o..dddd..o...",
+			"...o..dddd..o...",
+			"...oooooooooo...",
+			"................",
+			"................",
+			"................",
+	};
+
+	/** Verre de la fiole, gris tres clair. */
+	private static final int GLASS = 0xFFB6C4CE;
+
+	/** Contenu de la fiole : le bleu du Celestium. */
+	private static final int DUST = 0xFF5FA8D3;
+
 	/** Blanc verdatre de l'oeil, du cote de l'Overworld. */
 	private static final int SCLERA = 0xFFB9BE8E;
 
@@ -133,6 +163,7 @@ public final class PixelArtTextures {
 		draw(HEART, items.resolve("demon_heart.png"), PixelArtTextures::heartColour);
 		draw(EYE, items.resolve("corrupted_eye.png"), PixelArtTextures::eyeColour);
 		draw(BOOK, items.resolve("corrupted_book.png"), PixelArtTextures::bookColour);
+		draw(FLASK, items.resolve("celestial_dust.png"), PixelArtTextures::flaskColour);
 	}
 
 	/** Applique un masque et ecrit l'image. */
@@ -161,6 +192,15 @@ public final class PixelArtTextures {
 
 	private static int heartColour(char symbol, int x, int y) {
 		return colourOf(symbol, x, y);
+	}
+
+	private static int flaskColour(char symbol, int x, int y) {
+		return switch (symbol) {
+			case 'o' -> grain(GLASS, x, y);
+			case 'd' -> grain(DUST, x, y);
+			case 'l' -> 0xFFFFFFFF;
+			default -> 0x00000000;
+		};
 	}
 
 	private static int bookColour(char symbol, int x, int y) {

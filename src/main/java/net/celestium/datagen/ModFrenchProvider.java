@@ -89,6 +89,14 @@ public class ModFrenchProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.HARVEST, "Moisson");
 		addEnchantment(ModEnchantments.SMELTING, "Fonte");
 		addEnchantment(ModEnchantments.MAGNETISM, "Aimant");
+		addEnchantment(ModEnchantments.THUNDERSTRIKE, "Éclair fulgurant");
+		addEnchantment(ModEnchantments.MIDAS_CURSE, "Malédiction de Midas");
+		addEnchantment(ModEnchantments.TAMER, "Dompteur");
+
+		addItem(ModItems.CELESTIAL_DUST, "Poussière céleste");
+		add("tooltip.celestium.celestial_dust", "Un effet au hasard, pour une durée au hasard.");
+		add("message.celestium.dust.boon", "%1$s, pendant %2$s secondes.");
+		add("message.celestium.dust.bane", "%1$s... pendant %2$s secondes.");
 
 		add("container.celestium.corrupted_enchanting", "Table d'enchantement corrompue");
 		add("gui.celestium.compendium", "Compendium du Celestium");

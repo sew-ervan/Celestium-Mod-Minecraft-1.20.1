@@ -42,11 +42,11 @@ public final class GuiTextures {
 	}
 
 	/**
-	 * La table corrompue : un emplacement pour l'outil, et de la place pour quatre propositions.
+	 * La table corrompue : un emplacement pour l'outil, et de la place pour cinq propositions.
 	 *
-	 * <p>Quatre, parce que c'est ce qu'une pioche peut recevoir — excavation, filon, fonte et
-	 * aimant. En montrer trois obligerait a en cacher un jusqu'a ce qu'un autre soit au maximum,
-	 * ce qui donnerait l'impression que la table change d'avis.
+	 * <p>Cinq, parce que c'est ce qu'une pioche peut recevoir — excavation, filon, fonte, aimant et
+	 * la malediction de Midas. En montrer moins obligerait a en cacher un jusqu'a ce qu'un autre
+	 * soit au maximum, ce qui donnerait l'impression que la table change d'avis.
 	 *
 	 * <p>Les propositions elles-memes sont dessinees par l'ecran et non ici : leur apparence depend
 	 * de ce que le joueur peut se payer, ce qu'une image figee ne saurait dire.
@@ -54,13 +54,13 @@ public final class GuiTextures {
 	private static void enchantingTable(Path target) throws IOException {
 		BufferedImage image = blank();
 
-		panel(image, 0, 0, 176, 202);
-		slot(image, 16, 49);
+		panel(image, 0, 0, 176, 225);
+		slot(image, 16, 60);
 
-		playerInventory(image, 8, 202);
+		playerInventory(image, 8, 225);
 
 		ImageIO.write(image, "PNG", target.toFile());
-		System.out.println("OK\t" + target + "\t176x202");
+		System.out.println("OK\t" + target + "\t176x225");
 	}
 
 	/**

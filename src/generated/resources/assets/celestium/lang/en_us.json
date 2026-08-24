@@ -73,7 +73,10 @@
   "enchantment.celestium.excavation": "Excavation",
   "enchantment.celestium.harvest": "Harvest",
   "enchantment.celestium.magnetism": "Magnetism",
+  "enchantment.celestium.midas_curse": "Curse of Midas",
   "enchantment.celestium.smelting": "Smelting",
+  "enchantment.celestium.tamer": "Tamer",
+  "enchantment.celestium.thunderstrike": "Thunderstrike",
   "enchantment.celestium.timber": "Timber",
   "enchantment.celestium.vein_miner": "Vein Miner",
   "entity.celestium.celestial_bolt": "Celestial Bolt",
@@ -90,6 +93,7 @@
   "item.celestium.backpack_huge": "Huge Celestial Backpack",
   "item.celestium.backpack_medium": "Medium Celestial Backpack",
   "item.celestium.backpack_small": "Small Celestial Backpack",
+  "item.celestium.celestial_dust": "Celestial Dust",
   "item.celestium.celestium_axe": "Celestium Axe",
   "item.celestium.celestium_boots": "Celestium Boots",
   "item.celestium.celestium_chestplate": "Celestium Chestplate",
@@ -147,6 +151,8 @@
   "message.celestium.corrupted.spreading": "The stone is changing around you...",
   "message.celestium.corrupted.wanderers": "Something crossed over.",
   "message.celestium.corruption.unprotected": "The corruption gnaws at you. You need armour.",
+  "message.celestium.dust.bane": "%1$s... for %2$s seconds.",
+  "message.celestium.dust.boon": "%1$s, for %2$s seconds.",
   "message.celestium.enchant.already_maxed": "This tool can go no further.",
   "message.celestium.enchant.cost": "%1$s levels",
   "message.celestium.enchant.empty": "Place a tool to see what it can receive.",
@@ -192,5 +198,6 @@
   "message.celestium.teleport.moved": "You moved. Try again.",
   "message.celestium.teleport.warmup": "Do not move for %s seconds.",
   "spell.celestium.celestial_bolt": "Celestial Bolt",
-  "spell.celestium.celestial_strike": "Celestial Strike"
+  "spell.celestium.celestial_strike": "Celestial Strike",
+  "tooltip.celestium.celestial_dust": "A random effect, for a random duration."
 }

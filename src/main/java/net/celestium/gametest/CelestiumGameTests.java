@@ -10,6 +10,8 @@ import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.corruption.DimensionMining;
 import net.celestium.feature.enchant.ExcavationEnchantment;
+import net.celestium.feature.enchant.TamerEnchantment;
+import net.celestium.feature.enchant.ThunderstrikeEnchantment;
 import net.celestium.feature.luckyblock.LuckyOutcome;
 import net.celestium.feature.luckyblock.LuckyTier;
 import net.celestium.feature.portal.CorruptedPortalFrameBlock;
@@ -229,7 +231,12 @@ public class CelestiumGameTests {
 				ModEnchantments.TIMBER.get(),
 				ModEnchantments.EXCAVATION.get(),
 				ModEnchantments.VEIN_MINER.get(),
-				ModEnchantments.HARVEST.get())) {
+				ModEnchantments.HARVEST.get(),
+				ModEnchantments.SMELTING.get(),
+				ModEnchantments.MAGNETISM.get(),
+				ModEnchantments.THUNDERSTRIKE.get(),
+				ModEnchantments.MIDAS_CURSE.get(),
+				ModEnchantments.TAMER.get())) {
 			helper.assertFalse(enchantment.isDiscoverable(),
 					enchantment.getDescriptionId() + " apparait sur une table d'enchantement ordinaire");
 			helper.assertFalse(enchantment.isTradeable(),
@@ -288,6 +295,45 @@ public class CelestiumGameTests {
 
 		helper.assertTrue(ModEnchantments.EXCAVATION.get().getMaxLevel() == expected.length,
 				"L'excavation n'a pas quatre niveaux");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Les baremes de l'Eclair fulgurant et du Dompteur.
+	 *
+	 * <p>Ce sont les deux seuls enchantements du mod dont l'effet se chiffre, et des chiffres ecrits
+	 * dans un tableau se decalent sans bruit. Le test fige ceux qui ont ete demandes.
+	 */
+	@GameTest(template = ARENA)
+	public static void combatEnchantmentOddsMatchTheirSpecification(GameTestHelper helper) {
+		int[] againstMobs = {10, 20, 30};
+		int[] againstPlayers = {3, 7, 13};
+
+		for (int level = 1; level <= 3; level++) {
+			int mob = ThunderstrikeEnchantment.chanceFor(level, false);
+			int player = ThunderstrikeEnchantment.chanceFor(level, true);
+
+			helper.assertTrue(mob == againstMobs[level - 1],
+					"Eclair fulgurant niveau " + level + " : " + mob + " % sur une creature au lieu de "
+							+ againstMobs[level - 1]);
+			helper.assertTrue(player == againstPlayers[level - 1],
+					"Eclair fulgurant niveau " + level + " : " + player + " % sur un joueur au lieu de "
+							+ againstPlayers[level - 1]);
+			helper.assertTrue(player < mob,
+					"Eclair fulgurant frappe un joueur aussi souvent qu'une creature");
+		}
+
+		// Le Dompteur decroit avec la robustesse de la cible, et s'annule sur ce qui tient vraiment.
+		int weak = TamerEnchantment.chanceFor(3, 20.0F);
+		int sturdy = TamerEnchantment.chanceFor(3, 35.0F);
+
+		helper.assertTrue(weak > sturdy,
+				"Le Dompteur detourne une creature robuste aussi bien qu'une fragile");
+		helper.assertTrue(TamerEnchantment.chanceFor(3, 40.0F) == 0,
+				"Le Dompteur agit encore au-dela du seuil de resistance");
+		helper.assertTrue(TamerEnchantment.chanceFor(1, 20.0F) < TamerEnchantment.chanceFor(3, 20.0F),
+				"Les niveaux du Dompteur ne se distinguent pas");
 
 		helper.succeed();
 	}

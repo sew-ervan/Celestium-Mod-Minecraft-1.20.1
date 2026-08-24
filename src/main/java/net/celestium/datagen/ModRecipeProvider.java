@@ -218,6 +218,20 @@ public class ModRecipeProvider extends RecipeProvider {
 		tool(writer, ModItems.CELESTIUM_SHOVEL.get(), ingot, stick, "I", "S", "S");
 		tool(writer, ModItems.CELESTIUM_HOE.get(), ingot, stick, "II", " S", " S");
 
+		// La poussiere celeste : un fragment broye avec une verrue du Nether et un champignon,
+		// enferme dans une fiole. Quatre par tour, parce qu'on en avale plus d'une avant de tomber
+		// sur ce qu'on esperait.
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CELESTIAL_DUST.get(), 4)
+				.pattern(" F ")
+				.pattern("WMW")
+				.pattern(" B ")
+				.define('F', fragment)
+				.define('W', Items.NETHER_WART)
+				.define('M', Items.BROWN_MUSHROOM)
+				.define('B', Items.GLASS_BOTTLE)
+				.unlockedBy("has_celestium_fragment", has(fragment))
+				.save(writer, CelestiumMod.id("celestial_dust"));
+
 		armour(writer, ModItems.CELESTIUM_HELMET.get(), ingot, "III", "I I");
 		armour(writer, ModItems.CELESTIUM_CHESTPLATE.get(), ingot, "I I", "III", "III");
 		armour(writer, ModItems.CELESTIUM_LEGGINGS.get(), ingot, "III", "I I", "I I");

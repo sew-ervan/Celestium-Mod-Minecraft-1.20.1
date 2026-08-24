@@ -9,11 +9,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -35,16 +37,16 @@ import java.util.Map;
 public class CorruptedEnchantingMenu extends AbstractContainerMenu {
 
 	public static final int IMAGE_WIDTH = 176;
-	public static final int IMAGE_HEIGHT = 202;
+	public static final int IMAGE_HEIGHT = 225;
 
 	/** Cout en niveaux du premier palier ; chaque palier suivant coute ce prix multiplie. */
 	public static final int LEVEL_COST = 8;
 
 	/** Nombre de propositions que l'ecran sait afficher. */
-	public static final int MAX_OFFERS = 4;
+	public static final int MAX_OFFERS = 5;
 
 	private static final int TOOL_SLOT_X = 16;
-	private static final int TOOL_SLOT_Y = 49;
+	private static final int TOOL_SLOT_Y = 60;
 
 	private final Container tool = new SimpleContainer(1) {
 		@Override
@@ -117,12 +119,19 @@ public class CorruptedEnchantingMenu extends AbstractContainerMenu {
 
 	/** Les enchantements que ce type d'outil accepte, au maximum ou non. */
 	private static List<Enchantment> candidatesFor(ItemStack stack) {
+		if (stack.getItem() instanceof SwordItem) {
+			return List.of(ModEnchantments.THUNDERSTRIKE.get());
+		}
 		if (stack.getItem() instanceof AxeItem) {
 			return List.of(ModEnchantments.TIMBER.get(), ModEnchantments.MAGNETISM.get());
 		}
 		if (stack.getItem() instanceof PickaxeItem) {
 			return List.of(ModEnchantments.EXCAVATION.get(), ModEnchantments.VEIN_MINER.get(),
-					ModEnchantments.SMELTING.get(), ModEnchantments.MAGNETISM.get());
+					ModEnchantments.SMELTING.get(), ModEnchantments.MAGNETISM.get(),
+					ModEnchantments.MIDAS_CURSE.get());
+		}
+		if (stack.getItem() instanceof ArmorItem armor && armor.getType() == ArmorItem.Type.HELMET) {
+			return List.of(ModEnchantments.TAMER.get());
 		}
 		if (stack.getItem() instanceof ShovelItem) {
 			return List.of(ModEnchantments.EXCAVATION.get(), ModEnchantments.SMELTING.get(),

@@ -84,6 +84,14 @@ public class ModEnglishProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.HARVEST, "Harvest");
 		addEnchantment(ModEnchantments.SMELTING, "Smelting");
 		addEnchantment(ModEnchantments.MAGNETISM, "Magnetism");
+		addEnchantment(ModEnchantments.THUNDERSTRIKE, "Thunderstrike");
+		addEnchantment(ModEnchantments.MIDAS_CURSE, "Curse of Midas");
+		addEnchantment(ModEnchantments.TAMER, "Tamer");
+
+		addItem(ModItems.CELESTIAL_DUST, "Celestial Dust");
+		add("tooltip.celestium.celestial_dust", "A random effect, for a random duration.");
+		add("message.celestium.dust.boon", "%1$s, for %2$s seconds.");
+		add("message.celestium.dust.bane", "%1$s... for %2$s seconds.");
 
 		add("container.celestium.corrupted_enchanting", "Corrupted Enchanting Table");
 		add("gui.celestium.compendium", "Celestium Compendium");

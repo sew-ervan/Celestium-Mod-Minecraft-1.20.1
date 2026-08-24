@@ -4,6 +4,10 @@ import net.celestium.CelestiumMod;
 import com.mojang.serialization.Codec;
 import net.celestium.feature.enchant.ExcavationEnchantment;
 import net.celestium.feature.enchant.MagnetismEnchantment;
+import net.celestium.feature.enchant.MidasCurseEnchantment;
+import net.celestium.feature.enchant.MidasModifier;
+import net.celestium.feature.enchant.TamerEnchantment;
+import net.celestium.feature.enchant.ThunderstrikeEnchantment;
 import net.celestium.feature.enchant.SmeltingEnchantment;
 import net.celestium.feature.enchant.SmeltingModifier;
 import net.celestium.feature.enchant.HarvestEnchantment;
@@ -51,6 +55,18 @@ public final class ModEnchantments {
 	public static final RegistryObject<Enchantment> MAGNETISM =
 			ENCHANTMENTS.register("magnetism", MagnetismEnchantment::new);
 
+	/** Eclair fulgurant : frapper appelle parfois la foudre sur ce qu'on frappe. */
+	public static final RegistryObject<Enchantment> THUNDERSTRIKE =
+			ENCHANTMENTS.register("thunderstrike", ThunderstrikeEnchantment::new);
+
+	/** Malediction de Midas : tout ce qui vaut mieux que le fer se change en or. */
+	public static final RegistryObject<Enchantment> MIDAS_CURSE =
+			ENCHANTMENTS.register("midas_curse", MidasCurseEnchantment::new);
+
+	/** Dompteur : ce qui vous prend pour cible se ravise parfois. */
+	public static final RegistryObject<Enchantment> TAMER =
+			ENCHANTMENTS.register("tamer", TamerEnchantment::new);
+
 	/**
 	 * Le modificateur de butin qui met la Fonte en oeuvre.
 	 *
@@ -62,6 +78,9 @@ public final class ModEnchantments {
 
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> SMELTING_MODIFIER =
 			LOOT_MODIFIERS.register("smelting", () -> SmeltingModifier.CODEC);
+
+	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> MIDAS_MODIFIER =
+			LOOT_MODIFIERS.register("midas", () -> MidasModifier.CODEC);
 
 	private ModEnchantments() {
 	}
