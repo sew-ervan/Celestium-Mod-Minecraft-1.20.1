@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "H": {
+      "item": "celestium:unicorn_horn"
+    },
+    "S": {
+      "item": "celestium:celestium_stick"
+    }
+  },
+  "pattern": [
+    "H",
+    "S"
+  ],
+  "result": {
+    "item": "celestium:unicorn_horn_sword"
+  },
+  "show_notification": true
+}

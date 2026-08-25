@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:unicorn",
+  "criteria": {
+    "unicorn_foal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:unicorn_foal_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.unicorn_foal.descr"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:unicorn_foal_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.unicorn_foal.title"
+    }
+  },
+  "requirements": [
+    [
+      "unicorn_foal"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

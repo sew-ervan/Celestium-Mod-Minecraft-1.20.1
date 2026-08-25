@@ -1,0 +1,43 @@
+{
+  "parent": "celestium:root",
+  "criteria": {
+    "fennec": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "celestium:fennec"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.fennec.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:fennec_spawn_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.fennec.title"
+    }
+  },
+  "requirements": [
+    [
+      "fennec"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

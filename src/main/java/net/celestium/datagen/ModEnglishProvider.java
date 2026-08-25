@@ -334,6 +334,32 @@ public class ModEnglishProvider extends LanguageProvider {
 		advancement("thunderstrike", "The Sky Joins In", "Get Thunderstrike.");
 		advancement("tamer", "Settle Down", "Get Tamer.");
 		advancement("midas_curse", "Everything He Touches", "Put the Curse of Midas on your pickaxe.");
+
+		// --- The unicorn and the familiars ---
+		addItem(ModItems.UNICORN_HORN, "Unicorn Horn");
+		addItem(ModItems.UNICORN_HORN_SWORD, "Unicorn Horn Sword");
+		addItem(ModItems.UNICORN_HORN_HAT, "Unicorn Horn Hat");
+		addItem(ModItems.UNICORN_FOAL_EGG, "Celestial Foal Egg");
+		addItem(ModItems.UNICORN_SPAWN_EGG, "Unicorn Spawn Egg");
+		addItem(ModItems.FENNEC_SPAWN_EGG, "Fennec Spawn Egg");
+		addItem(ModItems.MINI_GUARDIAN_SPAWN_EGG, "Little Guardian Spawn Egg");
+		addItem(ModItems.MINI_DEMON_SPAWN_EGG, "Little Demon Spawn Egg");
+		add("entity.celestium.unicorn", "Unicorn");
+		add("entity.celestium.fennec", "Fennec");
+		add("entity.celestium.mini_guardian", "Little Guardian");
+		add("entity.celestium.mini_demon", "Little Demon");
+
+		// --- The unicorn and the familiars ---
+		advancement("unicorn", "So It Was Real", "Slay a unicorn.");
+		advancement("unicorn_horn", "Two Chances in a Hundred", "Recover a unicorn's horn.");
+		advancement("horn_sword", "Mounted as a Blade", "Forge the unicorn horn sword.");
+		advancement("horn_hat", "On Your Head", "Wear the unicorn horn hat.");
+		advancement("unicorn_foal", "What Is Left of Her", "Recover a celestial foal egg.");
+		advancement("fennec", "A Reason to Cross the Desert", "Tame a fennec.");
+		advancement("mini_guardian", "The Only One You Can Approach", "Tame a little guardian.");
+		advancement("mini_demon", "Brought Back from Down There", "Tame a little demon.");
+		advancement("every_familiar", "Good Company",
+				"Tame the fennec, the little guardian and the little demon.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */

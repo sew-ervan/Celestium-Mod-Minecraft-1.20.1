@@ -2,7 +2,11 @@ package net.celestium.init;
 
 import net.celestium.CelestiumMod;
 import net.celestium.feature.magie.entity.CelestialBoltEntity;
+import net.celestium.feature.familiar.FennecFamiliar;
+import net.celestium.feature.familiar.MiniDemonFamiliar;
+import net.celestium.feature.familiar.MiniGuardianFamiliar;
 import net.celestium.feature.mob.CelestialDragonEntity;
+import net.celestium.feature.mob.UnicornEntity;
 import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.mob.ParasiteEntity;
@@ -10,6 +14,8 @@ import net.celestium.feature.mob.MiniWardenEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -81,6 +87,43 @@ public class ModEntities {
 					.clientTrackingRange(10)
 					.build("corrupted_villager"));
 
+	// --- La licorne et les familiers ---
+
+	/**
+	 * La licorne : elle appartient a la categorie des creatures, comme les chevaux.
+	 *
+	 * <p>Cette categorie decide de la frequence d'apparition et du moment ou le jeu s'en debarrasse.
+	 * La declarer hostile l'aurait fait naitre la nuit, dans le noir, et disparaitre au matin.
+	 */
+	public static final RegistryObject<EntityType<UnicornEntity>> UNICORN =
+			ENTITIES.register("unicorn", () -> EntityType.Builder
+					.<UnicornEntity>of(UnicornEntity::new, MobCategory.CREATURE)
+					.sized(1.3964844F, 1.6F)
+					.clientTrackingRange(10)
+					.build("unicorn"));
+
+	public static final RegistryObject<EntityType<FennecFamiliar>> FENNEC =
+			ENTITIES.register("fennec", () -> EntityType.Builder
+					.<FennecFamiliar>of(FennecFamiliar::new, MobCategory.CREATURE)
+					.sized(0.6F, 0.7F)
+					.clientTrackingRange(8)
+					.build("fennec"));
+
+	public static final RegistryObject<EntityType<MiniGuardianFamiliar>> MINI_GUARDIAN =
+			ENTITIES.register("mini_guardian", () -> EntityType.Builder
+					.<MiniGuardianFamiliar>of(MiniGuardianFamiliar::new, MobCategory.CREATURE)
+					.sized(0.6F, 1.1F)
+					.clientTrackingRange(8)
+					.build("mini_guardian"));
+
+	public static final RegistryObject<EntityType<MiniDemonFamiliar>> MINI_DEMON =
+			ENTITIES.register("mini_demon", () -> EntityType.Builder
+					.<MiniDemonFamiliar>of(MiniDemonFamiliar::new, MobCategory.CREATURE)
+					.sized(0.6F, 1.2F)
+					.fireImmune()
+					.clientTrackingRange(8)
+					.build("mini_demon"));
+
 	private ModEntities() {
 	}
 
@@ -112,6 +155,30 @@ public class ModEntities {
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				Monster::checkAnyLightMonsterSpawnRules);
+
+		// La licorne et les trois familiers naissent au jour comme a la nuit : ce ne sont pas des
+		// creatures hostiles, et la regle des animaux du jeu de base — de l'herbe, de la lumiere —
+		// ne vaudrait ni dans un desert de sable ni dans deux dimensions sans ciel. Il leur suffit
+		// d'un sol et de la place pour tenir debout.
+		SpawnPlacements.register(UNICORN.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Animal::checkAnimalSpawnRules);
+
+		SpawnPlacements.register(FENNEC.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Mob::checkMobSpawnRules);
+
+		SpawnPlacements.register(MINI_GUARDIAN.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Mob::checkMobSpawnRules);
+
+		SpawnPlacements.register(MINI_DEMON.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				Mob::checkMobSpawnRules);
 	}
 
 	@SubscribeEvent
@@ -121,5 +188,9 @@ public class ModEntities {
 		event.put(PARASITE.get(), ParasiteEntity.createAttributes().build());
 		event.put(CORRUPTED_VILLAGER.get(), CorruptedVillagerEntity.createAttributes().build());
 		event.put(CELESTIAL_DRAGON.get(), CelestialDragonEntity.createAttributes().build());
+		event.put(UNICORN.get(), UnicornEntity.createAttributes().build());
+		event.put(FENNEC.get(), FennecFamiliar.createAttributes().build());
+		event.put(MINI_GUARDIAN.get(), MiniGuardianFamiliar.createAttributes().build());
+		event.put(MINI_DEMON.get(), MiniDemonFamiliar.createAttributes().build());
 	}
 }

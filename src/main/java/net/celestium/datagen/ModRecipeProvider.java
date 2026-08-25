@@ -468,5 +468,25 @@ public class ModRecipeProvider extends RecipeProvider {
 				.define('S', Items.STRING)
 				.unlockedBy("has_celestium_ingot", has(ModItems.CELESTIUM_INGOT.get()))
 				.save(writer, CelestiumMod.id("celestial_bow"));
+
+		// La corne se monte en lame sur un baton de Celestium. Elle ne se coupe pas, ne se fond
+		// pas, ne se divise pas : une corne donne une arme, et il n'y a rien d'autre a en tirer.
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.UNICORN_HORN_SWORD.get())
+				.pattern("H")
+				.pattern("S")
+				.define('H', ModItems.UNICORN_HORN.get())
+				.define('S', ModItems.CELESTIUM_STICK.get())
+				.unlockedBy("has_unicorn_horn", has(ModItems.UNICORN_HORN.get()))
+				.save(writer, CelestiumMod.id("unicorn_horn_sword"));
+
+		// Ou en couvre-chef, sur une coiffe de cuir. C'est l'autre usage, et il exclut le premier :
+		// il faut deux licornes pour avoir les deux.
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.UNICORN_HORN_HAT.get())
+				.pattern(" H ")
+				.pattern("LLL")
+				.define('H', ModItems.UNICORN_HORN.get())
+				.define('L', Items.LEATHER)
+				.unlockedBy("has_unicorn_horn", has(ModItems.UNICORN_HORN.get()))
+				.save(writer, CelestiumMod.id("unicorn_horn_hat"));
 	}
 }

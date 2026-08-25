@@ -1,0 +1,43 @@
+{
+  "parent": "celestium:enter_corrupted",
+  "criteria": {
+    "mini_guardian": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "celestium:mini_guardian"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.mini_guardian.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:mini_guardian_spawn_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.mini_guardian.title"
+    }
+  },
+  "requirements": [
+    [
+      "mini_guardian"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

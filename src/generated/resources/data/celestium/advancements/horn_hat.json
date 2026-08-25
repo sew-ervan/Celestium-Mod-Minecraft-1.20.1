@@ -1,0 +1,42 @@
+{
+  "parent": "celestium:unicorn_horn",
+  "criteria": {
+    "horn_hat": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:unicorn_horn_hat"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.horn_hat.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:unicorn_horn_hat",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.horn_hat.title"
+    }
+  },
+  "requirements": [
+    [
+      "horn_hat"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

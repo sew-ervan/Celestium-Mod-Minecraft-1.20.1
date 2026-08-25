@@ -87,6 +87,10 @@ public final class ModBiomes {
 						net.minecraft.world.entity.EntityType.WITHER_SKELETON, 10, 1, 2))
 				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
 						net.minecraft.world.entity.EntityType.BLAZE, 8, 1, 2))
+				// Le petit gardien n'est pas hostile : il vit ici sans attaquer personne, ce qui en
+				// fait la seule creature des terres corrompues qu'on puisse approcher.
+				.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(
+						ModEntities.MINI_GUARDIAN.get(), 10, 1, 2))
 				.build();
 
 		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder(features, carvers);
@@ -134,6 +138,10 @@ public final class ModBiomes {
 						ModEntities.CORRUPTED_VILLAGER.get(), 25, 1, 3))
 				.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(
 						ModEntities.DEMON_SWORDSMAN.get(), 2, 1, 1))
+				// Le petit demon, lui, ne s'en prend a personne : c'est l'espece avant qu'elle ne
+				// devienne ce qui garde la dimension.
+				.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(
+						ModEntities.MINI_DEMON.get(), 10, 1, 2))
 				.build();
 
 		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder(features, carvers);

@@ -229,6 +229,120 @@ public final class PixelArtTextures {
 	/** Ferrures et etrier. */
 	private static final int METAL = 0xFFB9BEC6;
 
+	/**
+	 * La corne de licorne, en diagonale comme toutes les longues pieces du jeu.
+	 *
+	 * <p>{@code o} contour, {@code h} ivoire, {@code b} rainure de la torsade.
+	 */
+	private static final String[] HORN = {
+			"..............o.",
+			".............oho",
+			"............ohho",
+			"...........ohho.",
+			"..........ohbo..",
+			".........ohho...",
+			"........ohho....",
+			".......ohbo.....",
+			"......ohho......",
+			".....ohho.......",
+			"....ohbo........",
+			"...ohho.........",
+			"..ohhho.........",
+			".ohhho..........",
+			".ohho...........",
+			"..oo............",
+	};
+
+	/**
+	 * La corne montee en epee : la meme lame, une garde et une poignee.
+	 *
+	 * <p>{@code g} garde en or, {@code s} poignee.
+	 */
+	private static final String[] HORN_SWORD = {
+			".............oh.",
+			"............ohho",
+			"...........ohho.",
+			"..........ohho..",
+			".........ohho...",
+			"........ohho....",
+			".......ohho.....",
+			"......ohho......",
+			".....ohho.......",
+			"....ohho........",
+			"...gggg.........",
+			"..ogsgo.........",
+			"..osgo..........",
+			".osso...........",
+			".oso............",
+			"..o.............",
+	};
+
+	/**
+	 * Le couvre-chef taille dans la corne : un cone et son bandeau.
+	 *
+	 * <p>{@code h} ivoire, {@code b} bandeau en or.
+	 */
+	private static final String[] HORN_HAT = {
+			".......hh.......",
+			".......hh.......",
+			"......hhhh......",
+			"......hhhh......",
+			".....hhhhhh.....",
+			".....hhhhhh.....",
+			"....hhhhhhhh....",
+			"....hhhhhhhh....",
+			"...hhhhhhhhhh...",
+			"...hhhhhhhhhh...",
+			"..hhhhhhhhhhhh..",
+			"..bbbbbbbbbbbb..",
+			".bbbbbbbbbbbbbb.",
+			"bbbbbbbbbbbbbbbb",
+			"................",
+			"................",
+	};
+
+	/**
+	 * L'oeuf de familier licorne : une coquille nacree, marquee d'une etoile.
+	 *
+	 * <p>{@code e} coquille, {@code s} etoile.
+	 */
+	private static final String[] FOAL_EGG = {
+			"................",
+			"......oooo......",
+			".....oeeeeo.....",
+			"....oeeeeeeo....",
+			"...oeeeeeeeeo...",
+			"...oeeesseeeo...",
+			"..oeeessseeeeo..",
+			"..oeessssseeeo..",
+			"..oeeessseeeeo..",
+			"..oeeesseeeeeo..",
+			"...oeeeeeeeeo...",
+			"...oeeeeeeeeo...",
+			"....oeeeeeeo....",
+			".....oeeeeo.....",
+			"......oooo......",
+			"................",
+	};
+
+	/** Ivoire de la corne. */
+	private static final int IVORY = 0xFFF2EDDC;
+
+	/** Rainure de la torsade, un ton plus sombre. */
+	private static final int GROOVE = 0xFFCBBFA0;
+
+	/** Contour de la corne, brun gris. */
+	private static final int HORN_OUTLINE = 0xFF5F5849;
+
+	/** Poignee de l'epee. */
+	private static final int GRIP = 0xFF5A4630;
+
+	/** Coquille de l'oeuf, blanc nacre. */
+	private static final int SHELL = 0xFFF0EAF6;
+
+	/** L'etoile qui marque l'oeuf, dans le bleu de la criniere. */
+	private static final int EGG_STAR = 0xFF8FB8DE;
+
 	public static void main(String[] args) throws IOException {
 		Path items = Path.of(args[0]).resolve("item");
 
@@ -238,6 +352,10 @@ public final class PixelArtTextures {
 		draw(FLASK, items.resolve("celestial_dust.png"), PixelArtTextures::flaskColour);
 		draw(CLOAK, items.resolve("invisibility_cloak.png"), PixelArtTextures::cloakColour);
 		draw(TANDEM_SADDLE, items.resolve("tandem_saddle.png"), PixelArtTextures::saddleColour);
+		draw(HORN, items.resolve("unicorn_horn.png"), PixelArtTextures::hornColour);
+		draw(HORN_SWORD, items.resolve("unicorn_horn_sword.png"), PixelArtTextures::hornColour);
+		draw(HORN_HAT, items.resolve("unicorn_horn_hat.png"), PixelArtTextures::hornColour);
+		draw(FOAL_EGG, items.resolve("unicorn_foal_egg.png"), PixelArtTextures::eggColour);
 	}
 
 	/** Applique un masque et ecrit l'image. */
@@ -273,6 +391,27 @@ public final class PixelArtTextures {
 			case 'o' -> grain(GLASS, x, y);
 			case 'd' -> grain(DUST, x, y);
 			case 'l' -> 0xFFFFFFFF;
+			default -> 0x00000000;
+		};
+	}
+
+	/** Les trois pieces tirees de la corne partagent leur palette. */
+	private static int hornColour(char symbol, int x, int y) {
+		return switch (symbol) {
+			case 'o' -> HORN_OUTLINE;
+			case 'h' -> grain(IVORY, x, y);
+			case 'b' -> grain(GROOVE, x, y);
+			case 'g' -> grain(CLASP, x, y);
+			case 's' -> grain(GRIP, x, y);
+			default -> 0x00000000;
+		};
+	}
+
+	private static int eggColour(char symbol, int x, int y) {
+		return switch (symbol) {
+			case 'o' -> HORN_OUTLINE;
+			case 'e' -> grain(SHELL, x, y);
+			case 's' -> grain(EGG_STAR, x, y);
 			default -> 0x00000000;
 		};
 	}

@@ -2,8 +2,11 @@ package net.celestium.client;
 
 import net.celestium.CelestiumMod;
 import net.celestium.client.model.SimpleGeoModel;
+import net.celestium.client.model.UnicornModel;
 import net.celestium.client.renderer.CelestialDragonRenderer;
 import net.celestium.client.renderer.CorruptedVillagerRenderer;
+import net.celestium.client.renderer.FennecRenderer;
+import net.celestium.client.renderer.UnicornRenderer;
 import net.celestium.client.renderer.SimpleGeoRenderer;
 import net.celestium.feature.mob.ParasiteEntity;
 import net.celestium.client.screen.BackpackScreen;
@@ -41,6 +44,17 @@ public final class ClientSetup {
 		});
 	}
 
+	/**
+	 * La geometrie de la licorne doit etre declaree avant qu'un rendu la demande.
+	 *
+	 * <p>C'est le seul modele que le mod ajoute a ceux du jeu de base : les autres creatures
+	 * passent par GeckoLib, qui charge les siens depuis des fichiers.
+	 */
+	@SubscribeEvent
+	public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		event.registerLayerDefinition(UnicornModel.LAYER, UnicornModel::createBodyLayer);
+	}
+
 	@SubscribeEvent
 	public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(ModEntities.MINI_WARDEN.get(),
@@ -58,6 +72,19 @@ public final class ClientSetup {
 
 		event.registerEntityRenderer(ModEntities.CORRUPTED_VILLAGER.get(), CorruptedVillagerRenderer::new);
 		event.registerEntityRenderer(ModEntities.CELESTIAL_DRAGON.get(), CelestialDragonRenderer::new);
+
+		event.registerEntityRenderer(ModEntities.UNICORN.get(), UnicornRenderer::new);
+		event.registerEntityRenderer(ModEntities.FENNEC.get(), FennecRenderer::new);
+
+		// Les deux familiers des dimensions reprennent la geometrie de leurs grands freres, comme
+		// le parasite reprend celle du gardien miniature : seules la taille et la robe changent.
+		event.registerEntityRenderer(ModEntities.MINI_GUARDIAN.get(),
+				context -> new SimpleGeoRenderer<>(context,
+						new SimpleGeoModel<>("miniwarden", "mini_guardian"), 0.3F, 0.35F));
+
+		event.registerEntityRenderer(ModEntities.MINI_DEMON.get(),
+				context -> new SimpleGeoRenderer<>(context,
+						new SimpleGeoModel<>("demonepeiste", "mini_demon"), 0.3F, 0.25F));
 
 		event.registerEntityRenderer(ModEntities.CELESTIAL_BOLT.get(),
 				context -> new SimpleGeoRenderer<>(context,

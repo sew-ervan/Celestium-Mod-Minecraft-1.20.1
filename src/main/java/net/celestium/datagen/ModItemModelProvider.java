@@ -56,6 +56,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 		bow(ModItems.CELESTIAL_BOW);
 
+		flat(ModItems.UNICORN_HORN);
+		flat(ModItems.UNICORN_HORN_HAT);
+		flat(ModItems.UNICORN_FOAL_EGG);
+		handheld(ModItems.UNICORN_HORN_SWORD);
+
 		// Les textures du Demonium sont derivees de celles du Celestium par corruption : meme
 		// silhouette, teinte basculee vers le rouge, surface brulee.
 		flat(ModItems.CORRUPTED_BOOK);
@@ -107,6 +112,10 @@ public class ModItemModelProvider extends ItemModelProvider {
 		spawnEgg(ModItems.PARASITE_SPAWN_EGG);
 		spawnEgg(ModItems.CORRUPTED_VILLAGER_SPAWN_EGG);
 		spawnEgg(ModItems.CELESTIAL_DRAGON_SPAWN_EGG);
+		spawnEgg(ModItems.UNICORN_SPAWN_EGG);
+		spawnEgg(ModItems.FENNEC_SPAWN_EGG);
+		spawnEgg(ModItems.MINI_GUARDIAN_SPAWN_EGG);
+		spawnEgg(ModItems.MINI_DEMON_SPAWN_EGG);
 	}
 
 

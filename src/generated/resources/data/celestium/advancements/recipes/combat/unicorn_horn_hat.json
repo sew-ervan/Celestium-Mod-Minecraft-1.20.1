@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "celestium:unicorn_horn_hat"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_unicorn_horn": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:unicorn_horn"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_unicorn_horn",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "celestium:unicorn_horn_hat"
+    ]
+  },
+  "sends_telemetry_event": false
+}

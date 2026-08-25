@@ -11,6 +11,7 @@ import net.celestium.feature.celestium.CelestiumIngotItem;
 import net.celestium.feature.celestium.CelestiumSwordItem;
 import net.celestium.feature.celestium.ModArmorItem;
 import net.celestium.feature.cloak.InvisibilityCloakItem;
+import net.celestium.feature.mob.UnicornFoalEggItem;
 import net.celestium.feature.mount.TandemSaddleItem;
 import net.celestium.feature.portal.CorruptedEyeItem;
 import net.minecraft.world.item.ArmorItem;
@@ -299,6 +300,25 @@ public class ModItems {
 	public static final RegistryObject<Item> TANDEM_SADDLE = ITEMS.register("tandem_saddle",
 			TandemSaddleItem::new);
 
+	// --- La licorne et ce qu'elle laisse ---
+
+	/** La corne, arrachee a une licorne abattue. Elle ne se fabrique pas. */
+	public static final RegistryObject<Item> UNICORN_HORN = ITEMS.register("unicorn_horn",
+			() -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+
+	/** La corne montee en epee : la lame la plus rapide du mod, et la plus fine. */
+	public static final RegistryObject<Item> UNICORN_HORN_SWORD = ITEMS.register("unicorn_horn_sword",
+			() -> new SwordItem(ModTiers.CELESTIUM, 3, -1.8F,
+					new Item.Properties().rarity(Rarity.RARE)));
+
+	/** La corne portee sur la tete : peu de protection, mais la vivacite de la bete. */
+	public static final RegistryObject<Item> UNICORN_HORN_HAT = ITEMS.register("unicorn_horn_hat",
+			() -> new ModArmorItem(ModArmorMaterials.UNICORN_HORN, ArmorItem.Type.HELMET));
+
+	/** L'oeuf qui fait naitre un poulain deja acquis a qui le pose. */
+	public static final RegistryObject<Item> UNICORN_FOAL_EGG = ITEMS.register("unicorn_foal_egg",
+			UnicornFoalEggItem::new);
+
 	// --- Oeufs d'apparition ---
 
 	public static final RegistryObject<Item> MINI_WARDEN_SPAWN_EGG = ITEMS.register("mini_warden_spawn_egg",
@@ -314,6 +334,20 @@ public class ModItems {
 
 	public static final RegistryObject<Item> PARASITE_SPAWN_EGG = ITEMS.register("parasite_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.PARASITE, 0x3B0D10, 0x8E2B22, new Item.Properties()));
+
+	public static final RegistryObject<Item> UNICORN_SPAWN_EGG = ITEMS.register("unicorn_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.UNICORN, 0xF2F0F5, 0xBFA6E8, new Item.Properties()));
+
+	public static final RegistryObject<Item> FENNEC_SPAWN_EGG = ITEMS.register("fennec_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.FENNEC, 0xE0C08A, 0xF5E9D0, new Item.Properties()));
+
+	public static final RegistryObject<Item> MINI_GUARDIAN_SPAWN_EGG =
+			ITEMS.register("mini_guardian_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.MINI_GUARDIAN, 0x2A5B5E, 0x7FD8C8,
+							new Item.Properties()));
+
+	public static final RegistryObject<Item> MINI_DEMON_SPAWN_EGG = ITEMS.register("mini_demon_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.MINI_DEMON, 0x3B0D10, 0xD4463C, new Item.Properties()));
 
 	public static final RegistryObject<Item> CORRUPTED_VILLAGER_SPAWN_EGG =
 			ITEMS.register("corrupted_villager_spawn_egg",

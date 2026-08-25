@@ -7,7 +7,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -59,6 +61,34 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 
 		this.add(ModEntities.MINI_WARDEN.get(), LootTable.lootTable());
 
+		// La licorne. Du cuir, comme tout cheval — puis les deux choses pour lesquelles on l'a
+		// abattue, chacune sur un tirage a part : elles ne s'excluent pas, mais compter sur les
+		// deux d'un seul coup releve de la chance.
+		this.add(ModEntities.UNICORN.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(Items.LEATHER)
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))))
+				// Deux chances sur cent. C'est volontairement tres bas : la corne est l'objet le
+				// plus rare du mod, et une licorne se laisse deja rarement approcher.
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.02F, 0.01F))
+						.add(LootItem.lootTableItem(ModItems.UNICORN_HORN.get())))
+				// Le poulain tombe un peu plus souvent que la corne : c'est ce qui reste de la bete
+				// quand on n'a pas eu sa corne, et repartir les mains vides trop souvent ferait de
+				// la chasse une corvee.
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05F, 0.02F))
+						.add(LootItem.lootTableItem(ModItems.UNICORN_FOAL_EGG.get()))));
+
+		// Les trois familiers ne laissent rien. Un compagnon dont la mort rapporte quelque chose
+		// serait une ressource, et on finirait par en elever pour les abattre.
+		this.add(ModEntities.FENNEC.get(), LootTable.lootTable());
+		this.add(ModEntities.MINI_GUARDIAN.get(), LootTable.lootTable());
+		this.add(ModEntities.MINI_DEMON.get(), LootTable.lootTable());
+
 		// Le parasite ne rend presque rien : c'est le nombre qui paie, pas la piece.
 		this.add(ModEntities.PARASITE.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
@@ -81,6 +111,10 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 	protected Stream<EntityType<?>> getKnownEntityTypes() {
 		return Stream.of(
 				ModEntities.CELESTIAL_DRAGON.get(),
+				ModEntities.UNICORN.get(),
+				ModEntities.FENNEC.get(),
+				ModEntities.MINI_GUARDIAN.get(),
+				ModEntities.MINI_DEMON.get(),
 				ModEntities.DEMON_SWORDSMAN.get(),
 				ModEntities.MINI_WARDEN.get(),
 				ModEntities.PARASITE.get(),

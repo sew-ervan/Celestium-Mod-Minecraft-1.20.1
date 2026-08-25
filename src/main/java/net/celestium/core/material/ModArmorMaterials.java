@@ -51,6 +51,19 @@ public enum ModArmorMaterials implements ArmorMaterial {
 			"celestium:textures/models/armor/dark_matter_layer_1.png",
 			"celestium:textures/models/armor/dark_matter_layer_2.png"),
 
+	/**
+	 * La corne de licorne, taillee en couvre-chef.
+	 *
+	 * <p>Elle ne protege presque pas — c'est de la corne, pas du metal — mais elle garde la
+	 * vivacite de la bete dont elle vient : qui la porte va plus vite. C'est le seul materiau du mod
+	 * dont il n'existe qu'une piece, et cela se voit dans ses valeurs : elle ne fait pas partie d'une
+	 * parure, elle remplace un casque quand on prefere courir a encaisser.
+	 */
+	UNICORN_HORN("unicorn_horn", 14, new int[]{1, 3, 4, 2}, 18, 1.0F, 0.0F,
+			SoundEvents.ARMOR_EQUIP_LEATHER, () -> Ingredient.of(ModItems.UNICORN_HORN.get()),
+			"celestium:textures/models/armor/unicorn_horn_layer_1.png",
+			"celestium:textures/models/armor/unicorn_horn_layer_2.png"),
+
 	DEMONIUM("demonium", 20, new int[]{4, 6, 8, 4}, 12, 3.0F, 0.6F,
 			SoundEvents.ARMOR_EQUIP_NETHERITE, () -> Ingredient.of(ModItems.DEMONIUM_INGOT.get()),
 			"celestium:textures/models/armor/demonium_layer_1.png",

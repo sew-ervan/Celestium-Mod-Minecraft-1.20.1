@@ -21,6 +21,7 @@ import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.advancements.critereon.TameAnimalTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -319,6 +320,56 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
 							.hasEnchantment(atLeastOne(ModEnchantments.SEEKER.get()))
 							.hasEnchantment(atLeastOne(ModEnchantments.COLLAPSE.get()))
 							.build()));
+
+			// --- La licorne ---
+
+			Advancement unicorn = advancement(saver, fileHelper, root, "unicorn",
+					ModItems.UNICORN_SPAWN_EGG.get(), FrameType.TASK, null,
+					killed(ModEntities.UNICORN.get()));
+
+			// Deux chances sur cent : c'est le seul progres du mod qui depende franchement de la
+			// chance, et c'est pourquoi il est declare comme un defi.
+			Advancement horn = advancement(saver, fileHelper, unicorn, "unicorn_horn",
+					ModItems.UNICORN_HORN.get(), FrameType.CHALLENGE, null,
+					hasItems(ModItems.UNICORN_HORN.get()));
+
+			advancement(saver, fileHelper, horn, "horn_sword",
+					ModItems.UNICORN_HORN_SWORD.get(), FrameType.GOAL, null,
+					hasItems(ModItems.UNICORN_HORN_SWORD.get()));
+
+			advancement(saver, fileHelper, horn, "horn_hat",
+					ModItems.UNICORN_HORN_HAT.get(), FrameType.GOAL, null,
+					hasItems(ModItems.UNICORN_HORN_HAT.get()));
+
+			advancement(saver, fileHelper, unicorn, "unicorn_foal",
+					ModItems.UNICORN_FOAL_EGG.get(), FrameType.CHALLENGE, null,
+					hasItems(ModItems.UNICORN_FOAL_EGG.get()));
+
+			// --- Les familiers ---
+
+			Advancement fennec = advancement(saver, fileHelper, root, "fennec",
+					ModItems.FENNEC_SPAWN_EGG.get(), FrameType.TASK, null,
+					tamed(ModEntities.FENNEC.get()));
+
+			advancement(saver, fileHelper, entered, "mini_guardian",
+					ModItems.MINI_GUARDIAN_SPAWN_EGG.get(), FrameType.TASK, null,
+					tamed(ModEntities.MINI_GUARDIAN.get()));
+
+			advancement(saver, fileHelper, enteredDemon, "mini_demon",
+					ModItems.MINI_DEMON_SPAWN_EGG.get(), FrameType.TASK, null,
+					tamed(ModEntities.MINI_DEMON.get()));
+
+			// Les trois d'un coup. C'est le seul progres a plusieurs conditions du mod : il faut
+			// avoir traverse les deux dimensions et etre revenu de chacune avec un compagnon.
+			Advancement.Builder.advancement()
+					.parent(fennec)
+					.display(display("every_familiar", ModItems.MINI_DEMON_SPAWN_EGG.get(),
+							FrameType.CHALLENGE, null))
+					.rewards(AdvancementRewards.Builder.experience(100))
+					.addCriterion("fennec", tamed(ModEntities.FENNEC.get()))
+					.addCriterion("mini_guardian", tamed(ModEntities.MINI_GUARDIAN.get()))
+					.addCriterion("mini_demon", tamed(ModEntities.MINI_DEMON.get()))
+					.save(saver, CelestiumMod.id("every_familiar"), fileHelper);
 		}
 
 		/**
@@ -383,6 +434,32 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
 
 		private static EnchantmentPredicate atLeastOne(Enchantment enchantment) {
 			return new EnchantmentPredicate(enchantment, MinMaxBounds.Ints.atLeast(1));
+		}
+
+		/**
+		 * L'affichage d'un progres, isole pour etre reutilisable.
+		 *
+		 * <p>Un seul progres du mod compte plusieurs conditions et ne peut donc pas passer par le
+		 * raccourci ci-dessous ; il lui faut malgre tout le meme affichage que les autres.
+		 */
+		private static DisplayInfo display(String name, ItemLike icon, FrameType frame,
+				@Nullable ResourceLocation background) {
+
+			return new DisplayInfo(
+					new ItemStack(icon),
+					Component.translatable("advancements.celestium." + name + ".title"),
+					Component.translatable("advancements.celestium." + name + ".descr"),
+					background,
+					frame,
+					true,
+					true,
+					false);
+		}
+
+		/** Le progres se declenche quand le joueur apprivoise cette creature. */
+		private static TameAnimalTrigger.TriggerInstance tamed(EntityType<?> type) {
+			return TameAnimalTrigger.TriggerInstance.tamedAnimal(
+					EntityPredicate.Builder.entity().of(type).build());
 		}
 
 		/** Le progres se declenche a la mort de la creature, tuee par le joueur. */

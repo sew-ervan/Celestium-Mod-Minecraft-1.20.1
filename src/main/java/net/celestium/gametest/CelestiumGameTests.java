@@ -5,7 +5,11 @@ import net.celestium.core.registry.ModTags;
 import net.celestium.core.material.ModArmorMaterials;
 import net.celestium.feature.celestium.ArmorSetEffects;
 import net.celestium.feature.magie.Faction;
+import net.celestium.feature.familiar.FennecFamiliar;
+import net.celestium.feature.familiar.MiniDemonFamiliar;
+import net.celestium.feature.familiar.MiniGuardianFamiliar;
 import net.celestium.feature.mob.CelestialDragonEntity;
+import net.celestium.feature.mob.UnicornEntity;
 import net.celestium.feature.mob.CorruptedVillagerEntity;
 import net.celestium.feature.mob.CorruptedVillagerTrades;
 import net.celestium.feature.mob.DemonSwordsmanEntity;
@@ -35,6 +39,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -974,6 +979,123 @@ public class CelestiumGameTests {
 				direction.x * cos - direction.z * sin,
 				direction.y,
 				direction.x * sin + direction.z * cos);
+	}
+
+	/**
+	 * La licorne va plus vite que le plus rapide des chevaux.
+	 *
+	 * <p>C'est sa seule defense, et donc la seule chose qui la rende difficile a prendre. Une
+	 * licorne qu'on rattraperait au galop d'un cheval ordinaire ne serait qu'un cheval blanc.
+	 */
+	@GameTest(template = ARENA)
+	public static void unicornOutrunsEveryHorse(GameTestHelper helper) {
+		// Le cheval le plus rapide que le jeu de base sache tirer au sort.
+		double fastestHorse = 0.3375;
+
+		UnicornEntity unicorn = helper.spawn(ModEntities.UNICORN.get(), 1, 2, 1);
+		double speed = unicorn.getAttributeValue(Attributes.MOVEMENT_SPEED);
+
+		helper.assertTrue(speed > fastestHorse,
+				"La licorne ne distance pas un cheval : " + speed + " contre " + fastestHorse);
+		helper.assertFalse(unicorn.isTamed(), "Une licorne sauvage arrive deja domptee");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Deux licornes se valent.
+	 *
+	 * <p>Le jeu de base fait varier chaque cheval, ce qui a du sens quand on en eleve un troupeau.
+	 * Il n'y a qu'une sorte de licorne : si elles differaient, on serait tente d'en abattre
+	 * plusieurs pour comparer, ce qui n'est pas le jeu qu'on veut.
+	 */
+	@GameTest(template = ARENA)
+	public static void unicornsAreAllAlike(GameTestHelper helper) {
+		UnicornEntity first = helper.spawn(ModEntities.UNICORN.get(), 1, 2, 1);
+		UnicornEntity second = helper.spawn(ModEntities.UNICORN.get(), 2, 2, 2);
+
+		// La mise en place est le moment ou le jeu de base tire les caracteristiques d'un cheval au
+		// sort : c'est donc elle qu'il faut declencher pour verifier qu'ici, elle ne tire rien.
+		BlockPos where = helper.absolutePos(new BlockPos(1, 2, 1));
+		first.finalizeSpawn(helper.getLevel(), helper.getLevel().getCurrentDifficultyAt(where),
+				MobSpawnType.NATURAL, null, null);
+		second.finalizeSpawn(helper.getLevel(), helper.getLevel().getCurrentDifficultyAt(where),
+				MobSpawnType.NATURAL, null, null);
+
+		helper.assertTrue(
+				first.getAttributeValue(Attributes.MOVEMENT_SPEED)
+						== second.getAttributeValue(Attributes.MOVEMENT_SPEED),
+				"Deux licornes n'ont pas la meme vitesse");
+		helper.assertTrue(first.getMaxHealth() == second.getMaxHealth(),
+				"Deux licornes n'ont pas la meme sante");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Chaque familier ne mange que ce que produit son monde.
+	 *
+	 * <p>C'est ce qui rattache le compagnon a l'endroit ou on le trouve. Un familier qu'on
+	 * apprivoiserait avec du ble se ramasserait au passage, sans qu'on ait rien fait pour lui.
+	 */
+	@GameTest(template = ARENA)
+	public static void familiarsEatWhatTheirWorldProduces(GameTestHelper helper) {
+		FennecFamiliar fennec = helper.spawn(ModEntities.FENNEC.get(), 1, 2, 1);
+		helper.assertTrue(fennec.isFood(new ItemStack(Items.RABBIT)),
+				"Le fennec refuse le lapin");
+		helper.assertFalse(fennec.isFood(new ItemStack(Items.WHEAT)),
+				"Le fennec se laisse apprivoiser au ble");
+
+		MiniGuardianFamiliar guardian = helper.spawn(ModEntities.MINI_GUARDIAN.get(), 2, 2, 1);
+		helper.assertTrue(
+				guardian.isFood(new ItemStack(ModItems.CORRUPTED_CELESTIUM_FRAGMENT.get())),
+				"Le petit gardien refuse le Celestium corrompu");
+		helper.assertFalse(guardian.isFood(new ItemStack(ModItems.DEMONIUM_FRAGMENT.get())),
+				"Le petit gardien mange la matiere d'une autre dimension");
+
+		MiniDemonFamiliar demon = helper.spawn(ModEntities.MINI_DEMON.get(), 1, 2, 2);
+		helper.assertTrue(demon.isFood(new ItemStack(ModItems.DEMONIUM_FRAGMENT.get())),
+				"Le petit demon refuse le Demonium");
+		helper.assertFalse(demon.isFood(new ItemStack(ModItems.CELESTIUM_INGOT.get())),
+				"Le petit demon mange du Celestium pur");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Un familier dompte obeit a son maitre, et a lui seul.
+	 *
+	 * <p>La main tendue par son maitre l'assied ou le releve ; celle d'un inconnu ne fait rien. Sans
+	 * cette seconde regle, n'importe qui pourrait clouer sur place le compagnon d'un autre.
+	 */
+	@GameTest(template = ARENA)
+	public static void tamedFamiliarObeysItsOwnerAlone(GameTestHelper helper) {
+		FennecFamiliar fennec = helper.spawn(ModEntities.FENNEC.get(), 1, 2, 1);
+		Player owner = helper.makeMockPlayer();
+		Player stranger = helper.makeMockPlayer();
+
+		helper.assertFalse(fennec.isTame(), "Le fennec arrive deja apprivoise");
+
+		fennec.tame(owner);
+		helper.assertTrue(fennec.isTame(), "Le fennec ne retient pas qu'il a ete apprivoise");
+		helper.assertTrue(fennec.obeys(owner), "Le fennec ne reconnait pas son maitre");
+		helper.assertFalse(fennec.obeys(stranger), "Le fennec appartient a tout le monde");
+
+		fennec.mobInteract(owner, InteractionHand.MAIN_HAND);
+		helper.assertTrue(fennec.isOrderedToSit(), "Le fennec refuse de s'asseoir");
+
+		fennec.mobInteract(stranger, InteractionHand.MAIN_HAND);
+		helper.assertTrue(fennec.isOrderedToSit(),
+				"Un inconnu remet debout le compagnon d'un autre");
+
+		fennec.mobInteract(owner, InteractionHand.MAIN_HAND);
+		helper.assertFalse(fennec.isOrderedToSit(), "Le fennec refuse de se relever");
+
+		// Un compagnon ne disparait pas parce qu'on s'en est eloigne.
+		helper.assertFalse(fennec.removeWhenFarAway(4096.0),
+				"Un fennec apprivoise finit par s'evaporer");
+
+		helper.succeed();
 	}
 
 	private static String percent(double rate) {

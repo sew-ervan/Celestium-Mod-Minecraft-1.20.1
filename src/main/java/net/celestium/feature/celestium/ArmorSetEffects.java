@@ -56,6 +56,7 @@ public final class ArmorSetEffects {
 			case CELESTIUM -> celestium(type, wearer);
 			case CORRUPTED_CELESTIUM -> corruptedCelestium(type, wearer);
 			case DEMONIUM -> demonium(type, wearer);
+			case UNICORN_HORN -> unicornHorn(type, wearer);
 		}
 	}
 
@@ -84,6 +85,19 @@ public final class ArmorSetEffects {
 			case CHESTPLATE -> refresh(wearer, MobEffects.DAMAGE_BOOST, SHORT_DURATION, 0, true);
 			case LEGGINGS -> refresh(wearer, MobEffects.DAMAGE_RESISTANCE, SHORT_DURATION, 0, true);
 			case BOOTS -> refresh(wearer, MobEffects.DIG_SPEED, SHORT_DURATION, 1, true);
+		}
+	}
+
+	/**
+	 * Le couvre-chef en corne de licorne : de la vitesse, et rien d'autre.
+	 *
+	 * <p>Il tient de la bete dont il vient. Ce n'est pas une piece de parure — il n'en existe qu'une
+	 * — et son effet doit donc se suffire a lui-meme : porte seul, il rend un peu de ce qui rendait
+	 * la licorne impossible a rattraper.
+	 */
+	private static void unicornHorn(ArmorItem.Type type, LivingEntity wearer) {
+		if (type == ArmorItem.Type.HELMET) {
+			refresh(wearer, MobEffects.MOVEMENT_SPEED, SHORT_DURATION, 0, true);
 		}
 	}
 

@@ -1,0 +1,43 @@
+{
+  "parent": "celestium:root",
+  "criteria": {
+    "unicorn": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "celestium:unicorn"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.unicorn.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:unicorn_spawn_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.unicorn.title"
+    }
+  },
+  "requirements": [
+    [
+      "unicorn"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

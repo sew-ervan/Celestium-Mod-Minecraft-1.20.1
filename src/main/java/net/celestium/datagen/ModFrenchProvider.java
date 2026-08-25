@@ -342,6 +342,32 @@ public class ModFrenchProvider extends LanguageProvider {
 		advancement("thunderstrike", "Le ciel s'en mêle", "Obtenir l'Éclair fulgurant.");
 		advancement("tamer", "On se calme", "Obtenir le Dompteur.");
 		advancement("midas_curse", "Tout ce qu'il touche", "Poser la Malédiction de Midas sur sa pioche.");
+
+		// --- La licorne et les familiers ---
+		addItem(ModItems.UNICORN_HORN, "Corne de licorne");
+		addItem(ModItems.UNICORN_HORN_SWORD, "Épée en corne de licorne");
+		addItem(ModItems.UNICORN_HORN_HAT, "Chapeau en corne de licorne");
+		addItem(ModItems.UNICORN_FOAL_EGG, "Œuf de poulain céleste");
+		addItem(ModItems.UNICORN_SPAWN_EGG, "Œuf de licorne");
+		addItem(ModItems.FENNEC_SPAWN_EGG, "Œuf de fennec");
+		addItem(ModItems.MINI_GUARDIAN_SPAWN_EGG, "Œuf de petit gardien");
+		addItem(ModItems.MINI_DEMON_SPAWN_EGG, "Œuf de petit démon");
+		add("entity.celestium.unicorn", "Licorne");
+		add("entity.celestium.fennec", "Fennec");
+		add("entity.celestium.mini_guardian", "Petit gardien");
+		add("entity.celestium.mini_demon", "Petit démon");
+
+		// --- La licorne et les familiers ---
+		advancement("unicorn", "Elle existait donc", "Abattre une licorne.");
+		advancement("unicorn_horn", "Deux chances sur cent", "Récupérer la corne d'une licorne.");
+		advancement("horn_sword", "Montée en lame", "Forger l'épée en corne de licorne.");
+		advancement("horn_hat", "Sur la tête", "Coiffer le chapeau en corne de licorne.");
+		advancement("unicorn_foal", "Ce qui reste d'elle", "Récupérer un œuf de poulain céleste.");
+		advancement("fennec", "Une raison de traverser le désert", "Apprivoiser un fennec.");
+		advancement("mini_guardian", "Le seul qu'on puisse approcher", "Apprivoiser un petit gardien.");
+		advancement("mini_demon", "Ramené de là-bas", "Apprivoiser un petit démon.");
+		advancement("every_familiar", "Bonne compagnie",
+				"Apprivoiser le fennec, le petit gardien et le petit démon.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */
