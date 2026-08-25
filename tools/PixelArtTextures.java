@@ -193,41 +193,6 @@ public final class PixelArtTextures {
 	/** Les etoiles semees dans le tissu. */
 	private static final int STAR = 0xFFE8ECFF;
 
-	/**
-	 * La selle deux places, de profil : deux assises, une sangle, un etrier.
-	 *
-	 * <p>{@code o} contour, {@code L} cuir, {@code b} sangle, {@code m} metal.
-	 */
-	private static final String[] TANDEM_SADDLE = {
-			"................",
-			"....oo....oo....",
-			"...oLLo..oLLo...",
-			"..oLLLLooLLLLo..",
-			".oLLLLLLLLLLLLo.",
-			".oLLLLLLLLLLLLo.",
-			".oLLbLLLLbLLLLo.",
-			".oLLbLLLLbLLLLo.",
-			"..oLLLLLLLLLLo..",
-			"...ooLLLLLLoo...",
-			".....oLLLLo.....",
-			".....o.mm.o.....",
-			".....o.mm.o.....",
-			"......oooo......",
-			"................",
-			"................",
-	};
-
-	/** Cuir de la selle. */
-	private static final int LEATHER = 0xFF8A5A2B;
-
-	/** Contour du cuir, brun presque noir. */
-	private static final int LEATHER_OUTLINE = 0xFF2B1A0C;
-
-	/** Sangles, plus sombres que l'assise. */
-	private static final int STRAP = 0xFF3E2A14;
-
-	/** Ferrures et etrier. */
-	private static final int METAL = 0xFFB9BEC6;
 
 	/**
 	 * La corne de licorne, en diagonale comme toutes les longues pieces du jeu.
@@ -351,7 +316,6 @@ public final class PixelArtTextures {
 		draw(BOOK, items.resolve("corrupted_book.png"), PixelArtTextures::bookColour);
 		draw(FLASK, items.resolve("celestial_dust.png"), PixelArtTextures::flaskColour);
 		draw(CLOAK, items.resolve("invisibility_cloak.png"), PixelArtTextures::cloakColour);
-		draw(TANDEM_SADDLE, items.resolve("tandem_saddle.png"), PixelArtTextures::saddleColour);
 		draw(HORN, items.resolve("unicorn_horn.png"), PixelArtTextures::hornColour);
 		draw(HORN_SWORD, items.resolve("unicorn_horn_sword.png"), PixelArtTextures::hornColour);
 		draw(HORN_HAT, items.resolve("unicorn_horn_hat.png"), PixelArtTextures::hornColour);
@@ -422,16 +386,6 @@ public final class PixelArtTextures {
 			case 'C' -> grain(CLASP, x, y);
 			case 'c' -> grain(CLOTH, x, y);
 			case 's' -> STAR;
-			default -> 0x00000000;
-		};
-	}
-
-	private static int saddleColour(char symbol, int x, int y) {
-		return switch (symbol) {
-			case 'o' -> LEATHER_OUTLINE;
-			case 'L' -> grain(LEATHER, x, y);
-			case 'b' -> grain(STRAP, x, y);
-			case 'm' -> grain(METAL, x, y);
 			default -> 0x00000000;
 		};
 	}

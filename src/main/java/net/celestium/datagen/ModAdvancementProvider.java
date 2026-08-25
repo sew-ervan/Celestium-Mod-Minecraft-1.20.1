@@ -187,10 +187,6 @@ public class ModAdvancementProvider extends ForgeAdvancementProvider {
 					ModItems.INVISIBILITY_CLOAK.get(), FrameType.GOAL, null,
 					hasItems(ModItems.INVISIBILITY_CLOAK.get()));
 
-			advancement(saver, fileHelper, root, "tandem_saddle",
-					ModItems.TANDEM_SADDLE.get(), FrameType.TASK, null,
-					hasItems(ModItems.TANDEM_SADDLE.get()));
-
 			// --- Ce que l'Overworld reserve ---
 
 			advancement(saver, fileHelper, ingot, "celestium_block",

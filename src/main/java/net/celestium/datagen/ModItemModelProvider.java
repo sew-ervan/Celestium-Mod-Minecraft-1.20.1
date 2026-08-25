@@ -52,7 +52,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 		texturedFlat(ModItems.BACKPACK_HUGE, "backpack");
 
 		flat(ModItems.INVISIBILITY_CLOAK);
-		flat(ModItems.TANDEM_SADDLE);
 
 		bow(ModItems.CELESTIAL_BOW);
 

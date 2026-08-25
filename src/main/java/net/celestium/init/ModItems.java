@@ -12,7 +12,6 @@ import net.celestium.feature.celestium.CelestiumSwordItem;
 import net.celestium.feature.celestium.ModArmorItem;
 import net.celestium.feature.cloak.InvisibilityCloakItem;
 import net.celestium.feature.mob.UnicornFoalEggItem;
-import net.celestium.feature.mount.TandemSaddleItem;
 import net.celestium.feature.portal.CorruptedEyeItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
@@ -295,10 +294,6 @@ public class ModItems {
 	 */
 	public static final RegistryObject<Item> INVISIBILITY_CLOAK = ITEMS.register("invisibility_cloak",
 			InvisibilityCloakItem::new);
-
-	/** La selle deux places, a poser sur une monture deja sellee. */
-	public static final RegistryObject<Item> TANDEM_SADDLE = ITEMS.register("tandem_saddle",
-			TandemSaddleItem::new);
 
 	// --- La licorne et ce qu'elle laisse ---
 

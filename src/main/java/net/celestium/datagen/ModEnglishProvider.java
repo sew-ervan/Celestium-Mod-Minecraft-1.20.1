@@ -242,7 +242,6 @@ public class ModEnglishProvider extends LanguageProvider {
 
 		// --- Travel gear ---
 		addItem(ModItems.INVISIBILITY_CLOAK, "Cloak of Invisibility");
-		addItem(ModItems.TANDEM_SADDLE, "Tandem Saddle");
 		addItem(ModItems.CELESTIAL_BOW, "Celestial Bow");
 
 		// --- Spells ---
@@ -296,8 +295,6 @@ public class ModEnglishProvider extends LanguageProvider {
 				"Slay a celestial dragon and take its hoard.");
 		advancement("invisibility_cloak", "Nobody Here",
 				"Craft the cloak of invisibility.");
-		advancement("tandem_saddle", "Hop On Behind",
-				"Craft a tandem saddle.");
 
 		// --- What the Overworld holds ---
 		advancement("celestium_block", "Stockpile", "Pack ingots into a block of Celestium.");

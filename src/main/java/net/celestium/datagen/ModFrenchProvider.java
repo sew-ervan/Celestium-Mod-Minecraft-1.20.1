@@ -250,7 +250,6 @@ public class ModFrenchProvider extends LanguageProvider {
 
 		// --- Equipement de voyage ---
 		addItem(ModItems.INVISIBILITY_CLOAK, "Cape d'invisibilité");
-		addItem(ModItems.TANDEM_SADDLE, "Selle deux places");
 		addItem(ModItems.CELESTIAL_BOW, "Arc céleste");
 
 		// --- Sorts ---
@@ -304,8 +303,6 @@ public class ModFrenchProvider extends LanguageProvider {
 				"Abattre un dragon céleste et lui prendre son tas.");
 		advancement("invisibility_cloak", "Personne ici",
 				"Fabriquer la cape d'invisibilité.");
-		advancement("tandem_saddle", "Monte derrière",
-				"Fabriquer une selle deux places.");
 
 		// --- Ce que l'Overworld reserve ---
 		advancement("celestium_block", "Réserve", "Compacter des lingots en bloc de Celestium.");

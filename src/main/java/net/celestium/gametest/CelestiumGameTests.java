@@ -21,7 +21,6 @@ import net.celestium.feature.enchant.ExcavationEnchantment;
 import net.celestium.feature.enchant.TamerEnchantment;
 import net.celestium.feature.enchant.ThunderstrikeEnchantment;
 import net.celestium.feature.luckyblock.LuckyOutcome;
-import net.celestium.feature.mount.TandemRiding;
 import net.celestium.feature.luckyblock.LuckyTier;
 import net.celestium.feature.portal.CorruptedPortalFrameBlock;
 import net.celestium.feature.portal.CorruptedPortalShape;
@@ -42,7 +41,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -752,72 +750,6 @@ public class CelestiumGameTests {
 	}
 
 	/**
-	 * La selle deux places porte un second cavalier, sans lui donner les renes.
-	 *
-	 * <p>Le jeu de base refuse le second passager ; c'est la seule regle que le mod contourne.
-	 * Celle qui decide qui conduit — le premier monte — reste intacte, et ce test le verifie : un
-	 * passager qui prendrait la direction de la monture serait bien pire qu'un passager absent.
-	 */
-	@GameTest(template = ARENA)
-	public static void tandemSaddleCarriesASecondRider(GameTestHelper helper) {
-		Pig mount = helper.spawn(EntityType.PIG, 1, 2, 1);
-
-		helper.assertFalse(TandemRiding.canFit(mount),
-				"Une monture sans selle accepte la selle deux places");
-
-		mount.equipSaddle(null);
-		helper.assertTrue(TandemRiding.canFit(mount),
-				"Une monture sellee refuse la selle deux places");
-
-		TandemRiding.fit(mount);
-		helper.assertFalse(TandemRiding.canFit(mount),
-				"La selle deux places se pose deux fois");
-
-		Player driver = helper.makeMockPlayer();
-		Player pillion = helper.makeMockPlayer();
-		driver.startRiding(mount, true);
-		pillion.startRiding(mount, true);
-
-		helper.assertTrue(mount.getPassengers().size() == 2,
-				"La monture ne porte pas deux cavaliers");
-		// Le cochon ne donne les renes qu'a un cavalier tenant une carotte au bout d'un baton :
-		// les deux en tiennent une, pour que seule la place decide.
-		driver.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.CARROT_ON_A_STICK));
-		pillion.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.CARROT_ON_A_STICK));
-
-		helper.assertTrue(mount.getFirstPassenger() == driver,
-				"Le cavalier de derriere est passe devant");
-		helper.assertTrue(mount.getControllingPassenger() == driver,
-				"Le cavalier de derriere a pris les renes");
-
-		helper.succeed();
-	}
-
-	/**
-	 * Le second siege est derriere le premier, dans l'axe du corps de la monture.
-	 *
-	 * <p>Sans ce decalage, les deux cavaliers occuperaient exactement le meme point : le jeu pose
-	 * tous les passagers d'une monture au meme endroit.
-	 */
-	@GameTest(template = ARENA)
-	public static void pillionSitsBehindTheDriver(GameTestHelper helper) {
-		Pig mount = helper.spawn(EntityType.PIG, 1, 2, 1);
-		mount.yBodyRot = 0.0F;
-
-		Player pillion = helper.makeMockPlayer();
-		Vec3 seat = TandemRiding.pillionSeat(mount, pillion);
-
-		helper.assertTrue(Math.abs(seat.x - mount.getX()) < 0.01,
-				"Le second siege est decale sur le cote");
-		helper.assertTrue(seat.z < mount.getZ() - 0.4,
-				"Le second siege n'est pas assez en arriere : " + (mount.getZ() - seat.z));
-		helper.assertTrue(seat.y > mount.getY(),
-				"Le second siege est au niveau du sol");
-
-		helper.succeed();
-	}
-
-	/**
 	 * La table corrompue propose les quatre enchantements d'arc, et a n'importe quel arc.
 	 *
 	 * <p>Les quatre sont declares indecouvrables : la table corrompue est le seul endroit qui puisse
@@ -1095,57 +1027,6 @@ public class CelestiumGameTests {
 		// Un compagnon ne disparait pas parce qu'on s'en est eloigne.
 		helper.assertFalse(fennec.removeWhenFarAway(4096.0),
 				"Un fennec apprivoise finit par s'evaporer");
-
-		helper.succeed();
-	}
-
-	/**
-	 * Le clic droit avec la selle deux places la pose, au lieu de faire monter en selle.
-	 *
-	 * <p>Ce test passe par le geste complet et non par les methodes qu'il declenche, parce que c'est
-	 * exactement la ou etait la faute : la mecanique repondait correctement a qui l'appelait, mais
-	 * personne ne l'appelait. Le jeu interroge la monture avant l'objet tenu, et un cheval dompte et
-	 * selle repond en faisant monter le joueur — la selle ne se posait donc sur aucune des montures
-	 * pour lesquelles elle existe.
-	 */
-	@GameTest(template = ARENA)
-	public static void tandemSaddleFitsATamedMountInsteadOfRidingIt(GameTestHelper helper) {
-		Horse mount = helper.spawn(EntityType.HORSE, 1, 2, 1);
-		mount.setTamed(true);
-		mount.equipSaddle(null);
-
-		Player rider = helper.makeMockPlayer();
-		rider.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ModItems.TANDEM_SADDLE.get()));
-
-		helper.assertFalse(TandemRiding.fitted(mount), "Le cheval porte deja une selle deux places");
-
-		rider.interactOn(mount, InteractionHand.MAIN_HAND);
-
-		helper.assertTrue(TandemRiding.fitted(mount),
-				"La selle deux places ne se pose pas sur un cheval dompte et selle");
-		helper.assertFalse(rider.isPassenger(),
-				"Le joueur est monte en selle au lieu de poser la selle deux places");
-
-		helper.succeed();
-	}
-
-	/**
-	 * Un cheval sauvage n'accepte pas la selle deux places.
-	 *
-	 * <p>Le jeu de base ne laisse deja pas seller un cheval qu'on n'a pas dompte, mais la regle est
-	 * ecrite explicitement : elle vaut pour tout ce qui se dompterait autrement.
-	 */
-	@GameTest(template = ARENA)
-	public static void tandemSaddleRefusesAWildMount(GameTestHelper helper) {
-		Horse wild = helper.spawn(EntityType.HORSE, 1, 2, 1);
-		wild.equipSaddle(null);
-
-		helper.assertFalse(TandemRiding.canFit(wild),
-				"Un cheval sauvage accepte la selle deux places");
-
-		wild.setTamed(true);
-		helper.assertTrue(TandemRiding.canFit(wild),
-				"Un cheval dompte et selle refuse la selle deux places");
 
 		helper.succeed();
 	}
