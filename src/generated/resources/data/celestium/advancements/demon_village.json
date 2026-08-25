@@ -1,0 +1,45 @@
+{
+  "parent": "celestium:enter_demon",
+  "criteria": {
+    "demon_village": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "celestium:demon_village"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.demon_village.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:bois_du_demon_planks"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.demon_village.title"
+    }
+  },
+  "requirements": [
+    [
+      "demon_village"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

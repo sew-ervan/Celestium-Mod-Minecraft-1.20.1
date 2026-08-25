@@ -1,0 +1,45 @@
+{
+  "parent": "celestium:enter_corrupted",
+  "criteria": {
+    "celestial_hoard": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "celestium:celestial_hoard"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.celestial_hoard.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:gold_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.celestial_hoard.title"
+    }
+  },
+  "requirements": [
+    [
+      "celestial_hoard"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

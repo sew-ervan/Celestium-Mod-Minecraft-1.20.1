@@ -1,0 +1,68 @@
+{
+  "parent": "celestium:celestial_bow",
+  "criteria": {
+    "complete_bow": {
+      "conditions": {
+        "items": [
+          {
+            "enchantments": [
+              {
+                "enchantment": "celestium:volley",
+                "levels": {
+                  "min": 1
+                }
+              },
+              {
+                "enchantment": "celestium:piercing_shot",
+                "levels": {
+                  "min": 1
+                }
+              },
+              {
+                "enchantment": "celestium:seeker",
+                "levels": {
+                  "min": 1
+                }
+              },
+              {
+                "enchantment": "celestium:collapse",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ],
+            "items": [
+              "celestium:celestial_bow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.complete_bow.descr"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:celestial_bow",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.complete_bow.title"
+    }
+  },
+  "requirements": [
+    [
+      "complete_bow"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

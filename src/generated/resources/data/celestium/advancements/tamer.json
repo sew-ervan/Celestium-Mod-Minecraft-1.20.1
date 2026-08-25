@@ -1,0 +1,47 @@
+{
+  "parent": "celestium:corrupted_enchant",
+  "criteria": {
+    "tamer": {
+      "conditions": {
+        "items": [
+          {
+            "enchantments": [
+              {
+                "enchantment": "celestium:tamer",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.tamer.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_celestium_helmet",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.tamer.title"
+    }
+  },
+  "requirements": [
+    [
+      "tamer"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

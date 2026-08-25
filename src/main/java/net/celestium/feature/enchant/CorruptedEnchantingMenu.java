@@ -5,12 +5,15 @@ import net.celestium.init.ModMenus;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
@@ -122,6 +125,14 @@ public class CorruptedEnchantingMenu extends AbstractContainerMenu {
 		if (stack.getItem() instanceof SwordItem) {
 			return List.of(ModEnchantments.THUNDERSTRIKE.get());
 		}
+
+		// L'arc en recoit quatre — le maximum que l'interface sait montrer d'un coup. C'est
+		// l'objet le mieux servi du mod, et c'est voulu : il arrive en dernier.
+		if (stack.getItem() instanceof BowItem) {
+			return List.of(ModEnchantments.VOLLEY.get(), ModEnchantments.PIERCING_SHOT.get(),
+					ModEnchantments.SEEKER.get(), ModEnchantments.COLLAPSE.get());
+		}
+
 		if (stack.getItem() instanceof AxeItem) {
 			return List.of(ModEnchantments.TIMBER.get(), ModEnchantments.MAGNETISM.get());
 		}
@@ -176,6 +187,13 @@ public class CorruptedEnchantingMenu extends AbstractContainerMenu {
 
 		this.tool.setChanged();
 		this.access.execute(CorruptedEnchantingTableBlock::celebrate);
+
+		// Le jeu compte les objets enchantes pour ses progres, mais il ne compte que ceux qui
+		// passent par sa propre table. Sans cette ligne, la table corrompue enchanterait sans que
+		// rien ne s'en apercoive — ni les progres du mod, ni ceux du jeu de base.
+		if (player instanceof ServerPlayer served) {
+			CriteriaTriggers.ENCHANTED_ITEM.trigger(served, stack, cost);
+		}
 
 		return true;
 	}

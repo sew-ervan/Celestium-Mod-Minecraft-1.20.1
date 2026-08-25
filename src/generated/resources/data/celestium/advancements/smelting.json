@@ -1,0 +1,46 @@
+{
+  "parent": "celestium:corrupted_enchant",
+  "criteria": {
+    "smelting": {
+      "conditions": {
+        "items": [
+          {
+            "enchantments": [
+              {
+                "enchantment": "celestium:smelting",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.smelting.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:furnace"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.smelting.title"
+    }
+  },
+  "requirements": [
+    [
+      "smelting"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

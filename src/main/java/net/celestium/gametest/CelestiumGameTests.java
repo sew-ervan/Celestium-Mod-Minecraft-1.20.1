@@ -12,6 +12,7 @@ import net.celestium.feature.mob.DemonSwordsmanEntity;
 import net.celestium.feature.cloak.CloakInvisibility;
 import net.celestium.feature.corruption.DimensionMining;
 import net.celestium.feature.darkmatter.DarkMatterAnchoring;
+import net.celestium.feature.enchant.CorruptedEnchantingMenu;
 import net.celestium.feature.enchant.ExcavationEnchantment;
 import net.celestium.feature.enchant.TamerEnchantment;
 import net.celestium.feature.enchant.ThunderstrikeEnchantment;
@@ -38,6 +39,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.player.Player;
@@ -806,6 +809,171 @@ public class CelestiumGameTests {
 				"Le second siege est au niveau du sol");
 
 		helper.succeed();
+	}
+
+	/**
+	 * La table corrompue propose les quatre enchantements d'arc, et a n'importe quel arc.
+	 *
+	 * <p>Les quatre sont declares indecouvrables : la table corrompue est le seul endroit qui puisse
+	 * les donner. Si elle ne les proposait pas, ils n'existeraient dans aucune partie.
+	 */
+	@GameTest(template = ARENA)
+	public static void corruptedTableOffersTheBowEnchantments(GameTestHelper helper) {
+		List<Enchantment> offers = CorruptedEnchantingMenu.offersFor(
+				new ItemStack(ModItems.CELESTIAL_BOW.get()));
+
+		helper.assertTrue(offers.contains(ModEnchantments.VOLLEY.get()),
+				"La table ne propose pas la Salve celeste");
+		helper.assertTrue(offers.contains(ModEnchantments.PIERCING_SHOT.get()),
+				"La table ne propose pas le Transpercement");
+		helper.assertTrue(offers.contains(ModEnchantments.SEEKER.get()),
+				"La table ne propose pas le Traqueur");
+		helper.assertTrue(offers.contains(ModEnchantments.COLLAPSE.get()),
+				"La table ne propose pas l'Effondrement");
+
+		// Un arc du jeu de base les recoit aussi : l'enchantement appartient a l'arc, pas au metal.
+		helper.assertTrue(CorruptedEnchantingMenu.offersFor(new ItemStack(Items.BOW)).size() == 4,
+				"Un arc ordinaire ne recoit pas les quatre enchantements");
+
+		// Et rien de tout cela sur autre chose qu'un arc.
+		helper.assertFalse(
+				CorruptedEnchantingMenu.offersFor(new ItemStack(ModItems.CELESTIUM_SWORD.get()))
+						.contains(ModEnchantments.VOLLEY.get()),
+				"Une epee recoit un enchantement d'arc");
+
+		helper.succeed();
+	}
+
+	/**
+	 * La Salve celeste met des fleches en plus en l'air, et aucune ne se ramasse.
+	 *
+	 * <p>La seconde moitie compte autant que la premiere : des fleches ajoutees ramassables
+	 * feraient de l'enchantement une facon de fabriquer des fleches a partir d'une seule.
+	 */
+	@GameTest(template = ARENA)
+	public static void celestialVolleyAddsArrowsThatCannotBeGathered(GameTestHelper helper) {
+		Vec3 origin = helper.absoluteVec(new Vec3(1.5, 2.0, 1.5));
+
+		Player archer = helper.makeMockPlayer();
+		archer.setPos(origin.x, origin.y, origin.z);
+		archer.setItemInHand(InteractionHand.MAIN_HAND,
+				enchanted(ModItems.CELESTIAL_BOW.get(), ModEnchantments.VOLLEY.get(), 3));
+
+		Arrow shot = new Arrow(helper.getLevel(), origin.x, origin.y, origin.z);
+		shot.setOwner(archer);
+		shot.setDeltaMovement(0.0, 0.0, 1.0);
+		shot.pickup = AbstractArrow.Pickup.ALLOWED;
+
+		helper.getLevel().addFreshEntity(shot);
+
+		// La boite est serree : les quatre fleches partent du meme point, et une arene voisine ne
+		// doit pas pouvoir compter dans ce test.
+		List<Arrow> volley = helper.getLevel().getEntitiesOfClass(
+				Arrow.class, shot.getBoundingBox().inflate(1.0));
+
+		helper.assertTrue(volley.size() == 4,
+				"La salve de niveau trois ne met pas quatre fleches en l'air, mais " + volley.size());
+
+		long gatherable = volley.stream()
+				.filter(arrow -> arrow.pickup == AbstractArrow.Pickup.ALLOWED)
+				.count();
+		helper.assertTrue(gatherable == 1,
+				"La salve rend " + gatherable + " fleches ramassables au lieu d'une");
+
+		// Les fleches ajoutees s'ecartent : trois fleches sur la meme trajectoire ne seraient
+		// qu'une fleche plus lourde.
+		long straightAhead = volley.stream()
+				.filter(arrow -> Math.abs(arrow.getDeltaMovement().x) < 1.0E-6)
+				.count();
+		helper.assertTrue(straightAhead == 1,
+				"La salve ne s'ecarte pas : " + straightAhead + " fleches vont tout droit");
+
+		helper.succeed();
+	}
+
+	/** Le Transpercement se reporte sur la fleche au moment du tir. */
+	@GameTest(template = ARENA)
+	public static void piercingShotCarriesOverToTheArrow(GameTestHelper helper) {
+		Vec3 origin = helper.absoluteVec(new Vec3(1.5, 2.0, 1.5));
+
+		Player archer = helper.makeMockPlayer();
+		archer.setPos(origin.x, origin.y, origin.z);
+		archer.setItemInHand(InteractionHand.MAIN_HAND,
+				enchanted(ModItems.CELESTIAL_BOW.get(), ModEnchantments.PIERCING_SHOT.get(), 2));
+
+		Arrow shot = new Arrow(helper.getLevel(), origin.x, origin.y, origin.z);
+		shot.setOwner(archer);
+		shot.setDeltaMovement(0.0, 0.0, 1.0);
+
+		helper.assertTrue(shot.getPierceLevel() == 0,
+				"La fleche traverse deja avant d'etre tiree");
+
+		helper.getLevel().addFreshEntity(shot);
+
+		helper.assertTrue(shot.getPierceLevel() == 2,
+				"Le Transpercement de niveau deux ne se reporte pas sur la fleche");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Le Traqueur rattrape une visee approximative.
+	 *
+	 * <p>La fleche part six degres a cote d'un cochon, ce qui reste dans le cone du premier niveau,
+	 * et doit arriver alignee sur lui. La creature est posee sur son propre sol : sans lui elle
+	 * tombe, et une cible en chute libre n'est plus a l'endroit ou le test la croit.
+	 */
+	@GameTest(template = ARENA)
+	public static void seekerCorrectsAnApproximateAim(GameTestHelper helper) {
+		for (int dx = 0; dx <= 3; dx++) {
+			for (int dz = 0; dz <= 3; dz++) {
+				helper.setBlock(new BlockPos(dx, 0, dz), Blocks.STONE);
+			}
+		}
+
+		Pig target = helper.spawn(EntityType.PIG, 3, 1, 3);
+		Vec3 origin = helper.absoluteVec(new Vec3(0.5, 1.5, 0.5));
+
+		Player archer = helper.makeMockPlayer();
+		archer.setPos(origin.x, origin.y, origin.z);
+		archer.setItemInHand(InteractionHand.MAIN_HAND,
+				enchanted(ModItems.CELESTIAL_BOW.get(), ModEnchantments.SEEKER.get(), 1));
+
+		Vec3 toTarget = target.getEyePosition().subtract(origin).normalize();
+		Vec3 askew = turned(toTarget, 6.0);
+
+		Arrow shot = new Arrow(helper.getLevel(), origin.x, origin.y, origin.z);
+		shot.setOwner(archer);
+		shot.setDeltaMovement(askew.scale(2.0));
+
+		helper.getLevel().addFreshEntity(shot);
+
+		double alignment = shot.getDeltaMovement().normalize().dot(toTarget);
+		helper.assertTrue(alignment > 0.99,
+				"Le Traqueur ne corrige pas la visee : alignement " + alignment);
+		helper.assertTrue(Math.abs(shot.getDeltaMovement().length() - 2.0) < 0.01,
+				"Le Traqueur change la vitesse de la fleche au lieu de sa seule direction");
+
+		helper.succeed();
+	}
+
+	/** Un exemplaire portant un seul enchantement, a un niveau donne. */
+	private static ItemStack enchanted(Item item, Enchantment enchantment, int level) {
+		ItemStack stack = new ItemStack(item);
+		stack.enchant(enchantment, level);
+		return stack;
+	}
+
+	/** Fait tourner une direction autour de la verticale, en degres. */
+	private static Vec3 turned(Vec3 direction, double degrees) {
+		double radians = Math.toRadians(degrees);
+		double cos = Math.cos(radians);
+		double sin = Math.sin(radians);
+
+		return new Vec3(
+				direction.x * cos - direction.z * sin,
+				direction.y,
+				direction.x * sin + direction.z * cos);
 	}
 
 	private static String percent(double rate) {

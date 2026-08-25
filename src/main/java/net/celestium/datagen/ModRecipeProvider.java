@@ -455,5 +455,18 @@ public class ModRecipeProvider extends RecipeProvider {
 				.define('I', Items.IRON_INGOT)
 				.unlockedBy("has_saddle", has(Items.SADDLE))
 				.save(writer, CelestiumMod.id("tandem_saddle"));
+
+		// L'arc reprend la forme de celui du jeu de base, au metal pres : trois cordes a droite,
+		// deux batons de Celestium pour les branches, un lingot pour la poignee. Qui a deja fabrique
+		// un arc n'a rien a reapprendre.
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.CELESTIAL_BOW.get())
+				.pattern(" CS")
+				.pattern("I S")
+				.pattern(" CS")
+				.define('C', ModItems.CELESTIUM_STICK.get())
+				.define('I', ModItems.CELESTIUM_INGOT.get())
+				.define('S', Items.STRING)
+				.unlockedBy("has_celestium_ingot", has(ModItems.CELESTIUM_INGOT.get()))
+				.save(writer, CelestiumMod.id("celestial_bow"));
 	}
 }

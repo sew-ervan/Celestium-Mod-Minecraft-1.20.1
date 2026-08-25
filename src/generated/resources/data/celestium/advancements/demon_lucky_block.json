@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:lucky_block",
+  "criteria": {
+    "demon_lucky_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:demon_lucky_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.demon_lucky_block.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:demon_lucky_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.demon_lucky_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "demon_lucky_block"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "celestium:enchanting_table",
+  "criteria": {
+    "corrupted_enchant": {
+      "conditions": {},
+      "trigger": "minecraft:enchanted_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.corrupted_enchant.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:corrupted_book"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.corrupted_enchant.title"
+    }
+  },
+  "requirements": [
+    [
+      "corrupted_enchant"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

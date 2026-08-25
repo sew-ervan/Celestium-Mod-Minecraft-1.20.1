@@ -1,0 +1,46 @@
+{
+  "parent": "celestium:corrupted_enchant",
+  "criteria": {
+    "magnetism": {
+      "conditions": {
+        "items": [
+          {
+            "enchantments": [
+              {
+                "enchantment": "celestium:magnetism",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.magnetism.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:gravity_well"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.magnetism.title"
+    }
+  },
+  "requirements": [
+    [
+      "magnetism"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

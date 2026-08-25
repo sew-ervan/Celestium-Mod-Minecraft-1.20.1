@@ -1,0 +1,39 @@
+{
+  "parent": "celestium:celestial_dust",
+  "criteria": {
+    "dust_trip": {
+      "conditions": {
+        "item": {
+          "items": [
+            "celestium:celestial_dust"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.dust_trip.descr"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:celestial_dust"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.dust_trip.title"
+    }
+  },
+  "requirements": [
+    [
+      "dust_trip"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

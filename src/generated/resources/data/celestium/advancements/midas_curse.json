@@ -1,0 +1,46 @@
+{
+  "parent": "celestium:corrupted_enchant",
+  "criteria": {
+    "midas_curse": {
+      "conditions": {
+        "items": [
+          {
+            "enchantments": [
+              {
+                "enchantment": "celestium:midas_curse",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.midas_curse.descr"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:gold_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.midas_curse.title"
+    }
+  },
+  "requirements": [
+    [
+      "midas_curse"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

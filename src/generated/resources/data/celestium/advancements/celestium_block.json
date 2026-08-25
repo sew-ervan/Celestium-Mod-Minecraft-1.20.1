@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:celestium_ingot",
+  "criteria": {
+    "celestium_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:celestium_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.celestium_block.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:celestium_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.celestium_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "celestium_block"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

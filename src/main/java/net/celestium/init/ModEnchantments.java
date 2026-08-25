@@ -2,7 +2,11 @@ package net.celestium.init;
 
 import net.celestium.CelestiumMod;
 import com.mojang.serialization.Codec;
+import net.celestium.feature.enchant.CollapseEnchantment;
 import net.celestium.feature.enchant.ExcavationEnchantment;
+import net.celestium.feature.enchant.PiercingShotEnchantment;
+import net.celestium.feature.enchant.SeekerEnchantment;
+import net.celestium.feature.enchant.VolleyEnchantment;
 import net.celestium.feature.enchant.MagnetismEnchantment;
 import net.celestium.feature.enchant.MidasCurseEnchantment;
 import net.celestium.feature.enchant.MidasModifier;
@@ -66,6 +70,24 @@ public final class ModEnchantments {
 	/** Dompteur : ce qui vous prend pour cible se ravise parfois. */
 	public static final RegistryObject<Enchantment> TAMER =
 			ENCHANTMENTS.register("tamer", TamerEnchantment::new);
+
+	// --- Les quatre enchantements d'arc ---
+
+	/** Salve celeste : une bande, plusieurs fleches. */
+	public static final RegistryObject<Enchantment> VOLLEY =
+			ENCHANTMENTS.register("volley", VolleyEnchantment::new);
+
+	/** Transpercement : la fleche traverse et poursuit. */
+	public static final RegistryObject<Enchantment> PIERCING_SHOT =
+			ENCHANTMENTS.register("piercing_shot", PiercingShotEnchantment::new);
+
+	/** Traqueur : la fleche part corrigee vers ce qu'on visait. */
+	public static final RegistryObject<Enchantment> SEEKER =
+			ENCHANTMENTS.register("seeker", SeekerEnchantment::new);
+
+	/** Effondrement : la fleche plantee tire a elle ce qui l'entoure. */
+	public static final RegistryObject<Enchantment> COLLAPSE =
+			ENCHANTMENTS.register("collapse", CollapseEnchantment::new);
 
 	/**
 	 * Le modificateur de butin qui met la Fonte en oeuvre.

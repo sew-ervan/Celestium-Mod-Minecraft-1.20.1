@@ -93,6 +93,12 @@ public class ModFrenchProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.MIDAS_CURSE, "Malédiction de Midas");
 		addEnchantment(ModEnchantments.TAMER, "Dompteur");
 
+		// --- Les quatre enchantements d'arc ---
+		addEnchantment(ModEnchantments.VOLLEY, "Salve céleste");
+		addEnchantment(ModEnchantments.PIERCING_SHOT, "Transpercement");
+		addEnchantment(ModEnchantments.SEEKER, "Traqueur");
+		addEnchantment(ModEnchantments.COLLAPSE, "Effondrement");
+
 		// --- Matiere noire ---
 		addItem(ModItems.DARK_MATTER, "Matière noire");
 		addItem(ModItems.DARK_MATTER_SWORD, "Épée en matière noire");
@@ -245,6 +251,7 @@ public class ModFrenchProvider extends LanguageProvider {
 		// --- Equipement de voyage ---
 		addItem(ModItems.INVISIBILITY_CLOAK, "Cape d'invisibilité");
 		addItem(ModItems.TANDEM_SADDLE, "Selle deux places");
+		addItem(ModItems.CELESTIAL_BOW, "Arc céleste");
 
 		// --- Sorts ---
 		add("spell.celestium.celestial_strike", "Frappe céleste");
@@ -299,6 +306,42 @@ public class ModFrenchProvider extends LanguageProvider {
 				"Fabriquer la cape d'invisibilité.");
 		advancement("tandem_saddle", "Monte derrière",
 				"Fabriquer une selle deux places.");
+
+		// --- Ce que l'Overworld reserve ---
+		advancement("celestium_block", "Réserve", "Compacter des lingots en bloc de Celestium.");
+		advancement("celestial_dust", "Poussière d'étoile", "Fabriquer de la poussière céleste.");
+		advancement("dust_trip", "Voir le ciel de trop près", "Boire une fiole de poussière céleste.");
+		advancement("cemetery", "Terre remuée", "Trouver le cimetière.");
+
+		// --- Les blocs chance ---
+		advancement("corrupted_lucky_block", "La chance tourne", "Mettre la main sur un bloc chance corrompu.");
+		advancement("demon_lucky_block", "Tenter le diable", "Mettre la main sur un bloc chance du démon.");
+
+		// --- L'arc ---
+		advancement("celestial_bow", "Tendre la corde", "Forger l'arc céleste.");
+		advancement("volley", "Trois d'un coup", "Obtenir la Salve céleste.");
+		advancement("piercing_shot", "À la file", "Obtenir le Transpercement.");
+		advancement("seeker", "La main corrigée", "Obtenir le Traqueur.");
+		advancement("collapse", "Tout vient à la flèche", "Obtenir l'Effondrement.");
+		advancement("complete_bow", "L'arc achevé", "Réunir les quatre enchantements d'arc sur le même arc.");
+
+		// --- Les structures ---
+		advancement("sanctum", "Sous la pierre", "Trouver un sanctuaire corrompu.");
+		advancement("celestial_hoard", "Tout cet or", "Trouver le tas d'un dragon céleste.");
+		advancement("demon_village", "Ils vivent ici", "Trouver un village des Terres du démon.");
+		advancement("parasite", "Nettoyage", "Abattre un parasite.");
+
+		// --- Ce que la table corrompue accorde ---
+		advancement("corrupted_enchant", "La table parle", "Enchanter un objet à la table corrompue.");
+		advancement("timber", "L'arbre entier", "Obtenir l'Abattage.");
+		advancement("vein_miner", "Jusqu'au bout du filon", "Obtenir le Filon.");
+		advancement("excavation", "Creuser large", "Obtenir l'Excavation.");
+		advancement("harvest", "D'un seul geste", "Obtenir la Moisson.");
+		advancement("smelting", "Déjà fondu", "Obtenir la Fonte.");
+		advancement("magnetism", "Rien ne traîne", "Obtenir l'Aimant.");
+		advancement("thunderstrike", "Le ciel s'en mêle", "Obtenir l'Éclair fulgurant.");
+		advancement("tamer", "On se calme", "Obtenir le Dompteur.");
+		advancement("midas_curse", "Tout ce qu'il touche", "Poser la Malédiction de Midas sur sa pioche.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */

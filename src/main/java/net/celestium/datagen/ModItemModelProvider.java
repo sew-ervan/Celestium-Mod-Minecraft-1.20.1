@@ -5,6 +5,7 @@ import net.celestium.init.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,6 +18,10 @@ import net.minecraftforge.registries.RegistryObject;
  * des modeles de blocs dont ils derivent.
  */
 public class ModItemModelProvider extends ItemModelProvider {
+
+	/** Les deux proprietes que le jeu expose sur un arc : bande ou non, et de combien. */
+	private static final ResourceLocation PULLING = new ResourceLocation("pulling");
+	private static final ResourceLocation PULL = new ResourceLocation("pull");
 
 	public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
 		super(output, CelestiumMod.MOD_ID, existingFileHelper);
@@ -48,6 +53,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 		flat(ModItems.INVISIBILITY_CLOAK);
 		flat(ModItems.TANDEM_SADDLE);
+
+		bow(ModItems.CELESTIAL_BOW);
 
 		// Les textures du Demonium sont derivees de celles du Celestium par corruption : meme
 		// silhouette, teinte basculee vers le rouge, surface brulee.
@@ -100,6 +107,37 @@ public class ModItemModelProvider extends ItemModelProvider {
 		spawnEgg(ModItems.PARASITE_SPAWN_EGG);
 		spawnEgg(ModItems.CORRUPTED_VILLAGER_SPAWN_EGG);
 		spawnEgg(ModItems.CELESTIAL_DRAGON_SPAWN_EGG);
+	}
+
+
+	/**
+	 * Un arc et ses trois etapes de bande.
+	 *
+	 * <p>Le modele herite de celui du jeu de base pour reprendre ses poses en main — un arc ne se
+	 * tient pas comme un lingot — mais il redeclare ses propres bascules. Les bascules ne
+	 * s'heritent pas : si elles l'etaient, le modele d'arc bande du jeu de base, qui herite lui
+	 * aussi de l'arc, se renverrait a lui-meme sans fin.
+	 */
+	private void bow(RegistryObject<Item> item) {
+		String name = name(item);
+
+		ItemModelBuilder loose = pullingStage(name, 0);
+		ItemModelBuilder half = pullingStage(name, 1);
+		ItemModelBuilder full = pullingStage(name, 2);
+
+		// L'ordre compte : le jeu retient la derniere bascule dont toutes les conditions sont
+		// remplies, donc de la moins bandee a la plus bandee.
+		withExistingParent(name, mcLoc("item/bow"))
+				.texture("layer0", modLoc("item/" + name))
+				.override().predicate(PULLING, 1.0F).model(loose).end()
+				.override().predicate(PULLING, 1.0F).predicate(PULL, 0.65F).model(half).end()
+				.override().predicate(PULLING, 1.0F).predicate(PULL, 0.9F).model(full).end();
+	}
+
+	private ItemModelBuilder pullingStage(String name, int stage) {
+		String stageName = name + "_pulling_" + stage;
+		return withExistingParent(stageName, mcLoc("item/bow"))
+				.texture("layer0", modLoc("item/" + stageName));
 	}
 
 	/** Objet plat, tenu comme une ressource : lingots, fragments, pieces d'armure. */

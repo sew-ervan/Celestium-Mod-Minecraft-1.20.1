@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "celestium:celestium_stick"
+    },
+    "I": {
+      "item": "celestium:celestium_ingot"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    " CS",
+    "I S",
+    " CS"
+  ],
+  "result": {
+    "item": "celestium:celestial_bow"
+  },
+  "show_notification": true
+}

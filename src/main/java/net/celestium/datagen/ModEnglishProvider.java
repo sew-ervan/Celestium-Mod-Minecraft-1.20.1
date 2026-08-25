@@ -88,6 +88,12 @@ public class ModEnglishProvider extends LanguageProvider {
 		addEnchantment(ModEnchantments.MIDAS_CURSE, "Curse of Midas");
 		addEnchantment(ModEnchantments.TAMER, "Tamer");
 
+		// --- The four bow enchantments ---
+		addEnchantment(ModEnchantments.VOLLEY, "Celestial Volley");
+		addEnchantment(ModEnchantments.PIERCING_SHOT, "Piercing Shot");
+		addEnchantment(ModEnchantments.SEEKER, "Seeker");
+		addEnchantment(ModEnchantments.COLLAPSE, "Collapse");
+
 		// --- Dark matter ---
 		addItem(ModItems.DARK_MATTER, "Dark Matter");
 		addItem(ModItems.DARK_MATTER_SWORD, "Dark Matter Sword");
@@ -237,6 +243,7 @@ public class ModEnglishProvider extends LanguageProvider {
 		// --- Travel gear ---
 		addItem(ModItems.INVISIBILITY_CLOAK, "Cloak of Invisibility");
 		addItem(ModItems.TANDEM_SADDLE, "Tandem Saddle");
+		addItem(ModItems.CELESTIAL_BOW, "Celestial Bow");
 
 		// --- Spells ---
 		add("spell.celestium.celestial_strike", "Celestial Strike");
@@ -291,6 +298,42 @@ public class ModEnglishProvider extends LanguageProvider {
 				"Craft the cloak of invisibility.");
 		advancement("tandem_saddle", "Hop On Behind",
 				"Craft a tandem saddle.");
+
+		// --- What the Overworld holds ---
+		advancement("celestium_block", "Stockpile", "Pack ingots into a block of Celestium.");
+		advancement("celestial_dust", "Stardust", "Craft celestial dust.");
+		advancement("dust_trip", "The Sky, a Little Too Close", "Drink a flask of celestial dust.");
+		advancement("cemetery", "Turned Earth", "Find the cemetery.");
+
+		// --- Lucky blocks ---
+		advancement("corrupted_lucky_block", "Luck Turns", "Get hold of a corrupted lucky block.");
+		advancement("demon_lucky_block", "Tempting Him", "Get hold of a demon lucky block.");
+
+		// --- The bow ---
+		advancement("celestial_bow", "Draw the String", "Forge the celestial bow.");
+		advancement("volley", "Three at Once", "Get Celestial Volley.");
+		advancement("piercing_shot", "In a Row", "Get Piercing Shot.");
+		advancement("seeker", "A Steadier Hand", "Get Seeker.");
+		advancement("collapse", "All Things to the Arrow", "Get Collapse.");
+		advancement("complete_bow", "The Finished Bow", "Gather all four bow enchantments on one bow.");
+
+		// --- Structures ---
+		advancement("sanctum", "Under the Stone", "Find a corrupted sanctum.");
+		advancement("celestial_hoard", "All That Gold", "Find a celestial dragon's hoard.");
+		advancement("demon_village", "They Live Here", "Find a village of the Demon Wastes.");
+		advancement("parasite", "Cleanup", "Slay a parasite.");
+
+		// --- What the corrupted table grants ---
+		advancement("corrupted_enchant", "The Table Speaks", "Enchant an item at the corrupted table.");
+		advancement("timber", "The Whole Tree", "Get Timber.");
+		advancement("vein_miner", "To the End of the Vein", "Get Vein Miner.");
+		advancement("excavation", "Dig Wide", "Get Excavation.");
+		advancement("harvest", "In One Sweep", "Get Harvest.");
+		advancement("smelting", "Already Molten", "Get Smelting.");
+		advancement("magnetism", "Nothing Left Behind", "Get Magnetism.");
+		advancement("thunderstrike", "The Sky Joins In", "Get Thunderstrike.");
+		advancement("tamer", "Settle Down", "Get Tamer.");
+		advancement("midas_curse", "Everything He Touches", "Put the Curse of Midas on your pickaxe.");
 	}
 
 	/** Un progrès : son titre et sa description, sous les deux clés attendues. */

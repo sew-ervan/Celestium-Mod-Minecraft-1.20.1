@@ -1,0 +1,41 @@
+{
+  "parent": "celestium:celestium_ingot",
+  "criteria": {
+    "celestial_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "celestium:celestial_dust"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.celestium.celestial_dust.descr"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "celestium:celestial_dust"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.celestium.celestial_dust.title"
+    }
+  },
+  "requirements": [
+    [
+      "celestial_dust"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

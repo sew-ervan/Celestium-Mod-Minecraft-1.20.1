@@ -4,6 +4,7 @@ import net.celestium.CelestiumMod;
 import net.celestium.core.material.ModArmorMaterials;
 import net.celestium.core.material.ModTiers;
 import net.celestium.feature.backpack.BackpackItem;
+import net.celestium.feature.bow.CelestialBowItem;
 import net.celestium.feature.backpack.BackpackTier;
 import net.celestium.feature.celestium.CelestialDustItem;
 import net.celestium.feature.celestium.CelestiumIngotItem;
@@ -272,6 +273,17 @@ public class ModItems {
 	/** Vingt rangees : l'interface n'en montre que six et defile pour le reste. */
 	public static final RegistryObject<Item> BACKPACK_HUGE = ITEMS.register("backpack_huge",
 			() -> new BackpackItem(BackpackTier.HUGE));
+
+	// --- Arc ---
+
+	/**
+	 * L'arc celeste : la seule arme de jet du mod.
+	 *
+	 * <p>Il frappe un peu plus fort et dure deux fois plus, mais sa raison d'etre est ailleurs :
+	 * c'est le support des quatre enchantements d'arc de la table corrompue.
+	 */
+	public static final RegistryObject<Item> CELESTIAL_BOW = ITEMS.register("celestial_bow",
+			CelestialBowItem::new);
 
 	// --- Equipement de voyage ---
 
