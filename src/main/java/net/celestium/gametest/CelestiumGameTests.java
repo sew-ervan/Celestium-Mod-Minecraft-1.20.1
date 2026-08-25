@@ -42,6 +42,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -1094,6 +1095,57 @@ public class CelestiumGameTests {
 		// Un compagnon ne disparait pas parce qu'on s'en est eloigne.
 		helper.assertFalse(fennec.removeWhenFarAway(4096.0),
 				"Un fennec apprivoise finit par s'evaporer");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Le clic droit avec la selle deux places la pose, au lieu de faire monter en selle.
+	 *
+	 * <p>Ce test passe par le geste complet et non par les methodes qu'il declenche, parce que c'est
+	 * exactement la ou etait la faute : la mecanique repondait correctement a qui l'appelait, mais
+	 * personne ne l'appelait. Le jeu interroge la monture avant l'objet tenu, et un cheval dompte et
+	 * selle repond en faisant monter le joueur — la selle ne se posait donc sur aucune des montures
+	 * pour lesquelles elle existe.
+	 */
+	@GameTest(template = ARENA)
+	public static void tandemSaddleFitsATamedMountInsteadOfRidingIt(GameTestHelper helper) {
+		Horse mount = helper.spawn(EntityType.HORSE, 1, 2, 1);
+		mount.setTamed(true);
+		mount.equipSaddle(null);
+
+		Player rider = helper.makeMockPlayer();
+		rider.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ModItems.TANDEM_SADDLE.get()));
+
+		helper.assertFalse(TandemRiding.fitted(mount), "Le cheval porte deja une selle deux places");
+
+		rider.interactOn(mount, InteractionHand.MAIN_HAND);
+
+		helper.assertTrue(TandemRiding.fitted(mount),
+				"La selle deux places ne se pose pas sur un cheval dompte et selle");
+		helper.assertFalse(rider.isPassenger(),
+				"Le joueur est monte en selle au lieu de poser la selle deux places");
+
+		helper.succeed();
+	}
+
+	/**
+	 * Un cheval sauvage n'accepte pas la selle deux places.
+	 *
+	 * <p>Le jeu de base ne laisse deja pas seller un cheval qu'on n'a pas dompte, mais la regle est
+	 * ecrite explicitement : elle vaut pour tout ce qui se dompterait autrement.
+	 */
+	@GameTest(template = ARENA)
+	public static void tandemSaddleRefusesAWildMount(GameTestHelper helper) {
+		Horse wild = helper.spawn(EntityType.HORSE, 1, 2, 1);
+		wild.equipSaddle(null);
+
+		helper.assertFalse(TandemRiding.canFit(wild),
+				"Un cheval sauvage accepte la selle deux places");
+
+		wild.setTamed(true);
+		helper.assertTrue(TandemRiding.canFit(wild),
+				"Un cheval dompte et selle refuse la selle deux places");
 
 		helper.succeed();
 	}

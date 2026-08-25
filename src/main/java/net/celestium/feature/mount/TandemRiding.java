@@ -1,12 +1,17 @@
 package net.celestium.feature.mount;
 
 import net.celestium.CelestiumMod;
+import net.celestium.init.ModItems;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Saddleable;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -72,37 +77,85 @@ public final class TandemRiding {
 	 * cochons, striders — sans qu'aucune liste soit a tenir a jour.
 	 */
 	public static boolean canFit(Entity mount) {
-		return mount instanceof Saddleable saddleable && saddleable.isSaddled() && !fitted(mount);
+		if (!(mount instanceof Saddleable saddleable) || !saddleable.isSaddled() || fitted(mount)) {
+			return false;
+		}
+
+		// Une monture qui se dompte doit l'etre. Le jeu de base ne laisse de toute facon pas seller
+		// un cheval sauvage, mais l'ecrire ici rend la regle lisible et la rend vraie pour tout ce
+		// qui se dompterait autrement.
+		return !(mount instanceof AbstractHorse horse) || horse.isTamed();
 	}
 
 	/**
-	 * Le clic droit d'un second cavalier sur une monture deja occupee.
+	 * Le clic droit sur une monture, dans les deux cas ou il nous concerne.
 	 *
-	 * <p>Sans selle deux places, ce geste ne fait rien du tout dans le jeu de base : l'intercepter
-	 * ne prive donc personne de quoi que ce soit.
+	 * <p>Poser la selle passe par ici et non par l'objet lui-meme. C'est ce qui manquait : le jeu
+	 * interroge la monture avant l'objet tenu, et une monture domptee et sellee repond a ce
+	 * clic-la en faisant monter le joueur. L'objet n'etait donc jamais consulte, et la selle deux
+	 * places ne se posait sur rien de ce pour quoi elle existe. Cet evenement, lui, passe avant la
+	 * monture.
+	 *
+	 * <p>Faire monter le second cavalier passe par ici aussi, mais pour une autre raison : sans
+	 * selle deux places, ce geste ne fait rien du tout dans le jeu de base, et l'intercepter ne
+	 * prive donc personne de quoi que ce soit.
 	 */
 	@SubscribeEvent
 	public static void onInteract(PlayerInteractEvent.EntityInteract event) {
-		if (event.getHand() != InteractionHand.MAIN_HAND) {
+		if (event.getHand() != InteractionHand.MAIN_HAND || event.getEntity().isSecondaryUseActive()) {
 			return;
 		}
 
 		Player player = event.getEntity();
 		Entity mount = event.getTarget();
+		ItemStack held = event.getItemStack();
 
-		if (player.isPassenger() || player.isSecondaryUseActive() || !event.getItemStack().isEmpty()) {
+		if (held.is(ModItems.TANDEM_SADDLE.get())) {
+			fitTo(event, player, mount, held);
+			return;
+		}
+
+		if (!held.isEmpty() || player.isPassenger()) {
 			return;
 		}
 		if (!fitted(mount) || mount.getPassengers().size() != 1) {
 			return;
 		}
 
-		event.setCanceled(true);
-		event.setCancellationResult(InteractionResult.sidedSuccess(player.level().isClientSide()));
+		claim(event, player);
 
 		if (!player.level().isClientSide()) {
 			player.startRiding(mount, true);
 		}
+	}
+
+	/** Pose la selle deux places, si cette monture peut la recevoir. */
+	private static void fitTo(PlayerInteractEvent.EntityInteract event, Player player, Entity mount,
+			ItemStack held) {
+
+		if (!canFit(mount)) {
+			return;
+		}
+
+		claim(event, player);
+
+		if (player.level().isClientSide()) {
+			return;
+		}
+
+		fit(mount);
+		if (!player.getAbilities().instabuild) {
+			held.shrink(1);
+		}
+
+		mount.level().playSound(null, mount.getX(), mount.getY(), mount.getZ(),
+				SoundEvents.HORSE_SADDLE, SoundSource.NEUTRAL, 0.5F, 1.0F);
+	}
+
+	/** Prend la main sur le geste, pour que la monture ne le traite pas a son tour. */
+	private static void claim(PlayerInteractEvent.EntityInteract event, Player player) {
+		event.setCanceled(true);
+		event.setCancellationResult(InteractionResult.sidedSuccess(player.level().isClientSide()));
 	}
 
 	/**
